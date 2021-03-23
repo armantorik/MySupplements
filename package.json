@@ -1,0 +1,21 @@
+{
+  "name": "ecommerce_team14_web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "expressjs": "^1.0.1",
+    "firebase": "^8.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://s21armantorikoglu@ipost.sabanciuniv.edu:7990/scm/scour14/ecommerce_team14_web.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
