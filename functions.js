@@ -13,7 +13,20 @@ import "firebase/firestore";
 
 function login(email, password)
 {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Signed in
+    var user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+}
+function register(name, email, password, phone)
+{
+  firebase.auth().createUserWithEmailAndPassword(email, password)
   .then((userCredential) => {
     // Signed in 
     var user = userCredential.user;
@@ -24,8 +37,4 @@ function login(email, password)
     var errorMessage = error.message;
     // ..
   });
-}
-function register(name, email, password, phone)
-{
-    
 }
