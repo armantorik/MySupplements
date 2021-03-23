@@ -38,3 +38,13 @@ function register(name, email, password, phone)
     // ..
   });
 }
+
+
+function signOut()
+{
+  firebase.auth().signOut().then(() => {
+    // Sign-out successful.
+  }).catch((error) => {
+    // An error happened.
+  });
+}
