@@ -1,17 +1,8 @@
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-import firebase from "firebase/app";
-// If you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
-// import * as firebase from "firebase/app"
-
-// If you enabled Analytics in your project, add the Firebase SDK for Analytics
-import "firebase/analytics";
-
-// Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/firestore";
+//require('./fireConfig');
+const firebase = require('firebase');
 
 
-function login(email, password)
+exports.signIn = function(email, password)
 {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then((userCredential) => {
@@ -22,9 +13,10 @@ function login(email, password)
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
+    res.redirect('/dummylogin.html');
   });
 }
-function register(name, email, password, phone)
+exports.signUp = function(name, email, password, phone)
 {
   firebase.auth().createUserWithEmailAndPassword(email, password)
   .then((userCredential) => {
@@ -35,16 +27,16 @@ function register(name, email, password, phone)
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
-    // ..
   });
 }
 
 
-function signOut()
+exports.signOut = function()
 {
   firebase.auth().signOut().then(() => {
     // Sign-out successful.
   }).catch((error) => {
-    // An error happened.
+    var errorCode = error.code;
+    var errorMessage = error.message;
   });
 }
