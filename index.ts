@@ -41,15 +41,15 @@ app.use(csrfMiddleware);
 
 //app.use(logger());
 
+app.all("*", (req, res, next) => {
+  res.cookie("XSRF-TOKEN", req.csrfToken());
+  next();
+});
 
 app.get("/login", function (req, res) {
   res.render("dummylogin.html");
 });
 
-app.all("*", (req, res, next) => {
-  res.cookie("XSRF-TOKEN", req.csrfToken());
-  next();
-});
 
 app.post("/logingin", (req, res) => {
   const idToken = req.body.idToken.toString();
@@ -69,12 +69,22 @@ app.post("/logingin", (req, res) => {
     );
 });
 
+app.get("/", function (req, res) {
+  const sessionCookie = req.cookies.session || "";
+
+  admin.auth().verifySessionCookie(sessionCookie, true /** checkRevoked */)
+    .then(() => {
+      res.redirect("/home");
+    })
+    .catch((error) => {
+      res.redirect("/login");
+    });
+});
+
 app.get("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
 
-  admin
-    .auth()
-    .verifySessionCookie(sessionCookie, true /** checkRevoked */)
+  admin.auth().verifySessionCookie(sessionCookie, true /** checkRevoked */)
     .then(() => {
       res.render("home.html");
     })
@@ -82,6 +92,7 @@ app.get("/home", function (req, res) {
       res.redirect("/login");
     });
 });
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Ecommerce app listening at http://localhost:${process.env.PORT}`)
