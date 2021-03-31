@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <h1>
+            Congratulations! You have logged in successfully!
+        </h1>
+
+        <script src="js/index.js"></script>
+        <script>
+          firebase.auth().onAuthStateChanged(function(user)
+          {
+              if(!user)
+              {
+                window.location.href = "home.html";
+              }
+          });
+        </script>
+
+    </body>
+
+</html>
