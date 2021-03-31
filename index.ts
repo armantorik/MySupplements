@@ -47,7 +47,7 @@ app.all("*", (req, res, next) => {
 });
 
 app.get("/login", function (req, res) {
-  res.render("dummylogin.html");
+  res.render("loginpage.html");
 });
 
 
@@ -93,6 +93,13 @@ app.get("/home", function (req, res) {
     });
 });
 
+app.get("/signup", function (req, res) {
+  res.render("signup.html");
+});
+
+// app.get("/signingin", function (req, res) {
+//   res.render("functions.js");
+// });
 
 app.listen(process.env.PORT, () => {
   console.log(`Ecommerce app listening at http://localhost:${process.env.PORT}`)
