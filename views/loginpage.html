@@ -263,30 +263,30 @@ footer {
 
 
 <div class="container" id="container">
-	<div class="form-container sign-up-container">
+	<!-- <div class="form-container sign-up-container">
 		<form action="#">
 			<h1>Create Account</h1>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 			</div>
 			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
+			<input type="text" placeholder="Name"/>
 			<input type="email" placeholder="Username or E-mail" />
 			<input type="password" placeholder="Password" />
 			<button>Sign Up</button>
 		</form>
-	</div>
+	</div> -->
 	<div class="form-container sign-in-container">
-		<form action="#">
+		<form action="/logingin" id="login">
 			<h1 style="color:#008080;">Login</h1>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="email" placeholder="Username or E-mail" />
-			<input type="password" placeholder="Password" />
+			<input name="email" id="email" type="email" placeholder="Username or E-mail" />
+			<input name="password" id="password" type="password" placeholder="Password" />
 			<a href="#">Forgot your password?</a>
-			<button>Sign In</button>
+			<button id="submit" name="submit">Sign In</button>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -299,18 +299,20 @@ footer {
 			<div class="overlay-panel overlay-right">
 				<h1 style="color:#ffffff;">Hello, Friend!</h1>
 				<p style="color:#ffffff;">Enter your personal details and start journey with us</p>
-				<button style="color:#008080;"class="ghost" id="signUp">Sign Up</button>
+				<button  style="color:#008080;"class="ghost" id="signUp">
+				<a href="signup"/>
+					Sign Up
+				</button>
 			</div>
 		</div>
 	</div>
 </div>
-
-
              </div>
      </div>
-
      <script>
+
       window.addEventListener("DOMContentLoaded", () => {
+
         const firebaseConfig = {
           apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
           authDomain: "ecommerce-ca57f.firebaseapp.com",
@@ -329,7 +331,7 @@ footer {
         document.getElementById("login").addEventListener("submit", (event) => {
             event.preventDefault();
             const login = event.target.email.value;
-            const password = event.target.pass.value;
+            const password = event.target.password.value;
 
             firebase.auth().signInWithEmailAndPassword(login, password)
               .then(({ user }) => {

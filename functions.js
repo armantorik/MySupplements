@@ -40,7 +40,7 @@ var firebaseConfig = {
 
   $("#btn-signup").click(function()
   {
-
+     console.log("success");
      var email = $("#email").val();
      var password = $("#password").val();
      var cpassword = $("#confirmPassword").val();

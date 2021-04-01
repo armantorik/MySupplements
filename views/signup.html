@@ -5,13 +5,90 @@
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+        <script>
+
+window.addEventListener("DOMContentLoaded", () => {
+        const firebaseConfig = {
+          apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+          authDomain: "ecommerce-ca57f.firebaseapp.com",
+          databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "ecommerce-ca57f",
+          storageBucket: "ecommerce-ca57f.appspot.com",
+          messagingSenderId: "450193218046",
+          appId: "1:450193218046:web:ed740c91c94096998288af",
+          measurementId: "G-SV0VSC22KY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+    });
+
+ 
+  $("#btn-login").click(function()
+  {
+    window.alert("hello");
+     var email = $("#email").val();
+     var password = $("#password").val();
+
+     if(email != "" && password != "")
+     {
+        var result = firebase.auth().signInWithEmailAndPassword(email, password);
+
+        result.catch(function(error)
+        {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            
+
+            window.alert("Message: " + errorMessage);
+        });
+     }
+     else
+     {
+         window.alert("Form Incomplete! Please fill out all fields!");
+     }
+  });
+
+
+  $(document).on('click', '#btn-signup', function() {
+     
+    console.log("success");
+     var email = $("#email").val();
+     var password = $("#password").val();
+     var cpassword = $("#confirmPassword").val();
+
+     if(email != "" && password != "" && cpassword != "")
+     { 
+         if(password == cpassword)
+         {
+        var result = firebase.auth().createUserWithEmailAndPassword(email, password);
+
+        result.catch(function(error)
+        {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            
+
+            window.alert("Message: " + errorMessage);
+        });
+        }
+        else
+        {
+            window.alert("Passwords do not match!");
+        }
+    }
+     else
+     {
+         window.alert("Form Incomplete! Please fill out all fields!");
+     }
+ });
+
+        </script>
             
             
             <!-- MATERIAL DESIGN ICONIC FONT -->
         <link rel="stylesheet" href="design_files/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-                
-                <!-- STYLE CSS -->
-        <link rel="stylesheet" href="design_files/css/style.css">
 
         <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
@@ -51,7 +128,7 @@
                     </div>
                     
                     <div class="w-full text-center" style="margin-top: 49%; font-size: 15px;">
-                        <a href="signin.html" class="text-dark">
+                        <a href="/login" class="text-dark">
                             Already have an Account?
                         </a>
                     </div>
@@ -59,16 +136,18 @@
             </div>
         </div>
 
-        
-        <script src="js/index.js"></script>
+
         <script>
-          firebase.auth().onAuthStateChanged(function(user)
-          {
-              if(user)
-              {
-                window.location.href = "home.html";
-              }
-          });
+
+
+    firebase.auth().onAuthStateChanged(function(user)
+    {
+        if(user)
+        {
+            window.alert("Passwords do not match!");
+            window.location.href = "home";
+        }
+    });
         </script>
     </body>
 </html>
