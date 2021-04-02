@@ -3,11 +3,18 @@
     <head>
         <title>Sign Up</title>
         
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="/__/firebase/8.3.2/firebase-app.js"></script>
+
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+        
         <script>
 
-window.addEventListener("DOMContentLoaded", () => {
+        window.addEventListener("DOMContentLoaded", () => {
         const firebaseConfig = {
           apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
           authDomain: "ecommerce-ca57f.firebaseapp.com",
@@ -53,7 +60,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   $(document).on('click', '#btn-signup', function() {
      
-    console.log("success");
      var email = $("#email").val();
      var password = $("#password").val();
      var cpassword = $("#confirmPassword").val();
@@ -62,16 +68,16 @@ window.addEventListener("DOMContentLoaded", () => {
      { 
          if(password == cpassword)
          {
-        var result = firebase.auth().createUserWithEmailAndPassword(email, password);
+            var result = firebase.auth().createUserWithEmailAndPassword(email, password);
 
-        result.catch(function(error)
-        {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            
+            result.catch(function(error)
+            {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                
 
-            window.alert("Message: " + errorMessage);
-        });
+                window.alert("Message: " + errorMessage);
+            });
         }
         else
         {
@@ -84,6 +90,17 @@ window.addEventListener("DOMContentLoaded", () => {
      }
  });
 
+
+
+ firebase.auth().onAuthStateChanged(function(user)
+    {
+        window.alert("Hey");
+        if(user)
+        {
+            window.location.href = "localhost:" + process.env.PORT + "/login";
+            window.alert(firebase.auth().currentUser);
+        }
+    });
         </script>
             
             
@@ -135,19 +152,5 @@ window.addEventListener("DOMContentLoaded", () => {
                 </form>
             </div>
         </div>
-
-
-        <script>
-
-
-    firebase.auth().onAuthStateChanged(function(user)
-    {
-        if(user)
-        {
-            window.alert("Passwords do not match!");
-            window.location.href = "home";
-        }
-    });
-        </script>
     </body>
 </html>
