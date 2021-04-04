@@ -11,7 +11,7 @@
         <h1>
             Congratulations! You have logged in successfully!
         </h1>
-        <form id="signout" action="/logout" method="get">
+        <form id="signout" action="/loginpage.html" method="get">
         <button id="submit">Sign Out!</button>
         </form>
 
@@ -38,7 +38,6 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-  window.alert("hey ");
   document.getElementById("signout").addEventListener("submit", (event) => {
                 event.preventDefault();
       
