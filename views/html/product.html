@@ -1,0 +1,27 @@
+
+      <html>
+        <body id="root">
+        <p>
+          Product Page:
+        </p>
+      </body>
+
+          <script>
+
+            const url = window.location.search; 
+            const pid = new URLSearchParams(url).get('pid');
+            var purl = "/api/server-data.json?pid="+pid;
+
+            fetch(purl).then((response)=>{  return response.json();  // converting byte data to json
+            }).then(data=>{
+
+            var product = data["jsonObject"]["detail"][0];
+            console.log(data);
+            var imgLink = product["link"];
+            var pname = product["name"];
+            var info = product["info"];
+            document.getElementById("root").innerHTML = "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "><img>";
+            });
+            </script>  
+      </html>
+      

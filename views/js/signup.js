@@ -52,7 +52,7 @@ $(document).on('click', '#btn-signup', function() {
      if(password == cpassword)
      {
         var result = firebase.auth().createUserWithEmailAndPassword(email, password);
-        window.location.href = "/loginpage.html";
+        window.location.href = "/html/loginpage.html";
         result.catch(function(error)
         {
             var errorCode = error.code;
@@ -80,7 +80,7 @@ firebase.auth().onAuthStateChanged(function(user)
     window.alert("Hey");
     if(user)
     {
-        window.location.href = "/loginpage.html";
+        window.location.href = "/html/loginpage.html";
         window.alert(firebase.auth().currentUser);
     }
 });

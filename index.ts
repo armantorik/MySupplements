@@ -59,7 +59,7 @@ app.get("/", function (req, res) {
       res.redirect("/home");
     })
     .catch((error) => {
-      res.redirect("/loginpage.html");
+      res.redirect("/html/signin.html");
     });
 });
 
@@ -86,42 +86,47 @@ app.get("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true)
     .then(() => {
-      res.redirect("home.html");
+      res.redirect("/html/home.html");
     })
     .catch((error) => {
       res.end("Error: " + error);
     });
 });
 
+
 app.get('/api/server-data.json', function(req, res){
+  var pid = req.param('pid');
+
   products.getProducts().then(function(doc){
-    var pid = req.params.pid;
-    console.log(pid);
-    if (pid >= 0)
-    {
-      var jsonObject={};
+    
+    var jsonObject={};
       var key = 'detail';
       jsonObject[key] = [];
   
-      for (var i = 0; i < doc.length; i++){ 
-        if (pid == i)
-        {
-          var details={
-            "id":i,
-            "name":doc[i].name,
-            "info":doc[i].info,
-            "link" :doc[i].link
+    if (pid >= 0)
+    {
+      if (pid >= doc.length)
+      {
+        res.send("Wrong pid!")
+      }
+      else{
+        for (var i = 0; i < doc.length; i++){ 
+          if (pid == i)
+          {
+            var details={
+              "id":i,
+              "name":doc[i].name,
+              "info":doc[i].info,
+              "link" :doc[i].link
+          };
+            jsonObject[key].push(details);  
+          }
         };
-          jsonObject[key].push(details);  
-        }
-      };
+      }
     }
     else
     {
-      var jsonObject={};
-      var key = 'detail';
-      jsonObject[key] = [];
-  
+      
       for (var i = 0; i < doc.length; i++){ 
           var details={
               "id":i,
@@ -139,13 +144,28 @@ app.get('/api/server-data.json', function(req, res){
   
 });
 
+var request = require("request")
+
 
 app.get("/products", function (req, res) {
   
   var pid = req.param('pid');
-  //jsonProducts(pid);
-  res.redirect("product.html");    
-    
+  var url = "http://localhost:3000/api/server-data.json?pid=" + pid;
+
+request({
+  url: url,
+  json: true
+}, function (error, response, body) {
+
+  if (!error ) {
+    res.sendFile(path.join(__dirname + "/views/html/product.html"));
+  }
+  else 
+  {
+    console.log(error);
+  }
+})
+
 });
 
 
