@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+<link rel="stylesheet" type="text/css" href="signin.css" media="screen"></link>
+
+</head>
+  <body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/8.3.2/firebase-app.js"></script>
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
+
+
+
+<div class="container" id="container">
+	<div class="form-container sign-in-container">
+		<form action="/logingin" method="post" id="login">
+			<h1 style="color:#008080;">Login</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input name="email" id="email" type="email" placeholder="E-mail" />
+			<input name="password" id="password" type="password" placeholder="Password" />
+			<a href="#">Forgot your password?</a>
+			<button id="submit" name="submit">Sign In</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p style="color:#ffffff;">To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1 style="color:#ffffff;">Hello, Friend!</h1>
+				<p style="color:#ffffff;">Enter your personal details and start journey with us</p>
+				<button  style="color:#008080;"class="ghost" id="signUp">
+				<a href="signup.html"/>
+					Sign Up
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+             </div>
+     </div>
+
+     <script src="signin.js"></script>
+  </body>
+</html>
