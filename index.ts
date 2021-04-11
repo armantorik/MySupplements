@@ -150,7 +150,7 @@ var request = require("request")
 app.get("/products", function (req, res) {
   
   var pid = req.param('pid');
-  var url = "http://localhost:3000/api/server-data.json?pid=" + pid;
+  var url = "http://localhost:" + process.env.PORT + "/api/server-data.json?pid=" + pid;
 
 request({
   url: url,
