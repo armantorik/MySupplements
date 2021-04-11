@@ -42,5 +42,20 @@
               });
             return false;
           });
+
+
+    document.getElementById("directForm").addEventListener("directSubmit", (event) => {
+      event.preventDefault();
+      firebase.auth().signInAnonymously()
+        .then(() => {
+          window.location.href = "/home";
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+        });
+      })
+
       });
       
