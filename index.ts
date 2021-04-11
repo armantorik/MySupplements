@@ -1,5 +1,6 @@
 // Main Script
 
+
 // Global Port
 process.env.PORT = "3000";
 
@@ -8,12 +9,15 @@ process.env.PORT = "3000";
 
 const express = require('express');
 const app = express();
+
 const bodyParser = require('body-parser');
 const urlencodedParser = bodyParser.urlencoded({ extended: false});
 
 const {firebase, admin, db } = require("./utils/admin");
 const firebaseConfig = require("./utils/config");
 firebase.initializeApp(firebaseConfig);
+
+const pug = require('pug');
 
 
 const http = require('http');
@@ -26,17 +30,21 @@ var path = require('path');
 const csrfMiddleware = csrf({cookie: true});
 const products = require("./products");
 
+//const jsonProducts = require("./api/productJSON");
+
 // Script
 
-app.engine("html", require("ejs").renderFile);
 app.use(express.static("static"));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(csrfMiddleware);
 
+app.use(csrfMiddleware);
 //app.use(logger());
 
 app.use(express.static('views'));
+app.use(express.static('assets'));
+
+app.set('view engine', 'html');
 
 app.all("*", (req, res, next) => {
   res.cookie("XSRF-TOKEN", req.csrfToken());
@@ -74,21 +82,73 @@ app.post("/logingin", (req, res) => {
     );
 });
 
-
 app.get("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
-
   admin.auth().verifySessionCookie(sessionCookie, true)
     .then(() => {
-      products.retrieveAll;
-      res.render("home.html");
+      res.redirect("home.html");
     })
     .catch((error) => {
-      res.redirect("/login");
-      res.send("Error: " + error);
+      res.end("Error: " + error);
     });
 });
 
+app.get('/api/server-data.json', function(req, res){
+  products.getProducts().then(function(doc){
+    var pid = req.params.pid;
+    console.log(pid);
+    if (pid >= 0)
+    {
+      var jsonObject={};
+      var key = 'detail';
+      jsonObject[key] = [];
+  
+      for (var i = 0; i < doc.length; i++){ 
+        if (pid == i)
+        {
+          var details={
+            "id":i,
+            "name":doc[i].name,
+            "info":doc[i].info,
+            "link" :doc[i].link
+        };
+          jsonObject[key].push(details);  
+        }
+      };
+    }
+    else
+    {
+      var jsonObject={};
+      var key = 'detail';
+      jsonObject[key] = [];
+  
+      for (var i = 0; i < doc.length; i++){ 
+          var details={
+              "id":i,
+              "name":doc[i].name,
+              "info":doc[i].info,
+              "link" :doc[i].link
+          };
+          jsonObject[key].push(details);    
+      };
+    }
+    res.jsonp({
+      jsonObject
+    });
+  })
+  
+});
+
+
+app.get("/products", function (req, res) {
+  
+  var pid = req.param('pid');
+  //jsonProducts(pid);
+  res.redirect("product.html");    
+    
+});
+
+
 app.listen(process.env.PORT, () => {
   console.log(`Ecommerce app listening at http://localhost:${process.env.PORT}`)
-})
+});
