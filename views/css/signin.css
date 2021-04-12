@@ -72,6 +72,12 @@ button.ghost {
   border-color: #FFFFFF;
 }
 
+button.skipLoginButton {
+
+  margin-top: 50px;
+  
+  }
+
 form {
   background-color: #FFFFFF;
   display: flex;
