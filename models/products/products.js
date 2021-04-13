@@ -1,10 +1,7 @@
 // Products Module:
 // getProduct function returns the array consisting all of the products
 
-const {firebase, admin, db } = require("./utils/admin");
-const parse = require('node-html-parser').parse;
-const fs = require('fs');
-const path = require("path");
+const {firebase, admin, db } = require("../../utils/admin");
 
 exports.getProducts = async function getProducts(){
             

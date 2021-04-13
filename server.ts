@@ -10,41 +10,32 @@ process.env.PORT = "3000";
 const express = require('express');
 const app = express();
 
-const bodyParser = require('body-parser');
-const urlencodedParser = bodyParser.urlencoded({ extended: false});
-
 const {firebase, admin, db } = require("./utils/admin");
 const firebaseConfig = require("./utils/config");
 firebase.initializeApp(firebaseConfig);
 
-const pug = require('pug');
-
-
+var path = require('path');
 const http = require('http');
 const fs = require('fs');
-const logger = require('morgan');
+
+const bodyParser = require('body-parser');
 const Cookies = require('cookies');
 const csrf = require('csurf');
 const cookieParser = require("cookie-parser");
-var path = require('path');
-const csrfMiddleware = csrf({cookie: true});
-const products = require("./products");
 
-//const jsonProducts = require("./api/productJSON");
+
+const products = require("./models/products/products");
+const user = require("./models/users/users");
 
 // Script
-
-app.use(express.static("static"));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+const csrfMiddleware = csrf({cookie: true});
 app.use(csrfMiddleware);
-//app.use(logger());
 
 app.use(express.static('views'));
 app.use(express.static('assets'));
 
-app.set('view engine', 'html');
 
 app.all("*", (req, res, next) => {
   res.cookie("XSRF-TOKEN", req.csrfToken());
@@ -144,28 +135,20 @@ app.get('/api/server-data.json', function(req, res){
   
 });
 
-var request = require("request")
-
 
 app.get("/products", function (req, res) {
-  
-  var pid = req.param('pid');
-  var url = "http://localhost:" + process.env.PORT + "/api/server-data.json?pid=" + pid;
+  res.sendFile(path.join(__dirname + "/views/html/product.html"));
+});
 
-request({
-  url: url,
-  json: true
-}, function (error, response, body) {
 
-  if (!error ) {
-    res.sendFile(path.join(__dirname + "/views/html/product.html"));
-  }
-  else 
-  {
-    console.log(error);
-  }
-})
-
+app.get("/accountCreation",function(req, res){
+  var params = req.query;
+  user.createAccount(params.email, params.firstName, params.lastName, params.address, params.phone, params.gender, params.bio).then(() => {
+    console.log("Account created successfully");
+  })
+  .catch((error) => {
+    res.end("Error: " + error);
+  });
 });
 
 
