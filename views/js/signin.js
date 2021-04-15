@@ -1,45 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
-
-</head>
-  <body>
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/8.3.1/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="/__/firebase/8.3.1/firebase-analytics.js"></script>
-
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
-
-    <div class="login">
-      <div class="heading">
-        <h2>Sign in</h2>
-        <form action="/logingin" method="POST" id = "login">
-    
-          <div class="input-group input-group-lg">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input id = = "email" name = "email" type="text" class="form-control" placeholder="Username or email">
-              </div>
-    
-            <div class="input-group input-group-lg">
-              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-              <input id = = "pass" name = "pass" type="password" class="form-control" placeholder="Password">
-            </div>
-    
-            <button id = = "submit" name = "submit" type="submit" class="float">Login</button>
-           </form>
-             </div>
-     </div>
-
-     <script>
       window.addEventListener("DOMContentLoaded", () => {
+
         const firebaseConfig = {
           apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
           authDomain: "ecommerce-ca57f.firebaseapp.com",
@@ -58,7 +18,7 @@
         document.getElementById("login").addEventListener("submit", (event) => {
             event.preventDefault();
             const login = event.target.email.value;
-            const password = event.target.pass.value;
+            const password = event.target.password.value;
 
             firebase.auth().signInWithEmailAndPassword(login, password)
               .then(({ user }) => {
@@ -82,7 +42,20 @@
               });
             return false;
           });
+
+
+    document.getElementById("directForm").addEventListener("directSubmit", (event) => {
+      event.preventDefault();
+      firebase.auth().signInAnonymously()
+        .then(() => {
+          window.location.href = "/home";
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+        });
+      })
+
       });
-    </script>
-  </body>
-</html>
+      

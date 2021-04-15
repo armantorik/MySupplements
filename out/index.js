@@ -23,7 +23,7 @@ else {
         res.sendFile(__dirname + "/dummylogin.html");
     });
 }
-app.listen(port, function () {
-    console.log("Ecommerce app listening at http://localhost:" + port);
-});
+// app.listen(port, function () {
+//     console.log("Ecommerce app listening at http://localhost:" + port);
+// });
 //# sourceMappingURL=index.js.map

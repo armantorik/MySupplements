@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+   
+  <link rel="stylesheet" type="text/css" href="/css/home.css" media="screen"></link>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script>function getServerData(data) { window.__SERVER_DATA__ = data; }</script>
+      <script src="/api/server-data.json?callback=getServerData"></script>
+    
+    </head>
+
+    <body> 
+
+
+        <h1>
+            Welcome!
+        </h1>
+        <div>
+          <table>
+            <tr id = "product"></tr>
+          </table>
+        </div>
+        <form id="signout" action="/html/signin.html" method="get">
+          <button id="submit">Sign Out!</button>
+        </form>
+
+
+        <script>
+
+          window.addEventListener('load', function() {
+          var productJson = __SERVER_DATA__["jsonObject"]["detail"];
+          productJson.forEach(element => {
+            var imgLink = element["link"];
+            var pname = element["name"];
+            var pid = element["id"];
+            document.getElementById("product").innerHTML += "<a href=/products?pid=" + pid + ">" + pname + "</a><img width='200' height='200' src=" + imgLink + "><img>";
+         
+          });
+        });
+        
+        </script>  
+
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="/__/firebase/8.3.2/firebase-app.js"></script>
+
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+    
+
+<script>
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+    authDomain: "ecommerce-ca57f.firebaseapp.com",
+    databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "ecommerce-ca57f",
+    storageBucket: "ecommerce-ca57f.appspot.com",
+    messagingSenderId: "450193218046",
+    appId: "1:450193218046:web:ed740c91c94096998288af",
+    measurementId: "G-SV0VSC22KY"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+  document.getElementById("signout").addEventListener("submit", (event) => {
+                event.preventDefault();
+      
+                  
+                  firebase.auth().signOut().then(() => {
+                  }).catch((error) => {
+                    window.alert("Error: " + error);
+                  });
+                });
+              
+
+</script>
+    </body>
+
+</html>
