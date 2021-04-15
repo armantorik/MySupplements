@@ -117,7 +117,8 @@ app.get('/api/server-data.json', function(req, res){
               "id":i,
               "name":doc[i].name,
               "info":doc[i].info,
-              "link" :doc[i].link
+              "link" :doc[i].link,
+              "price":doc[i].price
           };
             jsonObject[key].push(details);  
           }
@@ -132,7 +133,8 @@ app.get('/api/server-data.json', function(req, res){
               "id":i,
               "name":doc[i].name,
               "info":doc[i].info,
-              "link" :doc[i].link
+              "link" :doc[i].link,
+              "price":doc[i].price
           };
           jsonObject[key].push(details);    
       };

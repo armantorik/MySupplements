@@ -20,13 +20,17 @@
             var imgLink = product["link"];
             var pname = product["name"];
             var info = product["info"];
-            document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "><img>";
+            var price = product["price"];
+            console.log(price)
+            document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "><img> <p> Price: " + price + "</p>";
             });
             </script>  
-            <form action="addTocart" method="post">
-              <button>
-                Add to Cart
-              </button>
-            </form>
+            <button class="btn add-to-cart" type="button">ADD TO CART</button>
+            <li class="cart">
+              <a href="html/cart.html">
+                 Cart
+              </a>
+          </li>
+          <script src = "/js/cart.js"> </script>
       </html>
       
