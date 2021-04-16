@@ -1,5 +1,7 @@
 // Main Script
 
+import { userInfo } from "node:os";
+
 
 // Global Port
 process.env.PORT = "3000";
@@ -28,6 +30,7 @@ const products = require("./models/products/products");
 const user = require("./models/users/users");
 
 // Script
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 const csrfMiddleware = csrf({cookie: true});
@@ -57,13 +60,11 @@ app.get("/", function (req, res) {
 
 app.post("/logingin", (req, res) => {
   const idToken = req.body.idToken.toString();
-
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
   admin.auth().createSessionCookie(idToken, { expiresIn })
     .then(
       (sessionCookie) => {
-        const options = { maxAge: expiresIn, httpOnly: true };
+        const options = { maxAge: expiresIn, httpOnly: false, secure:true };
         res.cookie("session", sessionCookie, options);
         res.end(JSON.stringify({ status: "success" }));
       },
@@ -72,18 +73,36 @@ app.post("/logingin", (req, res) => {
       }
     );
 });
-
 app.get("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true)
-    .then(() => {
-      res.redirect("/html/home.html");
-    })
-    .catch((error) => {
-      res.end("Error: " + error);
-    });
+  .then((decodedClaims) => {
+    //user.serveContentForUser("/home", req, res, decodedClaims);
+    
+    res.sendFile(path.join(__dirname + "/views/html/home.html"));
+  })
+  .catch((error) => {
+    res.redirect('/html/signin.html');
+  });
+  
+
 });
 
+app.post("/getUser", function(req,res){
+  console.log("hello");
+  admin.auth()
+        .verifyIdToken(res.Authorization)
+        .then(function(decodedToken) {
+            var uid = decodedToken.uid;
+            console.log("uid ->", uid);
+            return uid;
+        })
+        .catch(function(error) {
+            console.log("error ->", error);
+
+            // Handle error
+        });
+});
 
 app.get('/api/server-data.json', function(req, res){
   var pid = req.param('pid');

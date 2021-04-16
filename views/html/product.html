@@ -5,6 +5,10 @@
           Product Page:
         </p>
       </body>
+      <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer></script>
+      <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
 
           <script>
 
@@ -16,16 +20,16 @@
             }).then(data=>{
 
             var product = data["jsonObject"]["detail"][0];
-            console.log(data);
             var imgLink = product["link"];
             var pname = product["name"];
             var info = product["info"];
             var price = product["price"];
-            console.log(price)
             document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "><img> <p> Price: " + price + "</p>";
             });
             </script>  
-            <button class="btn add-to-cart" type="button">ADD TO CART</button>
+            <form id=add>
+              <button class="add-to-cart" id="add-to-cart">ADD TO CART</button>
+            </form>
             <li class="cart">
               <a href="html/cart.html">
                  Cart
