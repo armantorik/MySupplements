@@ -1,118 +1,122 @@
 <!DOCTYPE html>
 
 <html>
-   
-  <link rel="stylesheet" type="text/css" href="/css/home.css" media="screen"></link>
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script>function getServerData(data) { window.__SERVER_DATA__ = data; }</script>
-      <script src="/api/server-data.json?callback=getServerData"></script>
-    </head>
+<link rel='icon' href='favicon.ico' type='image/x-icon' />
 
-    <body> 
+<link rel="stylesheet" type="text/css" href="/css/home.css" media="screen">
+</link>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>function getServerData(data) { window.__SERVER_DATA__ = data; }</script>
+  <script src="/api/products?callback=getServerData"></script>
+</head>
 
-        <h1>
-            Welcome!
-        </h1>
-        <div>
-          <table>
-            <tr id = "product"></tr>
-          </table>
-        </div>
-        <form id="signout" action="/html/signin.html" method="get">
-          <button id="submit">Sign Out!</button>
-        </form>
-        <li class="cart">
-          <a href="cart.html">
-             Cart
-          </a>
-      </li>
-
-        <script>
-
-          window.addEventListener('load', function() {
-          var productJson = __SERVER_DATA__["jsonObject"]["detail"];
-          productJson.forEach(element => {
-            var imgLink = element["link"];
-            var pname = element["name"];
-            var pid = element["id"];
-            document.getElementById("product").innerHTML += "<a href=/products?pid=" + pid + ">" + pname + "</a><img width='200' height='200' src=" + imgLink + "><img>";
-         
-          });
-        });
-        
-        </script>  
+<body>
 
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+  <h1>
+    Welcome!
+  </h1>
+  <div>
+    <table>
+      <tr id="product"></tr>
+    </table>
+  </div>
+  <form id="signout" action="/html/signin.html" method="get">
+    <button id="submit">Sign Out!</button>
+  </form>
+  <li class="cart">
+    <a href="/html/cart.html">
+      Cart
+    </a>
+  </li>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+  <script>
 
-<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
-    authDomain: "ecommerce-ca57f.firebaseapp.com",
-    databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "ecommerce-ca57f",
-    storageBucket: "ecommerce-ca57f.appspot.com",
-    messagingSenderId: "450193218046",
-    appId: "1:450193218046:web:ed740c91c94096998288af",
-    measurementId: "G-SV0VSC22KY"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    window.addEventListener('load', function () {
+      var productJson = __SERVER_DATA__["jsonObject"]["detail"];
+      productJson.forEach(element => {
+        var imgLink = element["link"];
+        var pname = element["name"];
+        var pid = element["id"];
+        document.getElementById("product").innerHTML += "<a href=/products?pid=" + pid + ">" + pname + "</a><img width='200' height='200' src=" + imgLink + "><img>";
 
-</script>
-    
-
-<script>
-  async function getUser()
-  {
-    const token = await firebase.auth().currentUser.getIdToken()
-    fetch("/getUser", {
-      method: "POST",
-      headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-      Authorization: token
-        },
-      body:"hello"
+      });
     });
-};
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    console.log("hello user");
 
-  }
-  else {
-    console.log("not user");
-    console.log(firebase.auth().currentUser);
-  }
-})
+  </script>
 
 
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 
-  document.getElementById("signout").addEventListener("submit", (event) => {
-                event.preventDefault();
-      
-                  
-                  firebase.auth().signOut().then(() => {
-                    window.location.href = "/html/signin.html"
-                  }).catch((error) => {
-                    window.alert("Error: " + error);
-                  });
-                });
-              
-</script>
-    </body>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+      authDomain: "ecommerce-ca57f.firebaseapp.com",
+      databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "ecommerce-ca57f",
+      storageBucket: "ecommerce-ca57f.appspot.com",
+      messagingSenderId: "450193218046",
+      appId: "1:450193218046:web:ed740c91c94096998288af",
+      measurementId: "G-SV0VSC22KY"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+  </script>
+
+
+  <script>
+    async function getUser() {
+      const token = await firebase.auth().currentUser.getIdToken()
+      fetch("/getUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+          Authorization: token
+        },
+        body: firebase.auth().currentUser.email
+      });
+    };
+
+
+    document.getElementById("signout").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+
+      firebase.auth().signOut().then(() => {
+        window.location.href = "/html/signin.html"
+      }).catch((error) => {
+        window.alert("Error: " + error);
+      });
+    });
+
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(firebase.auth().currentUser.email);
+
+      }
+      else {
+        console.log("no user");
+      }
+    })
+
+
+
+  </script>
+</body>
 
 </html>

@@ -1,165 +1,104 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        
-        <title>Account Settings</title>
-        
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
-            
-            <!-- MATERIAL DESIGN ICONIC FONT -->
-        <link rel="stylesheet" href="design_files/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-                
-                <!-- STYLE CSS -->
-        <link rel="stylesheet" href="design_files/css/style.css">
 
-    </head>
+<head>
 
-    <body>
-        <div class="wrapper" style="background-image: url('design_files/images/accountSettingsback.jpg')">
-            
-            <div class="inner">
-                <div class="image-holder">
-                    <img src="design_files/images/asettings.jpg">
+    <title>Account Settings</title>
+    <link rel='icon' href='favicon.ico' type='image/x-icon' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="inner">
+            <div class="image-holder">
+            </div>
+            <form>
+                <h3>Account Settings</h3>
+                <div class="form-group">
+                    <input id="firstName" type="text" placeholder="First Name" class="form-control">
+                    <input id="lastName" type="text" placeholder="Last Name" class="form-control">
+                </div>
+                <div class="form-wrapper">
+                    <select name="" id="country" class="form-control">
+                        <option value="" disabled selected> Country </option>
+                        <option value="USA"> USA </option>
+                        <option value="Germany"> Germany </option>
+                        <option value="England"> England </option>
+                        <option value="France"> France </option>
+                        <option value="Turkey"> Turkey </option>
+                        <option value="Japan"> Japan </option>
+                    </select>
+                    <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+                </div>
+                <div class="form-wrapper">
+                    <input id="phone" type="number" placeholder="Phone" class="form-control">
+                    <i class="zmdi zmdi-tablet-mac"></i>
                 </div>
 
-                <form>
-                    <h3>Account Settings</h3>
-                    <div class="form-group">
-                        <input id="firstName"  type="text" placeholder="First Name" class="form-control">
-                        <input id="lastName"  type="text" placeholder="Last Name" class="form-control">
-                    </div>
-                    <div class="form-wrapper">
-                        <select name="" id="country" class="form-control">
-                            <option value="" disabled selected> Country </option>
-                            <option value="USA" > USA </option>
-                            <option value="Germany" > Germany </option>
-                            <option value="England" > England </option>
-                            <option value="France" > France </option>
-                            <option value="Turkey" > Turkey </option>
-                            <option value="Japan" > Japan </option>
-                        </select>
-                        <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
-                    </div>
-                    <div class="form-wrapper">
-                        <input id="phone" type="number" placeholder="Phone" class="form-control">
-                        <i class="zmdi zmdi-tablet-mac"></i>
-                    </div>
+                <div class="form-wrapper">
+                    <select name="" id="gender" class="form-control">
+                        <option value="" disabled selected> Gender </option>
+                        <option value="Male"> Male </option>
+                        <option value="Female"> Female </option>
 
-                    <div class="form-wrapper">
-                        <select name="" id="gender" class="form-control">
-                            <option value="" disabled selected> Gender </option>
-                            <option value="Male" > Male </option>
-                            <option value="Female" > Female </option>
-                           
-                        </select>
-                        <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
-                    </div>
-                    
-                    <div class="form-wrapper">
-                        <input id="address" type="text" placeholder="Address" class="form-control">
-                        <i class="zmdi zmdi-account-pin"></i>
-                    </div>
+                    </select>
+                    <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+                </div>
 
-                    <div class="form-wrapper">
-                        <input id="bio" type="text" placeholder="Bio" class="form-control">
-                        <i class="zmdi zmdi-account-box-mail"></i>
-                    </div>
+                <div class="form-wrapper">
+                    <input id="address" type="text" placeholder="Address" class="form-control">
+                    <i class="zmdi zmdi-account-pin"></i>
+                </div>
 
-                    <div class="form-group container-login100-form-btn">
-                        <button id="btn-update" type="button">
-                            Update & Set
-                            <i class="zmdi zmdi-arrow-right"></i>
-                        </button>
-                    </div>
-                    
-                </form>
-            </div>
+                <div class="form-wrapper">
+                    <input id="bio" type="text" placeholder="Bio" class="form-control">
+                    <i class="zmdi zmdi-account-box-mail"></i>
+                </div>
+
+                <div class="form-group container-login100-form-btn">
+                    <button id="btn-update" type="button">
+                        Update & Set
+                        <i class="zmdi zmdi-arrow-right"></i>
+                    </button>
+                </div>
+
+            </form>
         </div>
-            <!-- The core Firebase JS SDK is always required and must be listed first -->
-            <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 
-            <!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
                  https://firebase.google.com/docs/web/setup#available-libraries -->
-            <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-            
-            <script>
-              // Your web app's Firebase configuration
-              // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-              var firebaseConfig = {
-                apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
-                authDomain: "ecommerce-ca57f.firebaseapp.com",
-                databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
-                projectId: "ecommerce-ca57f",
-                storageBucket: "ecommerce-ca57f.appspot.com",
-                messagingSenderId: "450193218046",
-                appId: "1:450193218046:web:ed740c91c94096998288af",
-                measurementId: "G-SV0VSC22KY"
-              };
-              // Initialize Firebase
-              firebase.initializeApp(firebaseConfig);
-            </script>
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
 
-
-$("#btn-update").click(function()
-  {
-    var phone = $("#phone").val();
-    var address = $("#address").val();
-    var bio = $("#bio").val();
-    var fName = $("#firstName").val();
-    var lName = $("#lastName").val();
-    var country = $("#country").val();
-    var gender = $("#gender").val();
-    const url = window.location.search; 
-    const email = new URLSearchParams(url).get('email');
-
-    if(fName != "" && lName != "" && phone != "" && country != "" && gender != "" && bio != "" && address != "" )
-    {
-        var data = 
-        {
-            "email": email,
-            "phone": phone,
-            "address": address,
-            "bio": bio,
-            "firstName": fName,
-            "lastName": lName,
-            "country": country,
-            "gender": gender,
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+            authDomain: "ecommerce-ca57f.firebaseapp.com",
+            databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "ecommerce-ca57f",
+            storageBucket: "ecommerce-ca57f.appspot.com",
+            messagingSenderId: "450193218046",
+            appId: "1:450193218046:web:ed740c91c94096998288af",
+            measurementId: "G-SV0VSC22KY"
         };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/accountSettings.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
 
-        $.get("/accountCreation", data);
-        window.location.href = "/html/home.html";
-
-    }
-    else
-    {
-        window.alert("Form Incomplete! Please fill out all fields!");
-    }
-  });
-  
-
-
-
-
-          firebase.auth().onAuthStateChanged(function(user)
-          {
-            if(user)
-              {
-                var userID = firebase.auth().cuurentUser.uid;
-                
-                firebase.database().ref('Users/' + userID).once('value').then(function(snapshot)
-                {
-                    if(snapshot.val())
-                    {
-                        window.location.href = "MainPage.html";
-                    }
-                });
-              }
-          });
-        </script>
-    </body>
 </html>

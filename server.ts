@@ -5,14 +5,14 @@ import { userInfo } from "node:os";
 
 // Global Port
 process.env.PORT = "3000";
-
+var debug = require('debug')('server')
 
 // All the imports
 
 const express = require('express');
 const app = express();
 
-const {firebase, admin, db } = require("./utils/admin");
+const { firebase, admin, db } = require("./utils/admin");
 const firebaseConfig = require("./utils/config");
 firebase.initializeApp(firebaseConfig);
 
@@ -33,7 +33,7 @@ const user = require("./models/users/users");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-const csrfMiddleware = csrf({cookie: true});
+const csrfMiddleware = csrf({ cookie: true });
 app.use(csrfMiddleware);
 
 app.use(express.static('views'));
@@ -64,7 +64,7 @@ app.post("/logingin", (req, res) => {
   admin.auth().createSessionCookie(idToken, { expiresIn })
     .then(
       (sessionCookie) => {
-        const options = { maxAge: expiresIn, httpOnly: false, secure:true };
+        const options = { maxAge: expiresIn, httpOnly: false, secure: true };
         res.cookie("session", sessionCookie, options);
         res.end(JSON.stringify({ status: "success" }));
       },
@@ -76,100 +76,149 @@ app.post("/logingin", (req, res) => {
 app.get("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true)
-  .then((decodedClaims) => {
-    //user.serveContentForUser("/home", req, res, decodedClaims);
-    
-    res.sendFile(path.join(__dirname + "/views/html/home.html"));
-  })
-  .catch((error) => {
-    res.redirect('/html/signin.html');
-  });
-  
+    .then((decodedClaims) => {
+      //user.serveContentForUser("/home", req, res, decodedClaims);
+
+      res.sendFile(path.join(__dirname + "/views/html/home.html"));
+    })
+    .catch((error) => {
+      res.redirect('/html/signin.html');
+    });
+
 
 });
 
-app.post("/getUser", function(req,res){
-  console.log("hello");
-  admin.auth()
-        .verifyIdToken(res.Authorization)
-        .then(function(decodedToken) {
-            var uid = decodedToken.uid;
-            console.log("uid ->", uid);
-            return uid;
-        })
-        .catch(function(error) {
-            console.log("error ->", error);
+app.get('/api/products', function (req, res) {
 
-            // Handle error
-        });
-});
+  products.getProducts().then(function (doc) {
 
-app.get('/api/server-data.json', function(req, res){
-  var pid = req.param('pid');
+    var jsonObject = {};
+    var key = 'detail';
+    jsonObject[key] = [];
 
-  products.getProducts().then(function(doc){
-    
-    var jsonObject={};
-      var key = 'detail';
-      jsonObject[key] = [];
-  
-    if (pid >= 0)
-    {
-      if (pid >= doc.length)
-      {
-        res.send("Wrong pid!")
-      }
-      else{
-        for (var i = 0; i < doc.length; i++){ 
-          if (pid == i)
-          {
-            var details={
-              "id":i,
-              "name":doc[i].name,
-              "info":doc[i].info,
-              "link" :doc[i].link,
-              "price":doc[i].price
-          };
-            jsonObject[key].push(details);  
-          }
-        };
-      }
-    }
-    else
-    {
-      
-      for (var i = 0; i < doc.length; i++){ 
-          var details={
-              "id":i,
-              "name":doc[i].name,
-              "info":doc[i].info,
-              "link" :doc[i].link,
-              "price":doc[i].price
-          };
-          jsonObject[key].push(details);    
+    for (var i = 0; i < doc.length; i++) {
+      var details = {
+        "id": i,
+        "name": doc[i].name,
+        "quantity": doc[i].quantity,
+        "info": doc[i].info,
+        "link": doc[i].link,
+        "price": doc[i].price
       };
-    }
+      jsonObject[key].push(details);
+    };
+
     res.jsonp({
       jsonObject
     });
-  })
-  
+  });
 });
 
+app.get('/api/products/:pid', function (req, res) {
+  var pid = req.params.pid;
+  products.getProducts().then(function (doc) {
+
+    var jsonObject = {};
+    var key = 'detail';
+    jsonObject[key] = [];
+
+    if (pid >= doc.length) {
+      res.send("Wrong pid!")
+    }
+    else {
+      for (var i = 0; i < doc.length; i++) {
+        if (pid == i) {
+          var details = {
+            "id": i,
+            "quantity": doc[i].quantity,
+            "name": doc[i].name,
+            "info": doc[i].info,
+            "link": doc[i].link,
+            "price": doc[i].price
+          };
+          jsonObject[key].push(details);
+        }
+      };
+      res.jsonp({
+        jsonObject
+      });
+    }
+
+  })
+
+});
+
+app.get('/api/basketQuery.json', function (req, res) {
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+    var email = req.param("email");
+    user.getProductsFromBasket(email).then(function (jsonProducts) {
+
+      debug(jsonProducts);
+      res.jsonp({
+        jsonProducts
+      })
+
+    }
+    )
+
+  }
+
+  ).catch((error) => {
+    res.redirect('/html/signin.html');
+  });
+
+
+});
+
+app.get('/api/basketQuery.json', function (req, res) {
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+    var email = req.param("email");
+    user.getProductsFromBasket(email).then(function (jsonProducts) {
+
+      debug(jsonProducts);
+      res.jsonp({
+        jsonProducts
+      })
+    }
+    )
+
+  }
+
+  ).catch((error) => {
+    res.redirect('/html/signin.html');
+  });
+
+
+});
 
 app.get("/products", function (req, res) {
   res.sendFile(path.join(__dirname + "/views/html/product.html"));
 });
 
 
-app.get("/accountCreation",function(req, res){
+app.put("/api/add2basket", function (req, res) {
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+    debug("hello");
+    var email = req.param("email");
+    var pid = req.param("pid");
+    user.add2basket(email, pid);
+
+  })
+});
+
+
+app.put("/api/createAccount", function (req, res) {
   var params = req.query;
+  console.log(params)
   user.createAccount(params.email, params.firstName, params.lastName, params.address, params.phone, params.gender, params.bio).then(() => {
     console.log("Account created successfully");
   })
-  .catch((error) => {
-    res.end("Error: " + error);
-  });
+    .catch((error) => {
+      res.end("Error: " + error);
+    });
 });
 
 
