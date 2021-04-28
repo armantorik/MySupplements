@@ -13,13 +13,11 @@
   <ul>
     <!-- Tempory, to be replaced by navbar  -->
     <li><a href="home.html">Home</a></li>
-    <li>
-      <a href="cart.html">
-        Cart
-      </a>
-    </li>
-
+    <li><a href="cart.html">Cart</a></li>
+    <button onclick="order()" class="complete-purchase" type="button" id="order-button">COMPLETE PURCHASE</button>
   </ul>
+
+  
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -50,5 +48,38 @@
 
   <script src="/js/cart.js"></script>
 </body>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+  function order() {
+
+    firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      console.log(firebase.auth().currentUser.email);
+      var queryurl = "/api/order?&email=" + firebase.auth().currentUser.email;
+      
+      axios.put(queryurl).then(
+          (response) => {
+            var result = response.data;
+            console.log('Processing Request');
+            resolve(result);
+
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+
+    }
+    else {
+      console.log("no user");
+    }
+    });
+
+  };
+
+</script>
+
 
 </html>

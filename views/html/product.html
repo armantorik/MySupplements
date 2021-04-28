@@ -72,7 +72,6 @@
         console.log(firebase.auth().currentUser.email);
         var queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
 
-
         axios.put(queryurl).then(
           (response) => {
             var result = response.data;

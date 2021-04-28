@@ -35,8 +35,16 @@ exports.getProductsFromBasket = async function (email) {
         var productArr = [];
 
         var data = userDoc.data();
-        var userCart = data.userCart;
-        async function waitData(userCart) {
+       // const usersRef = db.collection('users').doc(email).where();
+        if(!data.userCart){
+            jsonProducts.exist = "false";
+            return jsonProducts;
+        }
+
+        else
+        {        
+            var userCart = data.userCart;
+            async function waitData(userCart) {
             userCart.forEach(async function (basketRef) {
 
                 if (basketRef) {
@@ -71,6 +79,7 @@ exports.getProductsFromBasket = async function (email) {
                 }, 800);
             });
         }
+}
 
         waitData(userCart).then(() => {
 
@@ -120,8 +129,6 @@ exports.add2basket = async function (email, pid) {
                 console.log(error)
             })
 
-
-
     }
     else { // Increment the quantity of basket element with email and pid
         //var oldQuantity = await basketCol.where('user', '==', '/users/'+email).where('product', '==', '/Products/'+pid).get()
@@ -132,8 +139,6 @@ exports.add2basket = async function (email, pid) {
             oldQuantity = doc.data().quantity
         })
 
-        
-
         const basketRef2update = db.collection('basket').doc(currId.toString());
 
         // Set the 'capital' field of the city
@@ -142,3 +147,59 @@ exports.add2basket = async function (email, pid) {
     }
 }
 
+exports.order = async function (email) {
+    const usersRef = db.collection('users').doc(email);
+    const userDoc = await usersRef.get();
+
+    if (!userDoc.exists) {
+        debug('No such document!');
+
+    } else if(userDoc.data().userCart){
+
+        var total_price = 0;
+        var data = userDoc.data();
+
+    var userCart = data.userCart;
+    
+
+    userCart.forEach(async function (basketRef) {
+
+        if (basketRef) {
+            debug("basketRef\n" + basketRef)
+
+            var basketGet = await basketRef.get()
+            debug("basketGet\n" + basketGet)
+
+            basket = basketGet.data();
+            var inBasket = basket.quantity;
+            var productRef = basket.product;
+
+            if (productRef) {
+                var productGet = await productRef.get()
+                product = productGet.data();
+
+                var oldQuantity = product.quantity
+
+                total_price += product.price * inBasket;
+                const res = await productRef.update({quantity: oldQuantity-inBasket});
+                debug(res)
+            }          
+        }
+
+        basketRef.delete().then(() => {
+            console.log("Document successfully deleted!");
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });    
+    })
+
+    // Get the `FieldValue` object
+    const FieldValue = admin.firestore.FieldValue;
+
+    // Remove the 'userCart' field from the document
+    const res = await usersRef.update({
+    userCart: FieldValue.delete()
+    });
+        
+  }
+};

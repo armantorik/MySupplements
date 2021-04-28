@@ -1,7 +1,5 @@
 // Main Script
 
-import { userInfo } from "node:os";
-
 
 // Global Port
 process.env.PORT = "3000";
@@ -155,32 +153,11 @@ app.get('/api/basketQuery.json', function (req, res) {
     user.getProductsFromBasket(email).then(function (jsonProducts) {
 
       debug(jsonProducts);
+     
       res.jsonp({
         jsonProducts
       })
 
-    }
-    )
-
-  }
-
-  ).catch((error) => {
-    res.redirect('/html/signin.html');
-  });
-
-
-});
-
-app.get('/api/basketQuery.json', function (req, res) {
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-    var email = req.param("email");
-    user.getProductsFromBasket(email).then(function (jsonProducts) {
-
-      debug(jsonProducts);
-      res.jsonp({
-        jsonProducts
-      })
     }
     )
 
@@ -205,6 +182,18 @@ app.put("/api/add2basket", function (req, res) {
     var email = req.param("email");
     var pid = req.param("pid");
     user.add2basket(email, pid);
+
+
+  })
+});
+
+
+app.put("/api/order", function (req, res) {
+  console.log("allahu ekber")
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+  var email = req.param("email");
+  user.order(email);
 
   })
 });

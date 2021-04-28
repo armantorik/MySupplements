@@ -5,7 +5,7 @@ async function getProducts2js(user) {
 
 
         $.get(queryurl).then(response => {
-            console.log(response)
+           console.log(response)
         })
     }
     else {
@@ -13,4 +13,6 @@ async function getProducts2js(user) {
     }
 }
 firebase.auth().onAuthStateChanged(user => getProducts2js(user));
+
+
 
