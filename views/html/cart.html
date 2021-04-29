@@ -14,7 +14,7 @@
     <!-- Tempory, to be replaced by navbar  -->
     <li><a href="home.html">Home</a></li>
     <li><a href="cart.html">Cart</a></li>
-    <button onclick="order()" class="complete-purchase" type="button" id="order-button">COMPLETE PURCHASE</button>
+    <button onclick="order()" class="complete-purchase" type="button" id="order-button">PURCHASE</button>
   </ul>
 
   
@@ -63,8 +63,7 @@
           (response) => {
             var result = response.data;
             console.log('Processing Request');
-            resolve(result);
-
+            window.location.href = "/html/orderSuccess.html"
           },
           (error) => {
             reject(error);

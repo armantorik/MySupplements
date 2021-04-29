@@ -100,7 +100,7 @@ app.get('/api/products', function (req, res) {
         "name": doc[i].name,
         "quantity": doc[i].quantity,
         "info": doc[i].info,
-        "link": doc[i].link,
+        "link": doc[i].thumbnailUrl,
         "price": doc[i].price
       };
       jsonObject[key].push(details);
@@ -131,7 +131,7 @@ app.get('/api/products/:pid', function (req, res) {
             "quantity": doc[i].quantity,
             "name": doc[i].name,
             "info": doc[i].info,
-            "link": doc[i].link,
+            "link": doc[i].thumbnailUrl,
             "price": doc[i].price
           };
           jsonObject[key].push(details);
@@ -141,9 +141,7 @@ app.get('/api/products/:pid', function (req, res) {
         jsonObject
       });
     }
-
   })
-
 });
 
 app.get('/api/basketQuery.json', function (req, res) {
@@ -174,6 +172,23 @@ app.get("/products", function (req, res) {
   res.sendFile(path.join(__dirname + "/views/html/product.html"));
 });
 
+app.get("/api/decrementFromBasket", function (req, res){
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+    var email = req.param("email");
+    var pid = req.param("pid");
+    user.decrementFromasket(email, pid)
+  })
+})
+
+app.get("/api/removeFromBasket", function (req, res){
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+    var email = req.param("email");
+    var pid = req.param("pid");
+    user.removeFromBasket(email, pid)
+  })
+})
 
 app.put("/api/add2basket", function (req, res) {
   const sessionCookie = req.cookies.session || "";
@@ -183,18 +198,20 @@ app.put("/api/add2basket", function (req, res) {
     var pid = req.param("pid");
     user.add2basket(email, pid);
 
-
   })
 });
 
 
 app.put("/api/order", function (req, res) {
-  console.log("allahu ekber")
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
   var email = req.param("email");
   user.order(email);
-
+  res.jsonp(
+    {
+      result:"done"
+    }
+  )
   })
 });
 
