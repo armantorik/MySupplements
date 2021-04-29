@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/signin.css" media="screen"></link>
+<link rel='icon' href='favicon.ico' type='image/x-icon'/ >
+</head>
+  <body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
+
+
+<div class="container" id="container">
+	<div class="form-container sign-in-container">
+		<form action="/logingin" method="post" id="login">
+			<h1 style="color:#008080;">Login</h1>
+			<div class="social-container">
+				<a onclick="googleSignin()"" class="social"><i class="fab fa-google-plus-g"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input name="email" id="email" type="email" placeholder="E-mail" />
+			<input name="password" id="password" type="password" placeholder="Password" />
+			<a href="#">Forgot your password?</a>
+			<button id="submit" name="submit">Sign In</button>
+			<button class="skipLoginButton" id="directSubmit">
+				Skip Login
+			</button>
+		</form>
+
+	</div>
+	
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p style="color:#ffffff;">To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1 style="color:#ffffff;">Hello, Friend!</h1>
+				<p style="color:#ffffff;">Enter your personal details and start journey with us</p>
+				<button  style="color:#008080;"class="ghost" id="signUp">
+				<a href="signup.html"/>
+					Sign Up
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+             </div>
+     </div>
+	 <script>
+		// Your web app's Firebase configuration
+		// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+		var firebaseConfig = {
+		  apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+		  authDomain: "ecommerce-ca57f.firebaseapp.com",
+		  databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+		  projectId: "ecommerce-ca57f",
+		  storageBucket: "ecommerce-ca57f.appspot.com",
+		  messagingSenderId: "450193218046",
+		  appId: "1:450193218046:web:ed740c91c94096998288af",
+		  measurementId: "G-SV0VSC22KY"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+	  </script>
+
+     <script src="/js/signin.js"></script>
+  </body>
+</html>
