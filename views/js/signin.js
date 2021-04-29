@@ -1,7 +1,6 @@
       function googleSignin(){
         var provider = new firebase.auth.GoogleAuthProvider();
-      
-      
+    
         firebase.auth()
         .signInWithPopup(provider)
         .then((result) => {
@@ -71,6 +70,8 @@
                 });
               });
             }).then(()=> {
+              var result = await makeGetRequest("/api/createAccount?");
+              console.log(result);
               window.location.href = "/home";
             })
             .catch((error) => {

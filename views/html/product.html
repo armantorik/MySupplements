@@ -26,9 +26,10 @@
     var pname = product["name"];
     var info = product["info"];
     var quantity = product["quantity"];
+    var dist = product["distributor"];
 
     var price = product["price"];
-    document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "></img><p> Quantity: " + quantity + "</p> <p> Price: " + price + "</p>";
+    document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "></img><p> Quantity: " + quantity + "</p> <p> Distributor: " + dist  +  "<p> Price: " + price + "</p>";
   });
 </script>
 
@@ -65,14 +66,20 @@
   function addbasket() {
     const url = window.location.search;
     const pid = new URLSearchParams(url).get('pid');
-    console.log("hello");
     firebase.auth().onAuthStateChanged(user => {
-
+      var queryurl;
+      
       if (user) {
         console.log(firebase.auth().currentUser.email);
-        var queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
+        queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
+      }
+      else {
+        console.log("no user");
 
-        axios.put(queryurl).then(
+        queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
+      }
+
+      axios.put(queryurl).then(
           (response) => {
             var result = response.data;
             console.log('Processing Request');
@@ -83,10 +90,7 @@
             reject(error);
           }
         );
-      }
-      else {
-        console.log("no user");
-      }
+
     });
   };
 

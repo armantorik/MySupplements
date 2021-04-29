@@ -205,7 +205,6 @@ exports.order = async function (email) {
 
         var userCart = data.userCart;
 
-
         userCart.forEach(async function (basketRef) {
 
             if (basketRef) {
@@ -227,9 +226,7 @@ exports.order = async function (email) {
                 }
             }
 
-            basketRef.delete().then(() => {
-                console.log("Document successfully deleted!");
-            }).catch((error) => {
+            basketRef.delete().catch((error) => {
                 console.error("Error removing document: ", error);
             });
         })
@@ -237,6 +234,16 @@ exports.order = async function (email) {
         // Remove the 'userCart' field from the document
         const res = await usersRef.update({
             userCart: FieldValue.delete()
+        });
+
+        const order = {  // Create order
+            "totalPrice": total_price,
+            "user": db.doc('users/'+email)
+        };
+        
+        await db.collection('orders').add(order).then((oid) => {
+            debug(oid.id)
+            return oid.id;
         });
 
     }

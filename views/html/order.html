@@ -1,23 +1,15 @@
-<!DOCTYPE html>
 <html>
 
-<head>
-  <link rel='icon' href='favicon.ico' type='image/x-icon' />
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
-
-  <title>Shopping Cart</title>
-</head>
-
-<body>
-  <h2>SHOP</h2>
-  <ul>
-    <!-- Tempory, to be replaced by navbar  -->
-    <li><a href="home.html">Home</a></li>
-    <li><a href="cart.html">Cart</a></li>
-    <a href = "order.html" class="complete-purchase" type="button" id="order-button">PURCHASE</a>
-  </ul>
-
-  
+<body id="root">
+  <title>
+    Order
+  </title>
+  <p>
+    One Last Step
+</p>
+    <input name="cno" id="cno" placeholder="Credit Cart Number"/> 
+    <button onclick="order()">Order!</button>
+</body>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -25,6 +17,7 @@
   <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <script>
     // Your web app's Firebase configuration
@@ -43,14 +36,32 @@
     firebase.initializeApp(firebaseConfig);
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
+
+    function order() {
+  
+      firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(firebase.auth().currentUser.email);
+        var queryurl = "/api/order?&email=" + firebase.auth().currentUser.email;
+        
+        axios.get(queryurl).then(
+            (response) => {
+              var result = response.data;
+              console.log('Processing Request');
+              var oid = result.oid;
+              window.location.href = "/html/orderSuccess.html?oid=" + oid;
+            },
+            (error) => {
+              reject(error);
+            }
+          );
+  
+      }
+      else {
+        console.log("no user");
+      }
+      });
+  
+    };
+  
   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <script src="/js/cart.js"></script>
-</body>
-
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
-
-</html>

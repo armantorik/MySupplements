@@ -44,10 +44,9 @@ $("#btn-update").click(function () {
                 "country": country,
                 "gender": gender,
             };
+
             var param = new URLSearchParams(data).toString();
             console.log(param);
-            var result = await makeGetRequest("/api/createAccount?" + param);
-            console.log(result.result);
         }
 
     };
@@ -55,44 +54,3 @@ $("#btn-update").click(function () {
     window.location.href = "/html/signin.html";
 
 });
-
-    // $("#btn-update").click(function()
-    // {
-    //     var phone = $("#phone").val();
-    //     var address = $("#address").val();
-    //     var bio = $("#bio").val();
-    //     var fName = $("#firstName").val();
-    //     var lName = $("#lastName").val();
-    //     var country = $("#country").val();
-    //     var gender = $("#gender").val();
-    //     const url = window.location.search; 
-    //     const email = new URLSearchParams(url).get('email');
-
-    //     if(fName != "" && lName != "" && phone != "" && country != "" && gender != "" && bio != "" && address != "" )
-    //     {
-    //         var data = 
-    //         {
-    //             "email": email,
-    //             "phone": phone,
-    //             "address": address,
-    //             "bio": bio,
-    //             "firstName": fName,
-    //             "lastName": lName,
-    //             "country": country,
-    //             "gender": gender,
-    //         };
-
-    //         $.get("/api/createAccount", data).then(() => {
-    //             window.location.href = "/html/signin.html";
-    //         // },
-    //         //     (error) => {
-    //         //     reject(error);
-    //         //     alert(error);
-    //         });
-
-    //     }
-    //     else
-    //     {
-    //         window.alert("Form Incomplete! Please fill out all fields!");
-    //     }
-    // });

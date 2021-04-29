@@ -101,7 +101,8 @@ app.get('/api/products', function (req, res) {
         "quantity": doc[i].quantity,
         "info": doc[i].info,
         "link": doc[i].thumbnailUrl,
-        "price": doc[i].price
+        "price": doc[i].price,
+        "distributor": doc[i].distributor
       };
       jsonObject[key].push(details);
     };
@@ -132,7 +133,8 @@ app.get('/api/products/:pid', function (req, res) {
             "name": doc[i].name,
             "info": doc[i].info,
             "link": doc[i].thumbnailUrl,
-            "price": doc[i].price
+            "price": doc[i].price,
+            "distributor": doc[i].distributor
           };
           jsonObject[key].push(details);
         }
@@ -177,7 +179,7 @@ app.get("/api/decrementFromBasket", function (req, res){
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
     var email = req.param("email");
     var pid = req.param("pid");
-    user.decrementFromasket(email, pid)
+    user.decrementFromBasket(email, pid)
   })
 })
 
@@ -202,14 +204,17 @@ app.put("/api/add2basket", function (req, res) {
 });
 
 
-app.put("/api/order", function (req, res) {
+app.get("/api/order", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
   var email = req.param("email");
-  user.order(email);
+  var cardNo = req.param("cardNo");
+  let oid = user.order(email);
+  console.log(oid)
   res.jsonp(
     {
-      result:"done"
+      result1:"done",
+      oid:oid
     }
   )
   })
