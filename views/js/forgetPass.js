@@ -1,4 +1,4 @@
-$("#btn-resetPassword").click(function()
+$("#btn-resetPassword").click(function ()
 {
   var auth = firebase.auth();
   var email = $("#email").val();
