@@ -132,14 +132,9 @@ app.get('/api/products/:pid', function (req, res) {
             "quantity": doc[i].quantity,
             "name": doc[i].name,
             "info": doc[i].info,
-<<<<<<< HEAD
             "link": doc[i].thumbnailUrl,
             "price": doc[i].price,
             "distributor": doc[i].distributor
-=======
-            "link": doc[i].link,
-            "price": doc[i].price
->>>>>>> melis
           };
           jsonObject[key].push(details);
         }
@@ -148,13 +143,7 @@ app.get('/api/products/:pid', function (req, res) {
         jsonObject
       });
     }
-<<<<<<< HEAD
   })
-=======
-
-  })
-
->>>>>>> melis
 });
 
 app.get('/api/basketQuery.json', function (req, res) {
@@ -164,10 +153,7 @@ app.get('/api/basketQuery.json', function (req, res) {
     user.getProductsFromBasket(email).then(function (jsonProducts) {
 
       debug(jsonProducts);
-<<<<<<< HEAD
      
-=======
->>>>>>> melis
       res.jsonp({
         jsonProducts
       })
@@ -184,7 +170,6 @@ app.get('/api/basketQuery.json', function (req, res) {
 
 });
 
-<<<<<<< HEAD
 app.get("/products", function (req, res) {
   res.sendFile(path.join(__dirname + "/views/html/product.html"));
 });
@@ -206,34 +191,6 @@ app.get("/api/removeFromBasket", function (req, res){
     user.removeFromBasket(email, pid)
   })
 })
-=======
-app.get('/api/basketQuery.json', function (req, res) {
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-    var email = req.param("email");
-    user.getProductsFromBasket(email).then(function (jsonProducts) {
-
-      debug(jsonProducts);
-      res.jsonp({
-        jsonProducts
-      })
-    }
-    )
-
-  }
-
-  ).catch((error) => {
-    res.redirect('/html/signin.html');
-  });
-
-
-});
-
-app.get("/products", function (req, res) {
-  res.sendFile(path.join(__dirname + "/views/html/product.html"));
-});
-
->>>>>>> melis
 
 app.put("/api/add2basket", function (req, res) {
   const sessionCookie = req.cookies.session || "";
@@ -247,7 +204,6 @@ app.put("/api/add2basket", function (req, res) {
 });
 
 
-<<<<<<< HEAD
 app.get("/api/order", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
@@ -265,8 +221,6 @@ app.get("/api/order", function (req, res) {
 });
 
 
-=======
->>>>>>> melis
 app.put("/api/createAccount", function (req, res) {
   var params = req.query;
   console.log(params)

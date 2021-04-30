@@ -1,7 +1,7 @@
 $("#btn-update").click(function () {
     function makeGetRequest(path) {
         return new Promise(function (resolve, reject) {
-
+            
             axios.put(path).then(
                 (response) => {
                     var result = response.data;
@@ -45,13 +45,13 @@ $("#btn-update").click(function () {
                 "gender": gender,
             };
             var param = new URLSearchParams(data).toString();
-            console.log(param);
+            alert(fName);
             var result = await makeGetRequest("/api/createAccount?" + param);
-            console.log(result.result);
+            console.log(result);
         }
 
     };
     main();
-    window.location.href = "/html/signin.html";
+    window.location.href = "/html/home.html";
 
 });

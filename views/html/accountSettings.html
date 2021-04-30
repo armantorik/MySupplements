@@ -156,12 +156,11 @@ select:focus {
     
         <div class="py-2">
             <div class="row py-2">
-                <div class="col-md-6"> <label for="firstname">First Name</label> <input type="text" class="bg-light form-control" placeholder="Name"> </div>
-                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Last Name</label> <input type="text" class="bg-light form-control" placeholder="Surname"> </div>
+                <div class="col-md-6"> <label for="firstname">First Name</label> <input id="firstName" type="text" class="bg-light form-control" placeholder="Name"> </div>
+                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Last Name</label> <input id="lastName" type="text" class="bg-light form-control" placeholder="Surname"> </div>
             </div>
             <div class="row py-2">
-                <div class="col-md-6"> <label for="email">Email Address</label> <input type="text" class="bg-light form-control" placeholder=". . . @email.com"> </div>
-                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input type="tel" class="bg-light form-control" placeholder="+90 . . . "> 
+                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input id="phone" type="tel" class="bg-light form-control" placeholder="+90 . . . "> 
                     <i class="zmdi zmdi-tablet-mac"></i>
                 </div>
 
@@ -176,7 +175,7 @@ select:focus {
                         <option value="en">England</option>
                         <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
                     </select> </div>
-                    <div class="col-md-6"> <label for="country">Gender</label> <select name="country" id="country" class="bg-light">
+                    <div class="col-md-6"> <label for="country">Gender</label> <select name="country" id="gender" class="bg-light">
                         <option value="" disabled selected> Gender </option>
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
@@ -195,7 +194,9 @@ select:focus {
             <div class="form-wrapper"> <label for="bio">Bio</label> <input type="text" class="bg-light form-control" placeholder="Bio">
                 <i class="zmdi zmdi-account-box-mail"></i>
             </div>
-            <div class="py-3 pb-4 border-bottom"> <button style = "background-color: white" class="btn btn-primary mr-3"><a href="/html/home.html">Save Changes</a></button> <button class="btn border button"><a href="/html/home.html">Cancel</a></button> 
+            <div class="py-3 pb-4 border-bottom"> 
+                <button id="btn-update" style = "background-color: white" class="btn btn-primary mr-3"><a>Save Changes</a></button>
+                 <button class="btn border button"><a href="/html/home.html">Cancel</a></button> 
                 <i class="zmdi zmdi-arrow-right"></i>
             </div>
         </div>

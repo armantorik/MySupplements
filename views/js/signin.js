@@ -40,9 +40,7 @@
               });
             });
           })
-          // .then(() => {
-          //   return firebase.auth().signOut();
-          // })
+
           .then(() => {
             window.location.href = "/html/home.html";
           });
@@ -70,7 +68,6 @@
                 });
               });
             }).then(()=> {
-              var result = await makeGetRequest("/api/createAccount?");
               console.log(result);
               window.location.href = "/home";
             })

@@ -296,6 +296,13 @@ div.ex1 {
   text-align: center;
   font-family: monospace;
 }
+
+.containerS {
+overflow-y: scroll;
+height: 1000px;
+width: 2200px;
+}
+
   </style>
 <link rel='icon' href='favicon.ico' type='image/x-icon' />
 
@@ -345,12 +352,12 @@ div.ex1 {
 <h1> &ensp;</h1>
 <h1> &ensp;</h1>
 <h1 > Welcome </h1>
-
+<div>
     <table>
       <tr id="product"></tr>
     </table>
  
-  </div>
+  </div class = "containerS">
   <script>
 
     window.addEventListener('load', function () {
@@ -366,7 +373,7 @@ div.ex1 {
     });
 
   </script>
-
+  </div>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -411,16 +418,16 @@ div.ex1 {
     };
 
 
-    document.getElementById("signout").addEventListener("submit", (event) => {
-      event.preventDefault();
+    // document.getElementById("signout").addEventListener("submit", (event) => {
+    //   event.preventDefault();
 
 
-      firebase.auth().signOut().then(() => {
-        window.location.href = "/html/signin.html"
-      }).catch((error) => {
-        window.alert("Error: " + error);
-      });
-    });
+    //   firebase.auth().signOut().then(() => {
+    //     window.location.href = "/html/signin.html"
+    //   }).catch((error) => {
+    //     window.alert("Error: " + error);
+    //   });
+    // });
 
 
     firebase.auth().onAuthStateChanged(user => {

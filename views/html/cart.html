@@ -6,7 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
 
   <title>Shopping Cart</title>
-</head>
+
 <style>
   @import url("https://www.w3cplus.com/demo/css3/base.css");
 
@@ -148,6 +148,13 @@ ul, li {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.containerS {
+overflow-y: scroll;
+height: 1000px;
+width: 2200px;
+}
+
 .nav-menu li .active .front,
 .nav-menu li .active .back,
 .nav-menu li a:hover .front,
@@ -162,6 +169,8 @@ ul, li {
   background-image: -o-linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480), linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480);
   background-image: linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480), linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480);
 }
+
+
 .nav-menu ul {
   position:sticky;
   left: -40px;
@@ -663,12 +672,15 @@ h1 {
 }
 
 </style>
+</head>
+
+
 <body>
+
   <div class="background">
- 
     <div id="nav">
       <ul class="nav-menu clearfix unstyled">
-        <li><a href="/html/home.html" class="three-d active">
+        <li><a href="/html/home.html">
           Home
           <span class="three-d-box"><span class="front">Home</span><span class="back">Home</span></span>
         </a></li>
@@ -687,97 +699,89 @@ h1 {
         <li><a href="#" class="three-d">
           Contact
           <span class="three-d-box"><span class="front">Contact</span><span class="back">Contact</span></span>
-        </a></li>
-        <li><a href="/html/cart.html" class="three-d">
+        </a></li> 
+        <li><a href="/html/cart.html" class="three-d active">
           Shopping Cart
           <span class="three-d-box"><span class="front">Shopping Cart</span><span class="back">Shopping Cart</span></span>
         </a></li>
       </ul>
     </div>
-    <article>
+  
         
-  <div class="main">
     <h1>&ensp;</h1>
     <h1>YOUR SHOPPING CART</h1>
     <h2 class="sub-heading">Free shipping from 100₺!</h2>
+    <div class="_column checkout">
+      <button onclick="checkout()" class="_btn checkout-btn entypo-forward" >Checkout</button>
+    </div>
+    <div class="containerS">
   
     <section class="shopping-cart">
       <ol class="ui-list shopping-cart--list" id="shopping-cart--list">
-  
-        <script id="shopping-cart--list-item-template" type="text/template">
-          <li class="_grid shopping-cart--list-item">
-            <div class="_column product-image">
-              <img class="product-image--img" src="{{=img}}" alt="Item image" />
-            </div>
-            <div class="_column product-info">
-              <h4 class="product-name">{{=name}}</h4>
-              <p class="product-desc">{{=desc}}</p>
-              <div class="price product-single-price">{{=price}}₺</div>
-            </div>
-            <div class="_column product-modifiers" data-product-price="{{=price}}">
-              <div class="_grid">
-                <button class="_btn _column product-subtract">&minus;</button>
-                <div class="_column product-qty">0</div>
-                <button class="_btn _column product-plus">&plus;</button>
-              </div>
-              <button class="_btn entypo-trash product-remove">Remove</button>
-              <div class="price product-total-price">0.00₺</div>
-            </div>
-          </li>
-        </script>
-  
+        <div id="productRows">
+          
+        </div>
       </ol>
   
       <footer class="_grid cart-totals">
         <div class="_column subtotal" id="subtotalCtr">
           <div class="cart-totals-key">Subtotal</div>
-          <div class="cart-totals-value">0.00₺</div>
+          <div class="cart-totals-value" id="subtot">0.00₺</div>
         </div>
         <div class="_column shipping" id="shippingCtr">
           <div class="cart-totals-key">Shipping</div>
-          <div class="cart-totals-value">0.00₺</div>
+          <div class="cart-totals-value" id="ship">0.00₺</div>
         </div>
         <div class="_column taxes" id="taxesCtr">
           <div class="cart-totals-key">Taxes (6%)</div>
-          <div class="cart-totals-value">0.00₺</div>
+          <div class="cart-totals-value" id="taxes">0.00₺</div>
         </div>
         <div class="_column total" id="totalCtr">
           <div class="cart-totals-key">Total</div>
-          <div class="cart-totals-value">0.00₺</div>
+          <div class="cart-totals-value" id="tot">0.00₺</div>
         </div>
-        <div class="_column checkout">
-          <button class="_btn checkout-btn entypo-forward">Checkout</button>
-        </div>
+        
       </footer>
-  
+      
+      <div id="productRows">
+        
+      </div>
     </section>
   </div>
 </div>
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
 
-  <script>
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-      apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
-      authDomain: "ecommerce-ca57f.firebaseapp.com",
-      databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "ecommerce-ca57f",
-      storageBucket: "ecommerce-ca57f.appspot.com",
-      messagingSenderId: "450193218046",
-      appId: "1:450193218046:web:ed740c91c94096998288af",
-      measurementId: "G-SV0VSC22KY"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-  </script>
+ <!-- The core Firebase JS SDK is always required and must be listed first -->
+ <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+ <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+ <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
+ <script>
+   // Your web app's Firebase configuration
+   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+   var firebaseConfig = {
+     apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+     authDomain: "ecommerce-ca57f.firebaseapp.com",
+     databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+     projectId: "ecommerce-ca57f",
+     storageBucket: "ecommerce-ca57f.appspot.com",
+     messagingSenderId: "450193218046",
+     appId: "1:450193218046:web:ed740c91c94096998288af",
+     measurementId: "G-SV0VSC22KY"
+   };
+   // Initialize Firebase
+   firebase.initializeApp(firebaseConfig);
+   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+   function checkout(){
+    window.location.href = "order.html";
+   }
+ </script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <script src="/js/cart.js"></script>
