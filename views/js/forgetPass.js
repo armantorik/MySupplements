@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 $("#btn-resetPassword").click(function()
+=======
+$("#btn-resetPassword").click(function ()
+>>>>>>> Stashed changes
 {
   var auth = firebase.auth();
   var email = $("#email").val();
@@ -22,4 +26,8 @@ $("#btn-resetPassword").click(function()
   {
       window.alert("Please write your email first!");
   }
+<<<<<<< Updated upstream
 });
+=======
+});
+>>>>>>> Stashed changes
