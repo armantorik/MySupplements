@@ -329,10 +329,10 @@ width: 2200px;
         Settings
         <span class="three-d-box"><span class="front">Settings</span><span class="back">Settings</span></span>
       </a></li>
-      <li><a href="/html/signin.html" class="three-d">
+      <li><button id="signout" class="three-d">
         Sign Out
         <span class="three-d-box"><span class="front">Sign Out</span><span class="back">Sign Out</span></span>
-      </a></li>
+      </button></li>
       <li><a href="#" class="three-d">
         About
         <span class="three-d-box"><span class="front">About</span><span class="back">About</span></span>
@@ -374,6 +374,7 @@ width: 2200px;
 
   </script>
   </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -418,16 +419,17 @@ width: 2200px;
     };
 
 
-    // document.getElementById("signout").addEventListener("submit", (event) => {
-    //   event.preventDefault();
+     $("#signout").click(function(){
 
+      console.log("hello")
 
-    //   firebase.auth().signOut().then(() => {
-    //     window.location.href = "/html/signin.html"
-    //   }).catch((error) => {
-    //     window.alert("Error: " + error);
-    //   });
-    // });
+      firebase.auth().signOut().then(() => {
+        window.location.href = "/html/signin.html"
+      }).catch((error) => {
+        window.alert("Error: " + error);
+      });
+    })
+       
 
 
     firebase.auth().onAuthStateChanged(user => {
