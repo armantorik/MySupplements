@@ -1,7 +1,143 @@
 <!DOCTYPE html>
 <html>
+    
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-<head>
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+    
+}
+.background {
+    background: #43cea2;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #185a9d, #43cea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: aliceblue
+}
+
+.wrapper {
+    padding: 30px 50px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin: 10px auto;
+    max-width: 600px
+}
+
+h4 {
+    letter-spacing: -1px;
+    font-weight: 400
+}
+
+.img {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover
+}
+
+#img-section p,
+#deactivate p {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 10px;
+    text-align: justify
+}
+
+#img-section b,
+#img-section button,
+#deactivate b {
+    font-size: 14px
+}
+
+label {
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #777;
+    padding-left: 3px
+}
+
+.form-control {
+    border-radius: 10px
+}
+
+input[placeholder] {
+    font-weight: 500
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1.5px solid #0779e4
+}
+
+select {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    height: 40px;
+    padding: 5px 10px
+}
+
+select:focus {
+    outline: none
+}
+
+.button {
+    background-color: #fff;
+    color: #0779e4
+}
+
+.button:hover {
+    background-color: #0779e4;
+    color: #fff
+}
+
+.btn-primary {
+    background-color: #0779e4
+}
+
+.danger {
+    background-color: #fff;
+    color: #e20404;
+    border: 1px solid #ddd
+}
+
+.danger:hover {
+    background-color: #e20404;
+    color: #fff
+}
+
+@media(max-width:576px) {
+    .wrapper {
+        padding: 25px 20px
+    }
+
+    #deactivate {
+        line-height: 18px
+    }
+}
+  
+    </style>  
+    <div class="background">
+    <head>
+
+    <div>
 
     <title>Account Settings</title>
     <link rel='icon' href='favicon.ico' type='image/x-icon' />
@@ -12,66 +148,58 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
 </head>
-
 <body>
-    <div class="wrapper">
-        <div class="inner">
-            <div class="image-holder">
+    <div class="background">
+    <div class="wrapper bg-white mt-sm-5">
+        <h4 class="pb-4 border-bottom">Account Settings</h4>
+    
+        <div class="py-2">
+            <div class="row py-2">
+                <div class="col-md-6"> <label for="firstname">First Name</label> <input type="text" class="bg-light form-control" placeholder="Name"> </div>
+                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Last Name</label> <input type="text" class="bg-light form-control" placeholder="Surname"> </div>
             </div>
-            <form>
-                <h3>Account Settings</h3>
-                <div class="form-group">
-                    <input id="firstName" type="text" placeholder="First Name" class="form-control">
-                    <input id="lastName" type="text" placeholder="Last Name" class="form-control">
-                </div>
-                <div class="form-wrapper">
-                    <select name="" id="country" class="form-control">
-                        <option value="" disabled selected> Country </option>
-                        <option value="USA"> USA </option>
-                        <option value="Germany"> Germany </option>
-                        <option value="England"> England </option>
-                        <option value="France"> France </option>
-                        <option value="Turkey"> Turkey </option>
-                        <option value="Japan"> Japan </option>
-                    </select>
-                    <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
-                </div>
-                <div class="form-wrapper">
-                    <input id="phone" type="number" placeholder="Phone" class="form-control">
+            <div class="row py-2">
+                <div class="col-md-6"> <label for="email">Email Address</label> <input type="text" class="bg-light form-control" placeholder=". . . @email.com"> </div>
+                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input type="tel" class="bg-light form-control" placeholder="+90 . . . "> 
                     <i class="zmdi zmdi-tablet-mac"></i>
                 </div>
 
-                <div class="form-wrapper">
-                    <select name="" id="gender" class="form-control">
+            </div>
+            <div class="row py-2">
+                <div class="col-md-6"> <label for="country">Country</label> <select name="country" id="country" class="bg-light">
+                        <option value="turkey" selected>Turkey</option>
+                        <option value="usa">USA</option>
+                        <option value="gr">Germany</option>
+                        <option value="fr">France</option>
+                        <option value="jp">Japan</option>
+                        <option value="en">England</option>
+                        <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+                    </select> </div>
+                    <div class="col-md-6"> <label for="country">Gender</label> <select name="country" id="country" class="bg-light">
                         <option value="" disabled selected> Gender </option>
-                        <option value="Male"> Male </option>
-                        <option value="Female"> Female </option>
-
-                    </select>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Other">Other</option>
+                    
+                    </select> 
                     <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
                 </div>
+            </div>
 
-                <div class="form-wrapper">
-                    <input id="address" type="text" placeholder="Address" class="form-control">
-                    <i class="zmdi zmdi-account-pin"></i>
-                </div>
+            <div class="form-wrapper"> <label for="address">Address</label> <input type="text" class="bg-light form-control" placeholder="Address">
+                
+                <i class="zmdi zmdi-account-pin"></i>
+            </div>
 
-                <div class="form-wrapper">
-                    <input id="bio" type="text" placeholder="Bio" class="form-control">
-                    <i class="zmdi zmdi-account-box-mail"></i>
-                </div>
-
-                <div class="form-group container-login100-form-btn">
-                    <button id="btn-update" type="button">
-                        Update & Set
-                        <i class="zmdi zmdi-arrow-right"></i>
-                    </button>
-                </div>
-
-            </form>
+            <div class="form-wrapper"> <label for="bio">Bio</label> <input type="text" class="bg-light form-control" placeholder="Bio">
+                <i class="zmdi zmdi-account-box-mail"></i>
+            </div>
+            <div class="py-3 pb-4 border-bottom"> <button style = "background-color: white" class="btn btn-primary mr-3"><a href="/html/home.html">Save Changes</a></button> <button class="btn border button"><a href="/html/home.html">Cancel</a></button> 
+                <i class="zmdi zmdi-arrow-right"></i>
+            </div>
         </div>
+    </div>
     </div>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -99,6 +227,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/accountSettings.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</div>
 </body>
-
+</div>
 </html>

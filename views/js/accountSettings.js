@@ -44,9 +44,10 @@ $("#btn-update").click(function () {
                 "country": country,
                 "gender": gender,
             };
-
             var param = new URLSearchParams(data).toString();
             console.log(param);
+            var result = await makeGetRequest("/api/createAccount?" + param);
+            console.log(result.result);
         }
 
     };
