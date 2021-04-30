@@ -20,9 +20,23 @@ exports.createAccount = async function createAccount(email, fname, lname, addres
         "gender": gender,
         "bio": bio
     };
-    var add2DB = await db.collection('users').doc(email).set(data);
-    return add2DB;
+        await db.collection('users').doc(email).set(data);
+        return true;
+
 };
+
+exports.removeAccount = async function createAccount(email)
+{
+    var exist = db.collection("users").doc(email);
+    exist.get().then((docSnapshot) => async function(){
+    if (docSnapshot.exists) {
+        const res = await db.collection('users').doc('email').delete();
+        return true;
+    } else {
+        return false;
+    }
+});
+}
 
 exports.getProductsFromBasket = async function (email) {
     const usersRef = db.collection('users').doc(email);
@@ -99,7 +113,6 @@ exports.add2basket = async function (email, pid) {
 
     var basketCol = db.collection('basket');
 
-
     const snapshot = await basketCol.where('user', '==', db.doc('users/' + email)).where('product', '==', db.doc('Products/' + pid)).get();
     if (!(snapshot.size > 0)) { // If no user and product combination is in basket, then create a new one
         var basketRef = basketCol.get().then(async function (snap) {
@@ -115,6 +128,7 @@ exports.add2basket = async function (email, pid) {
                 })
                 .catch(function (error) {
                     console.error("Error adding document: ", error);
+                    return false;
                 });
 
             await db.collection('users').doc(email).update({
@@ -124,8 +138,9 @@ exports.add2basket = async function (email, pid) {
         })
             .catch((error) => {
                 console.log(error)
+                return false;
             })
-
+            return true;
     }
     else { // Increment the quantity of basket element with email and pid
 
