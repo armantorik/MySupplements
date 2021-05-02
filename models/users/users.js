@@ -207,6 +207,7 @@ exports.decrementFromBasket = async function (email, pid) {
 
 
 exports.order = async function (email) {
+
     const usersRef = db.collection('users').doc(email);
     const userDoc = await usersRef.get();
 
