@@ -77,8 +77,7 @@ describe('Order from basket', () => {
             });
     });
     it('Should work if email s correct', function() {
-        order("dirtibofyi@biyac.com").then(function(data){
-                console.log(data);
+        order("emre_muslu@gmail.com").then(function(data){
                 expect(data).to.be.string;
             });
     });
