@@ -149,11 +149,10 @@ app.get('/api/products/:pid', function (req, res) {
 app.get('/api/basketQuery.json', function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+
     var email = req.param("email");
     user.getProductsFromBasket(email).then(function (jsonProducts) {
 
-      debug(jsonProducts);
-     
       res.jsonp({
         jsonProducts
       })
@@ -193,33 +192,63 @@ app.get("/api/removeFromBasket", function (req, res){
 })
 
 app.put("/api/add2basket", function (req, res) {
+
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-    debug("hello");
     var email = req.param("email");
     var pid = req.param("pid");
-    user.add2basket(email, pid);
+    if (user.add2basket(email, pid))
+    {
+      res.jsonp({
+        ack:true
+      })
+    }
+    else{
+      res.jsonp({
+        ack:false
+      })
+    }
 
-  })
+  }).catch(()=>
+    {
+      console.log("no cookie")
+
+    }
+  )
 });
 
 
 app.get("/api/order", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-  var email = req.param("email");
-  var cardNo = req.param("cardNo");
-  let oid = user.order(email);
-  console.log(oid)
-  res.jsonp(
-    {
-      result1:"done",
-      oid:oid
-    }
-  )
+    var email = req.param("email");
+    var cardNo = req.param("cardNo");
+    debug("hello order")
+    user.order(email);
+    res.jsonp(
+      {
+        result1:"done",
+      }
+    )
   })
 });
 
+app.get("/api/getOrders", function (req, res) {
+
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+    var email = req.param("email");
+    let orders = user.retrieveOrders(email);
+    console.log(orders)
+    res.jsonp(
+      {
+        result1:"done",
+        orders:orders
+      }
+    )
+  })
+
+})
 
 app.put("/api/createAccount", function (req, res) {
   var params = req.query;
@@ -231,6 +260,19 @@ app.put("/api/createAccount", function (req, res) {
       res.end("Error: " + error);
     });
 });
+
+
+app.get("/api/getProfile", function (req, res) {
+  var params = req.query;
+
+  user.getProfile(params.email).then(() => {
+    console.log("Account created successfully");
+  })
+    .catch((error) => {
+      res.end("Error: " + error);
+    });
+});
+
 
 
 app.listen(process.env.PORT, () => {

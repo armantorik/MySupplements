@@ -6,6 +6,7 @@
     "@google-cloud/storage": "^5.8.2",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "bufferutil": "^4.0.3",
     "cheerio": "^1.0.0-rc.6",
     "cookie-parser": "^1.4.5",
     "cookies": "^0.8.0",
@@ -28,7 +29,8 @@
     "pug": "^3.0.2",
     "request": "^2.88.2",
     "tslint": "^6.1.3",
-    "type": "module"
+    "type": "module",
+    "utf-8-validate": "^5.0.5"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.12.13",
@@ -42,9 +44,9 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "test": "mocha ",
-    "dev": "nodemon --config nodemon.json src/index.ts",
-    "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts"
+    "test": "mocha",
+    "dev": "nodemon --config nodemon.json server.ts",
+    "dev:debug": "nodemon --config nodemon.json --inspect-brk server.ts"
   },
   "repository": {
     "type": "git",

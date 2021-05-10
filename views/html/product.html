@@ -409,7 +409,7 @@ position: fixed;
         Settings
         <span class="three-d-box"><span class="front">Settings</span><span class="back">Settings</span></span>
       </a></li>
-      <li><a href="/html/signin.html" class="three-d">
+      <li><a href="signin.html" id="signout" class="three-d">
         Sign Out
         <span class="three-d-box"><span class="front">Sign Out</span><span class="back">Sign Out</span></span>
       </a></li>
@@ -450,44 +450,20 @@ position: fixed;
   
 
 </div>
-<li><a href="/html/cart.html" >
   <button onclick="addbasket()" class="add-to-cart" type="button" id="add-to-cart">ADD TO CART</button>
-</a></li>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
-
-<script>
-
-  const url = window.location.search;
-  const pid = new URLSearchParams(url).get('pid');
-  var purl = "/api/products/" + pid;
-
-  fetch(purl).then((response) => {
-    return response.json();  // converting byte data to json
-  }).then(data => {
-
-    var product = data["jsonObject"]["detail"][0];
-    var imgLink = product["link"];
-    var pname = product["name"];
-    var info = product["info"];
-    var quantity = product["quantity"];
-    var dist = product["distributor"];
-
-    var price = product["price"];
-    document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "></img><p> Quantity: " + quantity + "</p> <p> Distributor: " + dist  +  "<p> Price: " + price + "</p>";
-  });
-</script>
-
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
 
 <script>
   // Your web app's Firebase configuration
@@ -506,6 +482,27 @@ position: fixed;
   firebase.initializeApp(firebaseConfig);
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
+  
+  const url = window.location.search;
+  const pid = new URLSearchParams(url).get('pid');
+  var purl = "/api/products/" + pid;
+
+  fetch(purl).then((response) => {
+    return response.json();  // converting byte data to json
+  }).then(data => {
+
+    var product = data["jsonObject"]["detail"][0];
+    var imgLink = product["link"];
+    var pname = product["name"];
+    var info = product["info"];
+    var quantity = product["quantity"];
+    var dist = product["distributor"];
+
+    var price = product["price"];
+    document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='200' height='200' src=" + imgLink + "></img><p> Quantity: " + quantity + "</p> <p> Distributor: " + dist  +  "<p> Price: " + price + "</p>";
+  });
+
+
   function addbasket() {
     const url = window.location.search;
     const pid = new URLSearchParams(url).get('pid');
@@ -513,7 +510,6 @@ position: fixed;
       var queryurl;
       
       if (user) {
-        console.log(firebase.auth().currentUser.email);
         queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
       }
       else {
@@ -526,10 +522,12 @@ position: fixed;
           (response) => {
             var result = response.data;
             console.log('Processing Request');
+            window.location.href ="/html/cart.html";
             resolve(result);
 
           },
           (error) => {
+            alert(error)
             reject(error);
           }
         );

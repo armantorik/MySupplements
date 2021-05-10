@@ -246,11 +246,11 @@ position: fixed;
 
 
     function order() {
-  
+      
       firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(firebase.auth().currentUser.email);
-        var queryurl = "/api/order?&email=" + firebase.auth().currentUser.email;
+        var queryurl = "/api/order?email=" + firebase.auth().currentUser.email;
         
         axios.get(queryurl).then(
             (response) => {

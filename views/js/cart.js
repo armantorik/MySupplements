@@ -20,28 +20,28 @@ async function getProducts2js(user) {
             distributor = row.distributor
  
             subtot+=price * quantity;
+            
             var cartRowContents = `
          <div" width="100" height="100">
-         <img size="200" src="${link}"> 
+         <img size="100" src="${link}"> 
                  <span class="cart-item-title">Name: ${pname}</span>
              </div>
              <span class="cart-price cart-column">Price: ${price}₺</span>
              <span class="cart-price cart-column">Quantity: ${quantity}</span>
              <div class="cart-quantity cart-column">
 
-                 <button onclick="addP(${pid})" type="button">Add</button>
-                 <button class="btn btn-danger" onclick="rmP(${pid})"type="button">REMOVE</button>
+                 <button onclick="addP(${pid})" type="button">+</button>
+                 <button class="btn btn-danger" onclick="rmP(${pid})"type="button">-</button>
              </div>
              `
             var cartRow = document.createElement('div')
-            //cartRow.classList.add('cart-row')    
             cartRow.innerHTML = cartRowContents
             document.getElementById("productRows").append(cartRow);
            })
             
            let ship = 50/subtot;
            let taxes = subtot * 0.06
-           let tot = subtot - ship - taxes;
+           let tot = subtot + ship + taxes;
            
            document.getElementById("subtot").innerHTML = subtot.toFixed(2);
            document.getElementById("ship").innerHTML = ship.toFixed(2);
