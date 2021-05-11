@@ -242,34 +242,44 @@ exports.order = async function (email) {
 };
 
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
 
-
-exports.retrieveOrders = async function (email) {
+exports.retrieveOrders = async function (email, res) {
     const usersRef = db.collection('users').doc(email);
     const snapshot = await db.collection("orders").where('user', '==', db.doc('users/' + email)).get();
 
         var orders = {};
         var ordersArr = [];
-        var pros = [];
+        var count=0;
         if (snapshot.size > 0) { 
-            snapshot.forEach(async function(orderRef){
-                
+            snapshot.forEach(async function (orderRef, callback) {
+                var pros = [];
                 var order = orderRef.data();
-                order.products.forEach(async function(pid){
-                    var pro = await product.getProducts(pid)
-                    pros.push(pro.product)
-                    debug(pros)
-
-                })
-                 ordersArr.push({
-                        time: order.orderTime,
-                        pros,
-                        status: order.status
-                    })
+                var oid = orderRef.id;
+                await Promise.all(
+                     order.products.map(async (pid)=>{
+                        var pro = await product.getProducts(pid);
+                        pros.push(pro.product);
+                     })
+                )
+                    ordersArr.push({
+                    time: order.orderTime,
+                    pros: pros,
+                    status: order.status,
+                    oid: oid
+                });
+                if (snapshot.size - 1 == count){
+                    res.jsonp(
+                        {
+                          orders:ordersArr
+                        })
+                }
+                count+=1;
             })
-
-            orders.arr = ordersArr;
-            return orders;
         }
 };
 
@@ -287,8 +297,6 @@ exports.getProfile = async function (email) {
         var data = userDoc.data();
 
         var userCart = data.userCart;
-
-
 
     }
 };

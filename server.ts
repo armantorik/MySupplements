@@ -237,12 +237,7 @@ app.get("/api/getOrders", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
     var email = req.param("email");
-    user.retrieveOrders(email).then((orders)=>{
-      res.jsonp(
-        {
-          orders:orders
-        }
-      )
+    user.retrieveOrders(email, res).then((orders)=>{
     });
     
   })
