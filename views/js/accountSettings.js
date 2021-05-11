@@ -18,7 +18,6 @@ $("#btn-update").click(function () {
         });
     };
 
-    async function main() {
 
         var phone = $("#phone").val();
         var address = $("#address").val();
@@ -27,31 +26,36 @@ $("#btn-update").click(function () {
         var lName = $("#lastName").val();
         var country = $("#country").val();
         var gender = $("#gender").val();
+
         const url = window.location.search;
+        var email;
+        firebase.auth().onAuthStateChanged(async(user) => {
+            if (user) {
+              email = firebase.auth().currentUser.email;
+            }
+            else {
+                email = new URLSearchParams(url).get('email');
+            }
 
-        const email = new URLSearchParams(url).get('email');
 
-        if (fName != "" && lName != "" && phone != "" && country != "" && gender != "" && bio != "" && address != "") {
+            if (fName != "" && lName != "" && phone != "" && country != "" && gender != "" && bio != "" && address != "") {
+                address = country + ", " + address;
+                var data = {
+                    "email": email,
+                    "phone": phone,
+                    "address": address,
+                    "bio": bio,
+                    "firstName": fName,
+                    "lastName": lName,
+                    "gender": gender,
+                };
+                var param = new URLSearchParams(data).toString();
 
-            var data =
-            {
-                "email": email,
-                "phone": phone,
-                "address": address,
-                "bio": bio,
-                "firstName": fName,
-                "lastName": lName,
-                "country": country,
-                "gender": gender,
-            };
-            var param = new URLSearchParams(data).toString();
-            alert(fName);
-            var result = await makeGetRequest("/api/createAccount?" + param);
-            console.log(result);
-        }
-
-    };
-    main();
-    window.location.href = "/html/home.html";
+                var result = await makeGetRequest("/api/createAccount?" + param);
+                console.log(result);
+            }
+    
+        })
+        //window.location.href = "/html/home.html";
 
 });

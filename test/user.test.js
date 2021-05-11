@@ -10,7 +10,7 @@ const removeAccount = require('../models/users/users.js').removeAccount
 const removeFromBasket = require('../models/users/users.js').removeFromBasket 
 const decrementFromBasket = require('../models/users/users.js').decrementFromBasket 
 const order = require('../models/users/users.js').order 
-
+const getOrder =  require('../models/users/users.js').retrieveOrders
 var email = "test:" + Math.random();
 
 describe('Create Account', () => {

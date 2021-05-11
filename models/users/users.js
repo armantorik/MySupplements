@@ -11,7 +11,7 @@ const FieldValue = admin.firestore.FieldValue;
 
 
 exports.createAccount = async function createAccount(email, fname, lname, address, phone, gender, bio) {
-
+    debug(email)
     const data = {
         "fname": fname,
         "lname": lname,
@@ -286,18 +286,22 @@ exports.retrieveOrders = async function (email, res) {
 
 exports.getProfile = async function (email) {
     const usersRef = db.collection('users').doc(email);
-    const userDoc = await usersRef();
-
+    const userDoc = await usersRef.get();
     if (!userDoc.exists) {
         debug('No such document!');
 
-    } else if (userDoc.data().userCart) {
-
-        var total_price = 0;
+    } else {
         var data = userDoc.data();
-
-        var userCart = data.userCart;
-
+        
+        var profile = {
+            fname:data.fname,
+            lname:data.lname,
+            phone:data.phone,
+            address:data.address,
+            gender:data.gender,
+            bio:data.bio
+        }
+        return profile;
     }
 };
 

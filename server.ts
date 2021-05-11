@@ -259,8 +259,10 @@ app.put("/api/createAccount", function (req, res) {
 app.get("/api/getProfile", function (req, res) {
   var params = req.query;
 
-  user.getProfile(params.email).then(() => {
-    console.log("Account created successfully");
+  user.getProfile(params.email).then((profile) => {
+    res.jsonp({
+      profile:profile
+    })
   })
     .catch((error) => {
       res.end("Error: " + error);
