@@ -4,7 +4,7 @@
 
 const { admin, db, firebase } = require('../../utils/admin');
 var debug = require('debug')('user')
-
+var product = require("../products/products")
 
 // Get the `FieldValue` object
 const FieldValue = admin.firestore.FieldValue;
@@ -174,13 +174,9 @@ exports.decrementFromBasket = async function (email, pid) {
 
 
 exports.order = async function (email) {
-    debug("hello")
     const usersRef = db.collection('users').doc(email); // user reference
     const userDoc = await usersRef.get(); // user get
     
-    debug(userDoc)
-    debug(userDoc.exists)
-    debug(userDoc.data().userCart)
     if (userDoc.exists && userDoc.data().userCart) { // If user exists and has no empty basket
 
         var data = userDoc.data();
@@ -191,13 +187,15 @@ exports.order = async function (email) {
         const order = {
             "user": db.doc('users/' + email),
             "status": "Processing",
-            "orderTime": Date.now()
+            "orderTime": FieldValue.serverTimestamp()
         };
 
-        var id = await db.collection('orders').add(order).id;
+        var orderRef = await db.collection('orders').add(order);
+        var id = orderRef.id;
         /**********************************************************/
 
-        debug(id)
+
+
 
         /**************************  ITERATE OVER ITEMS IN BASKET - Start ****************************************/
         userCart.forEach(async function (basketRef) {
@@ -208,8 +206,8 @@ exports.order = async function (email) {
 
                 basket = basketGet.data();
                 var inBasket = basket.quantity;
+                
                 var productRef = basket.product;
-
                 if (productRef) {
                     var productGet = await productRef.get()
                     product = productGet.data(); // fetch current product in cart
@@ -218,7 +216,7 @@ exports.order = async function (email) {
                     const res = await productRef.update({ quantity: oldQuantity - inBasket });
 
                     db.collection('orders').doc(id).update({
-                        products: FieldValue.arrayUnion(productRef)
+                        products: FieldValue.arrayUnion(productRef.id)
                     })
 
                 }
@@ -248,27 +246,37 @@ exports.order = async function (email) {
 
 exports.retrieveOrders = async function (email) {
     const usersRef = db.collection('users').doc(email);
-    const userDoc = await usersRef.get();
+    const snapshot = await db.collection("orders").where('user', '==', db.doc('users/' + email)).get();
 
-    if (!userDoc.exists) {
-        debug('No such document!');
+        var orders = {};
+        var ordersArr = [];
+        var pros = [];
+        if (snapshot.size > 0) { 
+            snapshot.forEach(async function(orderRef){
+                
+                var order = orderRef.data();
+                order.products.forEach(async function(pid){
+                    var pro = await product.getProducts(pid)
+                    pros.push(pro.product)
+                    debug(pros)
 
-    } else if (userDoc.data().userCart) {
+                })
+                 ordersArr.push({
+                        time: order.orderTime,
+                        pros,
+                        status: order.status
+                    })
+            })
 
-        var total_price = 0;
-        var data = userDoc.data();
-
-        var userCart = data.userCart;
-
-
-
-    }
+            orders.arr = ordersArr;
+            return orders;
+        }
 };
 
 
 exports.getProfile = async function (email) {
     const usersRef = db.collection('users').doc(email);
-    const userDoc = await usersRef.get();
+    const userDoc = await usersRef();
 
     if (!userDoc.exists) {
         debug('No such document!');

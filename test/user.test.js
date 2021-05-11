@@ -50,6 +50,10 @@ describe('Add to basket', () => {
         expect(function(){add2basket("invalidEmail", 2)}).to.be.false;
     });
 
+    it('Check the results from db when all correct', function(){
+        expect(function(){add2basket("dirtibofyi@biyac.com", 2)}).to.be.true;
+    });
+
 });
 
 describe('Remove from basket', () => {

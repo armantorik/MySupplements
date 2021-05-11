@@ -86,6 +86,16 @@ app.get("/home", function (req, res) {
 
 });
 
+app.get("/products", function (req, res) {
+  res.sendFile(path.join(__dirname + "/views/html/product.html"));
+});
+
+
+
+
+/************************** API START *********************************/
+
+
 app.get('/api/products', function (req, res) {
 
   products.getProducts().then(function (doc) {
@@ -94,15 +104,15 @@ app.get('/api/products', function (req, res) {
     var key = 'detail';
     jsonObject[key] = [];
 
-    for (var i = 0; i < doc.length; i++) {
+    for (var i = 0; i < doc.arr.length; i++) {
       var details = {
         "id": i,
-        "name": doc[i].name,
-        "quantity": doc[i].quantity,
-        "info": doc[i].info,
-        "link": doc[i].thumbnailUrl,
-        "price": doc[i].price,
-        "distributor": doc[i].distributor
+        "name": doc.arr[i].name,
+        "quantity": doc.arr[i].quantity,
+        "info": doc.arr[i].info,
+        "link": doc.arr[i].thumbnailUrl,
+        "price": doc.arr[i].price,
+        "distributor": doc.arr[i].distributor
       };
       jsonObject[key].push(details);
     };
@@ -115,34 +125,27 @@ app.get('/api/products', function (req, res) {
 
 app.get('/api/products/:pid', function (req, res) {
   var pid = req.params.pid;
-  products.getProducts().then(function (doc) {
+  products.getProducts(pid).then(function (doc) {
 
     var jsonObject = {};
     var key = 'detail';
     jsonObject[key] = [];
+    
 
-    if (pid >= doc.length) {
-      res.send("Wrong pid!")
-    }
-    else {
-      for (var i = 0; i < doc.length; i++) {
-        if (pid == i) {
-          var details = {
-            "id": i,
-            "quantity": doc[i].quantity,
-            "name": doc[i].name,
-            "info": doc[i].info,
-            "link": doc[i].thumbnailUrl,
-            "price": doc[i].price,
-            "distributor": doc[i].distributor
-          };
-          jsonObject[key].push(details);
-        }
-      };
-      res.jsonp({
-        jsonObject
-      });
-    }
+        var details = {
+          "id": pid,
+          "quantity": doc.product.quantity,
+          "name": doc.product.name,
+          "info": doc.product.info,
+          "link": doc.product.thumbnailUrl,
+          "price": doc.product.price,
+          "distributor": doc.product.distributor
+        };
+        jsonObject[key].push(details);
+
+    res.jsonp({
+      jsonObject
+    });
   })
 });
 
@@ -169,9 +172,6 @@ app.get('/api/basketQuery.json', function (req, res) {
 
 });
 
-app.get("/products", function (req, res) {
-  res.sendFile(path.join(__dirname + "/views/html/product.html"));
-});
 
 app.get("/api/decrementFromBasket", function (req, res){
   const sessionCookie = req.cookies.session || "";
@@ -223,11 +223,10 @@ app.get("/api/order", function (req, res) {
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
     var email = req.param("email");
     var cardNo = req.param("cardNo");
-    debug("hello order")
-    user.order(email);
+    var oid = user.order(email);
     res.jsonp(
       {
-        result1:"done",
+        oid:oid,
       }
     )
   })
@@ -238,14 +237,14 @@ app.get("/api/getOrders", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
     var email = req.param("email");
-    let orders = user.retrieveOrders(email);
-    console.log(orders)
-    res.jsonp(
-      {
-        result1:"done",
-        orders:orders
-      }
-    )
+    user.retrieveOrders(email).then((orders)=>{
+      res.jsonp(
+        {
+          orders:orders
+        }
+      )
+    });
+    
   })
 
 })

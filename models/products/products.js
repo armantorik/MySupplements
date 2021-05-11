@@ -3,22 +3,24 @@
 
 const {firebase, admin, db } = require("../../utils/admin");
 
-exports.getProducts = async function getProducts(){
-            
-            products = db.collection('Products');
-        
+exports.getProducts = async function getProducts(pid){
+    
+        productsJson = {};
+        productsArr = []; 
+
+        if(typeof pid == "undefined"){
+            let products = db.collection('Products');
             const snapshot = await products.get();
-            
-            if (snapshot.empty) {
-                console.log('No matching documents.');
-                return;
-            }  
-
-            docs = []; 
             snapshot.forEach(doc => {
-                docs.push(doc.data());
-             });
+                productsArr.push(doc.data());
+                });
+            productsJson.arr = productsArr;
+        } else {
+            let products = await db.collection('Products').doc(pid).get();
+            productsJson.product = products.data();
+            
+            }
 
-             return docs;
+            return productsJson;
 
         };

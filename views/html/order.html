@@ -208,16 +208,18 @@ position: fixed;
     <h3 class="Title">Please enter credit card info:</h3>
     <div class="Input">
 
-      <input type="text" id="input" class="Input-text" placeholder="Credit Cart Number">
-      <li><a href="/html/orderSuccess.html">
+      <input type="text" id="cardno" class="Input-text" placeholder="Credit Cart Number">
+      <li>
         <button onclick="order()">Order!</button>
-      </a></li>
+      </li>
     </div>
   </div>
 
   </div>
 </div>
 </body>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -249,14 +251,15 @@ position: fixed;
       
       firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(firebase.auth().currentUser.email);
-        var queryurl = "/api/order?email=" + firebase.auth().currentUser.email;
+        var cardNo = $("#cardno").val();
         
+        var queryurl = "/api/order?email=" + firebase.auth().currentUser.email + "&cardNo=" + cardNo;
         axios.get(queryurl).then(
             (response) => {
               var result = response.data;
               console.log('Processing Request');
               var oid = result.oid;
+              console.log(oid)
               window.location.href = "/html/orderSuccess.html?oid=" + oid;
             },
             (error) => {
