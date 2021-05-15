@@ -17,7 +17,7 @@
     "encoding": "^0.1.13",
     "express": "^4.17.1",
     "expressjs": "^1.0.1",
-    "firebase": "^8.3.2",
+    "firebase": "^8.6.1",
     "firebase-admin": "^9.5.0",
     "firebase-functions": "^3.13.2",
     "firebaseui": "^4.8.0",

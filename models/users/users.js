@@ -66,7 +66,9 @@ exports.getProductsFromBasket = async function (email) {
                              "name": product.name,
                              "info": product.info,
                              "link": product.thumbnailUrl,
-                             "quantity": basket.quantity,
+                             "cQuantity": basket.quantity,
+                             "pQuantity": product.quantity,
+
                              "price": product.price
                          })
                          
@@ -288,7 +290,10 @@ exports.getProfile = async function (email) {
     const usersRef = db.collection('users').doc(email);
     const userDoc = await usersRef.get();
     if (!userDoc.exists) {
-        debug('No such document!');
+        var profile = {
+        exist:false
+        }
+        return profile;
 
     } else {
         var data = userDoc.data();
@@ -299,7 +304,8 @@ exports.getProfile = async function (email) {
             phone:data.phone,
             address:data.address,
             gender:data.gender,
-            bio:data.bio
+            bio:data.bio,
+            exist:true
         }
         return profile;
     }

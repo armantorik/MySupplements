@@ -71,12 +71,31 @@ app.post("/logingin", (req, res) => {
       }
     );
 });
+
+app.post('/sessionLogout', (req, res) => {
+    const sessionCookie = req.cookies.session || '';
+    res.clearCookie('session');
+    admin
+      .auth()
+      .verifySessionCookie(sessionCookie)
+      .then((decodedClaims) => {
+        return admin.auth().revokeRefreshTokens(decodedClaims.sub);
+      })
+      .then(() => {
+        res.redirect('/html/signin.html');
+      })
+      .catch((error) => {
+        res.redirect('/html/signin.html');
+      });
+  });
+  
+
 app.get("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
+  
   admin.auth().verifySessionCookie(sessionCookie, true)
     .then((decodedClaims) => {
-      //user.serveContentForUser("/home", req, res, decodedClaims);
-
+      console.log(decodedClaims)
       res.sendFile(path.join(__dirname + "/views/html/home.html"));
     })
     .catch((error) => {
@@ -179,6 +198,9 @@ app.get("/api/decrementFromBasket", function (req, res){
     var email = req.param("email");
     var pid = req.param("pid");
     user.decrementFromBasket(email, pid)
+    res.jsonp({
+      status:true
+    })
   })
 })
 
@@ -200,12 +222,12 @@ app.put("/api/add2basket", function (req, res) {
     if (user.add2basket(email, pid))
     {
       res.jsonp({
-        ack:true
+        status:true
       })
     }
     else{
       res.jsonp({
-        ack:false
+        status:false
       })
     }
 

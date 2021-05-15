@@ -56,6 +56,8 @@ $("#btn-update").click(function () {
             }
     
         })
-        //window.location.href = "/html/home.html";
+        
+        window.location.href = "/html/home.html";
 
 });
+

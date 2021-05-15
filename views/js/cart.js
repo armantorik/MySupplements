@@ -1,7 +1,10 @@
-async function getProducts2js(user) {
+
+let pLeft = {};
+async function getProducts2js() {
+    firebase.auth().onAuthStateChanged(async(user) => {
     if (user) {
-        console.log(firebase.auth().currentUser.email);
-        var queryurl = "/api/basketQuery.json?&email=" + firebase.auth().currentUser.email;
+        console.log(user.email);
+        var queryurl = "/api/basketQuery.json?&email=" + user.email;
 
 
         $.get(queryurl).then(response => {
@@ -13,21 +16,31 @@ async function getProducts2js(user) {
 
             pid = row.id;
             pname = row.name;
-            quantity = row.quantity;
+            cquantity = row.cQuantity;
+            pquantity = row.pQuantity;
             info = row.info;
             link = row.link;
             price = row.price; 
             distributor = row.distributor
  
-            subtot+=price * quantity;
+            subtot+=price * cquantity;
             
+            if (cquantity >= pquantity){
+                pLeft[pid] = false;
+            }
+            else{
+                pLeft[pid] = true;
+            }
+
             var cartRowContents = `
-         <div" width="100" height="100">
-         <img size="100" src="${link}"> 
+         <div width="100" height="100">
+         <img width="200" height="200" src="${link}"> 
                  <span class="cart-item-title">Name: ${pname}</span>
              </div>
              <span class="cart-price cart-column">Price: ${price}₺</span>
-             <span class="cart-price cart-column">Quantity: ${quantity}</span>
+             <span class="cart-price cart-column">Quantity in basket: ${cquantity}</span>
+             <span class="cart-price cart-column">Available Quantity: ${pquantity}</span>
+             
              <div class="cart-quantity cart-column">
 
                  <button onclick="addP(${pid})" type="button">+</button>
@@ -53,40 +66,47 @@ async function getProducts2js(user) {
     else {
         console.log("no user");
     }
+})
 }
-firebase.auth().onAuthStateChanged(user => getProducts2js(user));
+
+getProducts2js();
 
 
 
 function addP(pid){
+
+    if(pLeft[pid] == false) // if no product left
+    {
+        alert("Sorry! No product left")
+    }
+    else {
     queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
     axios.put(queryurl).then(
     (response) => {
       var result = response.data;
       console.log('Processing Request');
-      
-
-      resolve(result);
+    
+      getProducts2js();
+      $("#shopping-cart--list").load(location.href + " #productRows");
 
     },
     (error) => {
         reject(error);
         }
     );
-        location.reload()
+}
 }
    function rmP(pid){
     queryurl = "/api/decrementFromBasket?email=" + firebase.auth().currentUser.email + "&pid=" + pid;
     axios.get(queryurl).then(
     (response) => {
-      var result = response.data;
-      console.log('Processing Request');
+      getProducts2js();
+      $("#shopping-cart--list").load(location.href + " #productRows");
       resolve(result);
     },
     (error) => {
         reject(error);
         }
     );
-    location.reload(); 
-
+    
    }

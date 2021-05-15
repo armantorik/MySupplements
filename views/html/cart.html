@@ -716,7 +716,46 @@ h1 {
           
         </div>
       </ol>
-  
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+     
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+      <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+     
+      <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+          apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+          authDomain: "ecommerce-ca57f.firebaseapp.com",
+          databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "ecommerce-ca57f",
+          storageBucket: "ecommerce-ca57f.appspot.com",
+          messagingSenderId: "450193218046",
+          appId: "1:450193218046:web:ed740c91c94096998288af",
+          measurementId: "G-SV0VSC22KY"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+     
+        function checkout(){
+          if(firebase.auth().currentUser.isAnonymous){
+            alert("You need to be signed in to buy products!")
+            window.location.href = "/html/signin.html";
+          }
+          else{
+            window.location.href = "order.html";
+          }
+        }
+      </script>
+     
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     
+       <script src="/js/cart.js"></script>
       <footer class="_grid cart-totals">
         <div class="_column subtotal" id="subtotalCtr">
           <div class="cart-totals-key">Subtotal</div>
@@ -737,7 +776,7 @@ h1 {
         
       </footer>
       
-      <div id="productRows">
+      <div>
         
       </div>
     </section>
@@ -745,44 +784,7 @@ h1 {
 </div>
 
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
- <!-- The core Firebase JS SDK is always required and must be listed first -->
- <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-
- <!-- TODO: Add SDKs for Firebase products that you want to use
-    https://firebase.google.com/docs/web/setup#available-libraries -->
- <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-
- <script>
-   // Your web app's Firebase configuration
-   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-   var firebaseConfig = {
-     apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
-     authDomain: "ecommerce-ca57f.firebaseapp.com",
-     databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
-     projectId: "ecommerce-ca57f",
-     storageBucket: "ecommerce-ca57f.appspot.com",
-     messagingSenderId: "450193218046",
-     appId: "1:450193218046:web:ed740c91c94096998288af",
-     measurementId: "G-SV0VSC22KY"
-   };
-   // Initialize Firebase
-   firebase.initializeApp(firebaseConfig);
-   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-
-   function checkout(){
-    window.location.href = "order.html";
-   }
- </script>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <script src="/js/cart.js"></script>
 </body>
-
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
 
 </html>
