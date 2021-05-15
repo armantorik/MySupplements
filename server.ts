@@ -242,13 +242,13 @@ app.put("/api/add2basket", function (req, res) {
 
 app.get("/api/order", function (req, res) {
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+  admin.auth().verifySessionCookie(sessionCookie, true).then(async () => {
     var email = req.param("email");
     var cardNo = req.param("cardNo");
-    var oid = user.order(email);
+    var oid = await user.order(email);
     res.jsonp(
       {
-        oid:oid,
+        oid:oid
       }
     )
   })

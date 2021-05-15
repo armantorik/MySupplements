@@ -260,6 +260,7 @@ position: fixed;
               console.log('Processing Request');
               var oid = result.oid;
               console.log(oid)
+              alert(oid)
               window.location.href = "/html/orderSuccess.html?oid=" + oid;
             },
             (error) => {
