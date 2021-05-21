@@ -10,38 +10,31 @@ var debug = require('debug')('server')
 const express = require('express');
 const app = express();
 
-const { firebase, admin, db } = require("./utils/admin");
-const firebaseConfig = require("./utils/config");
-firebase.initializeApp(firebaseConfig);
-
 var path = require('path');
 const http = require('http');
 const fs = require('fs');
 
-const bodyParser = require('body-parser');
 const Cookies = require('cookies');
-const csrf = require('csurf');
 const cookieParser = require("cookie-parser");
-
-
+const multer = require('multer')
+//custom modules
 const products = require("./models/products/products");
 const user = require("./models/users/users");
+const admins = require("./models/users/admins/admins");
+const { firebase, admin, db } = require("./utils/admin");
+
+
+const firebaseConfig = require("./utils/config");
+firebase.initializeApp(firebaseConfig);
 
 // Script
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-const csrfMiddleware = csrf({ cookie: true });
-app.use(csrfMiddleware);
 
 app.use(express.static('views'));
 app.use(express.static('assets'));
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 
-
-app.all("*", (req, res, next) => {
-  res.cookie("XSRF-TOKEN", req.csrfToken());
-  next();
-});
 
 app.get("/", function (req, res) {
   const sessionCookie = req.cookies.session || "";
@@ -90,7 +83,7 @@ app.post('/sessionLogout', (req, res) => {
   });
   
 
-app.get("/home", function (req, res) {
+app.all("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
   
   admin.auth().verifySessionCookie(sessionCookie, true)
@@ -101,7 +94,6 @@ app.get("/home", function (req, res) {
     .catch((error) => {
       res.redirect('/html/signin.html');
     });
-
 
 });
 
@@ -168,20 +160,19 @@ app.get('/api/products/:pid', function (req, res) {
   })
 });
 
-app.get('/api/basketQuery.json', function (req, res) {
+app.all('/api/basketQuery.json', function (req, res) {
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
+  debug(sessionCookie)
+  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
 
-    var email = req.param("email");
+    var email = decodedClaims["email"];
     user.getProductsFromBasket(email).then(function (jsonProducts) {
 
       res.jsonp({
         jsonProducts
       })
-
     }
     )
-
   }
 
   ).catch((error) => {
@@ -194,8 +185,8 @@ app.get('/api/basketQuery.json', function (req, res) {
 
 app.get("/api/decrementFromBasket", function (req, res){
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-    var email = req.param("email");
+  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
+    var email = decodedClaims["email"];
     var pid = req.param("pid");
     user.decrementFromBasket(email, pid)
     res.jsonp({
@@ -206,8 +197,8 @@ app.get("/api/decrementFromBasket", function (req, res){
 
 app.get("/api/removeFromBasket", function (req, res){
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-    var email = req.param("email");
+  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
+    var email = decodedClaims["email"];
     var pid = req.param("pid");
     user.removeFromBasket(email, pid)
   })
@@ -216,8 +207,8 @@ app.get("/api/removeFromBasket", function (req, res){
 app.put("/api/add2basket", function (req, res) {
 
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-    var email = req.param("email");
+  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
+    var email = decodedClaims["email"];
     var pid = req.param("pid");
     if (user.add2basket(email, pid))
     {
@@ -242,8 +233,8 @@ app.put("/api/add2basket", function (req, res) {
 
 app.get("/api/order", function (req, res) {
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(async () => {
-    var email = req.param("email");
+  admin.auth().verifySessionCookie(sessionCookie, true).then(async (decodedClaims) => {
+    var email = decodedClaims["email"];
     var cardNo = req.param("cardNo");
     var oid = await user.order(email);
     res.jsonp(
@@ -257,18 +248,17 @@ app.get("/api/order", function (req, res) {
 app.get("/api/getOrders", function (req, res) {
 
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(() => {
-    var email = req.param("email");
+  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
+    var email = decodedClaims["email"];
     user.retrieveOrders(email, res).then((orders)=>{
     });
-    
+
   })
 
 })
 
 app.put("/api/createAccount", function (req, res) {
   var params = req.query;
-  console.log(params)
   user.createAccount(params.email, params.firstName, params.lastName, params.address, params.phone, params.gender, params.bio).then(() => {
     console.log("Account created successfully");
   })
@@ -285,13 +275,44 @@ app.get("/api/getProfile", function (req, res) {
     res.jsonp({
       profile:profile
     })
-  })
-    .catch((error) => {
+  }).catch((error) => {
       res.end("Error: " + error);
     });
 });
 
+app.post("/adminLogin", async function(req, res) {
+  var username = req.body["username"];
+  var pass = req.body["pass"];
 
+  var adminSwitch = await admins.login(username, pass); 
+
+  if (adminSwitch == true){ // True means pm, false means sm
+    res.sendFile(path.join(__dirname + "/models/users/admins/static/pm.html"))
+  }
+  else if (adminSwitch == false){
+    res.sendFile(path.join(__dirname + "/models/users/admins/static/sm.html"))
+  }
+})
+
+
+
+
+/*********************************** Admin Page *************************************/
+
+// To temporarily store files
+const upload = multer({
+  storage: multer.memoryStorage()
+})
+
+
+app.post('/admin/addProduct', upload.single('image'), (req, res) => {
+
+  if(!req.file) {
+    res.status(400).send("Error: No files found")
+  } else{
+      admins.addProduct(req.file, req.body)
+  }
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`Ecommerce app listening at http://localhost:${process.env.PORT}`)
