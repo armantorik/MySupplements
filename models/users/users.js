@@ -43,42 +43,42 @@ exports.getProductsFromBasket = async function (email) {
     var jsonProducts = {};
     if (userDoc.data().userCart) {
 
-        
+
         var productArr = [];
         var userCart = userDoc.data().userCart;
 
-        async function add2json(){
+        async function add2json() {
             for (const index in userCart) {
 
-                     var basketGet = await userCart[index].get()
-    
-                     basket = basketGet.data();
-                     var productRef = basket.product;
-    
-                     if (productRef) {
-                         var productGet = await productRef.get()
-    
-                         product = productGet.data();
-                         pid = productGet.id;
+                var basketGet = await userCart[index].get()
 
-                         productArr.push({
-                             "id": pid,
-                             "name": product.name,
-                             "info": product.info,
-                             "link": product.thumbnailUrl,
-                             "cQuantity": basket.quantity,
-                             "pQuantity": product.quantity,
+                basket = basketGet.data();
+                var productRef = basket.product;
 
-                             "price": product.price
-                         })
-                         
-                    }
+                if (productRef) {
+                    var productGet = await productRef.get()
+
+                    product = productGet.data();
+                    pid = productGet.id;
+
+                    productArr.push({
+                        "id": pid,
+                        "name": product.name,
+                        "info": product.info,
+                        "link": product.thumbnailUrl,
+                        "cQuantity": basket.quantity,
+                        "pQuantity": product.quantity,
+
+                        "price": product.price
+                    })
+
+                }
             }
             jsonProducts.productArr = productArr;
             return jsonProducts;
         }
         return await add2json();
-    } 
+    }
     else return jsonProducts.exist = "false";
 }
 exports.add2basket = async function (email, pid) {
@@ -100,7 +100,7 @@ exports.add2basket = async function (email, pid) {
                     console.error("Error adding document: ", error);
                     return false;
                 });
-            
+
             await db.collection('users').doc(email).update({
                 userCart: admin.firestore.FieldValue.arrayUnion(db.doc('basket/' + newId))
             });
@@ -178,7 +178,7 @@ exports.decrementFromBasket = async function (email, pid) {
 exports.order = async function (email) {
     const usersRef = db.collection('users').doc(email); // user reference
     const userDoc = await usersRef.get(); // user get
-    
+
     if (userDoc.exists && userDoc.data().userCart) { // If user exists and has no empty basket
 
         var data = userDoc.data();
@@ -208,7 +208,7 @@ exports.order = async function (email) {
 
                 basket = basketGet.data();
                 var inBasket = basket.quantity;
-                
+
                 var productRef = basket.product;
                 if (productRef) {
                     var productGet = await productRef.get()
@@ -245,44 +245,44 @@ exports.order = async function (email) {
 
 
 async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+    }
 }
 
 exports.retrieveOrders = async function (email, res) {
     const usersRef = db.collection('users').doc(email);
     const snapshot = await db.collection("orders").where('user', '==', db.doc('users/' + email)).get();
 
-        var orders = {};
-        var ordersArr = [];
-        var count=0;
-        if (snapshot.size > 0) { 
-            snapshot.forEach(async function (orderRef, callback) {
-                var pros = [];
-                var order = orderRef.data();
-                var oid = orderRef.id;
-                await Promise.all(
-                     order.products.map(async (pid)=>{
-                        var pro = await product.getProducts(pid);
-                        pros.push(pro.product);
-                     })
-                )
-                    ordersArr.push({
-                    time: order.orderTime,
-                    pros: pros,
-                    status: order.status,
-                    oid: oid
-                });
-                if (snapshot.size - 1 == count){
-                    res.jsonp(
-                        {
-                          orders:ordersArr
-                        })
-                }
-                count+=1;
-            })
-        }
+    var orders = {};
+    var ordersArr = [];
+    var count = 0;
+    if (snapshot.size > 0) {
+        snapshot.forEach(async function (orderRef, callback) {
+            var pros = [];
+            var order = orderRef.data();
+            var oid = orderRef.id;
+            await Promise.all(
+                order.products.map(async (pid) => {
+                    var pro = await product.getProducts(pid);
+                    pros.push(pro.product);
+                })
+            )
+            ordersArr.push({
+                time: order.orderTime,
+                pros: pros,
+                status: order.status,
+                oid: oid
+            });
+            if (snapshot.size - 1 == count) {
+                res.jsonp(
+                    {
+                        orders: ordersArr
+                    })
+            }
+            count += 1;
+        })
+    }
 };
 
 
@@ -291,23 +291,68 @@ exports.getProfile = async function (email) {
     const userDoc = await usersRef.get();
     if (!userDoc.exists) {
         var profile = {
-        exist:false
+            exist: false
         }
         return profile;
 
     } else {
         var data = userDoc.data();
-        
+
         var profile = {
-            fname:data.fname,
-            lname:data.lname,
-            phone:data.phone,
-            address:data.address,
-            gender:data.gender,
-            bio:data.bio,
-            exist:true
+            fname: data.fname,
+            lname: data.lname,
+            phone: data.phone,
+            address: data.address,
+            gender: data.gender,
+            bio: data.bio,
+            exist: true
         }
         return profile;
     }
 };
 
+
+
+exports.search = async (queries) => {
+
+
+    var union = [];
+    var queryArr = queries.split(" ");
+    var proJson = {};
+
+        const snap = await db.collection("Products").where('keywords', 'array-contains-any', queryArr).get();
+
+        var proArr = [] // Array of products filtered by name
+
+        snap.forEach((product) => {
+            proArr.push(product.data());
+        })
+        
+        // merged array
+        var concat_array = [...union, ...proArr];
+        
+        // new array that holds union
+        // spread expands the Set into its individual values
+        union = [...new Set(concat_array)];
+        
+        proJson.proArr = union;
+        return proJson;
+}
+
+
+exports.getByCat = async (cat) => {
+
+    var snap = await db.collection("Products").where('category', '==', cat).get();
+
+    proJson = {};
+    proArr = [];
+
+    snap.forEach((product) => {
+        debug(product.data());
+        proArr.push(product.data());
+    })
+
+    proJson.proArr = proArr;
+
+    return proJson;
+}
