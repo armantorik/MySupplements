@@ -59,18 +59,24 @@ async function uploadFile(iname, file, encoding = 'ascii') {
 
 exports.login = async (username, password) => {
 
-  var receivedHashedPass = hash(password);
+  if (username && password){
+    var receivedHashedPass = hash(password);
 
-  let adminRef = await db.collection('admins').doc(username).get();
-  var adminUser = adminRef.data();
-
-  if (receivedHashedPass == adminUser.hashedPassword) {
-    return adminUser.isPmOrSm;
-
+    let adminRef = await db.collection('admins').doc(username).get();
+    var adminUser = adminRef.data();
+  
+    if (receivedHashedPass == adminUser.hashedPassword) {
+      return adminUser.isPmOrSm;
+  
+    }
+    else {
+      return null;
+    }
   }
   else {
     return null;
   }
+  
 }
 
 exports.addProduct = (image, body) => {

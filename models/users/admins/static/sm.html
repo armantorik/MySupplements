@@ -2,6 +2,16 @@
 <html>
 
   <body>
-   <a>Welcome Sm </a>
+   <a>Welcome SM</a>
   </body>
 </html>
+
+<script>
+
+  // get token from fetch request
+  const token = await res.json();
+  
+  // set token in cookie
+  document.cookie = `token=${token}`
+  
+  </script>

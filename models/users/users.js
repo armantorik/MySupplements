@@ -312,29 +312,35 @@ exports.getProfile = async function (email) {
 };
 
 
-
+function intersect(a, b) {
+    var setB = new Set(b);
+    return [...new Set(a)].filter(x => setB.has(x));
+  }
 exports.search = async (queries) => {
 
 
     var union = [];
     var queryArr = queries.split(" ");
     var proJson = {};
+    var count = 0;
+        for await (const query of queryArr)  {
 
-        const snap = await db.collection("Products").where('keywords', 'array-contains-any', queryArr).get();
-
-        var proArr = [] // Array of products filtered by name
-
-        snap.forEach((product) => {
-            proArr.push(product.data());
-        })
-        
-        // merged array
-        var concat_array = [...union, ...proArr];
-        
-        // new array that holds union
-        // spread expands the Set into its individual values
-        union = [...new Set(concat_array)];
-        
+            const snap = await db.collection("Products").where('keywords', 'array-contains', query).get();
+            var proArr = [] // Array of products filtered by query
+    
+            snap.forEach((product) => {
+                proArr.push(product.data());
+            });
+            
+            if (count == 0) {
+                union = proArr;
+                count++;
+            }
+            else {
+                intersect(union, proArr)
+            }
+            
+        }
         proJson.proArr = union;
         return proJson;
 }

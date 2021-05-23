@@ -175,14 +175,14 @@ app.get('/api/products/:pid', function (req, res) {
 
 
 /************ Users Can search and filter ***************/ 
-app.get('/api/search', function (req, res) {
+app.get('/api/search', async function (req, res) {
 
   var query = req.param("query");
-  var pros = user.search(query).then(()=>{
-    res.jsonp(pros);
-  }).catch((error) => {
+  var pros = await user.search(query).catch((error) => {
     res.status(400).send("Error: " + error);
   });
+
+    res.jsonp(pros);
 
 });
 
@@ -341,22 +341,65 @@ app.get("/api/getProfile", function (req, res) {
   });
 });
 
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[0]
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
+    
+
+    if (err) {console.log(err); return res.sendFile(path.join(__dirname + "/views/html/signin.html"));}
+
+    req.user = user
+
+    next()
+  })
+}
 // Admins can login with their special username and password
-app.post("/adminLogin", async function (req, res) {
+app.post("/adminLogin", authenticateToken, async function (req, res) {
+  debug(req.user)
+  if (req.body["pm"]) { // True means pm, false means sm
+    res.sendFile(path.join(__dirname + "/models/users/admins/static/pm.html"))
+  }
+  else if (req.body["sm"]) {
+    res.sendFile(path.join(__dirname + "/models/users/admins/static/sm.html"))
+  }
+  else {
+    res.sendStatus(400);
+  }
+})
+
+app.post('/adminLogin/GetToken', async (req, res) => {
+  
   var username = req.body["username"];
   var pass = req.body["pass"];
 
   var adminSwitch = await admins.login(username, pass);
 
-  if (adminSwitch == true) { // True means pm, false means sm
-    res.sendFile(path.join(__dirname + "/models/users/admins/static/pm.html"))
+  if (adminSwitch == true){
+    const token = generateAccessToken({ username: req.body.username });
+    res.jsonp({
+      token, 
+      sm:false,
+      pm:true
+      }
+    );
   }
-  else if (adminSwitch == false) {
-    res.sendFile(path.join(__dirname + "/models/users/admins/static/sm.html"))
+  else if (adminSwitch == false){
+    const token = generateAccessToken({ username: req.body.username });
+    res.jsonp({
+        token, 
+        sm:true,
+        pm:false
+        }
+      );
   }
-})
-
-
+  else {
+    res.status(401).send("Forbidden");
+  }
+  
+});
 
 
 /*********************************** Admin Page *************************************/
@@ -367,7 +410,13 @@ const upload = multer({
 })
 
 // Admin can add products
-app.post('/admin/addProduct', upload.single('image'), (req, res) => {
+
+app.get("/admin/getAddProductPage", authenticateToken, async function (req, res) {
+
+    res.sendFile(path.join(__dirname + "/models/users/admins/static/addProduct.html"))
+
+});
+app.post('/admin/addProduct', authenticateToken, upload.single('image'), (req, res) => {
 
   if (!req.file) {
     res.status(400).send("Error: No files found")
@@ -379,7 +428,7 @@ app.post('/admin/addProduct', upload.single('image'), (req, res) => {
 
 
 // Pm Review Invoices
-app.post("/admin/getInvoices", async function (req, res) {
+app.post("/admin/getInvoices", authenticateToken, async function (req, res) {
 
   var invoiceArr = await admins.getInvoices().catch((error) => {
     res.status(400).send("Error" + error);
@@ -388,8 +437,6 @@ app.post("/admin/getInvoices", async function (req, res) {
   res.jsonp(invoiceArr);
 
 });
-
-
 
 
 
