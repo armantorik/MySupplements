@@ -43,6 +43,10 @@ app.use(express.static('assets'));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+// To temporarily store files
+const upload = multer({
+  storage: multer.memoryStorage()
+})
 
 // Users are directed to their home or signin page
 app.get("/", function (req, res) {
@@ -99,7 +103,6 @@ app.all("/home", function (req, res) {
 
   admin.auth().verifySessionCookie(sessionCookie, true)
     .then((decodedClaims) => {
-      console.log(decodedClaims)
       res.sendFile(path.join(__dirname + "/views/html/home.html"));
     })
     .catch((error) => {
@@ -266,11 +269,12 @@ app.get("/api/removeFromBasket", function (req, res) {
 })
 
 // Users can add products with their pid to the basket
-app.put("/api/add2basket", function (req, res) {
+app.get("/api/add2basket", function (req, res) {
 
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
+  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
     var email = decodedClaims["email"];
+
     var pid = req.param("pid");
     if (user.add2basket(email, pid)) {
       res.jsonp({
@@ -308,10 +312,9 @@ app.get("/api/order", function (req, res) {
 app.get("/api/getOrders", function (req, res) {
 
   const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
+  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
     var email = decodedClaims["email"];
-    user.retrieveOrders(email, res).then((orders) => {
-    });
+    user.retrieveOrders(email, res);
 
   })
 
@@ -341,6 +344,38 @@ app.get("/api/getProfile", function (req, res) {
   });
 });
 
+
+// Users can request to cancel orders
+app.post("/api/askForRefund", async function (req, res){
+
+  var status = await user.askToCancel(req.body["email"], req.body["oid"]);
+
+  if (status)
+    res.status(200).send("Success!");
+  else if (status == false)
+    res.status(401).send("Forbidden!");
+  else 
+    res.send("Sorry, you can not do that! \n It may be either already delivered or cancelled.")
+
+});
+
+
+// PMs can cancel orders
+app.post("/admin/cancelOrder", authenticateToken, function (req, res){
+
+  var status = admins.cancelOrder(req.body["oid"])
+  if (status)
+    res.status(200).send("Success!");
+  else if (status == false)
+    res.status(401);
+  else 
+    res.send("You can not do that! \n It may be already delivered or cancelled.")
+    
+
+});
+
+
+// Admins can login with their special username and password
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[0]
@@ -356,20 +391,8 @@ function authenticateToken(req, res, next) {
     next()
   })
 }
-// Admins can login with their special username and password
-app.post("/adminLogin", authenticateToken, async function (req, res) {
-  debug(req.user)
-  if (req.body["pm"]) { // True means pm, false means sm
-    res.sendFile(path.join(__dirname + "/models/users/admins/static/pm.html"))
-  }
-  else if (req.body["sm"]) {
-    res.sendFile(path.join(__dirname + "/models/users/admins/static/sm.html"))
-  }
-  else {
-    res.sendStatus(400);
-  }
-})
 
+// Admins have to use their username and password to get their session token
 app.post('/adminLogin/GetToken', async (req, res) => {
   
   var username = req.body["username"];
@@ -377,7 +400,7 @@ app.post('/adminLogin/GetToken', async (req, res) => {
 
   var adminSwitch = await admins.login(username, pass);
 
-  if (adminSwitch == true){
+  if (adminSwitch == true){ // it means pm
     const token = generateAccessToken({ username: req.body.username });
     res.jsonp({
       token, 
@@ -386,7 +409,7 @@ app.post('/adminLogin/GetToken', async (req, res) => {
       }
     );
   }
-  else if (adminSwitch == false){
+  else if (adminSwitch == false){ // it means sm
     const token = generateAccessToken({ username: req.body.username });
     res.jsonp({
         token, 
@@ -401,16 +424,26 @@ app.post('/adminLogin/GetToken', async (req, res) => {
   
 });
 
+// After they got their token, they can login to their system
+app.post("/adminLogin", authenticateToken, async function (req, res) {
+  debug(req.user)
+  if (req.body["pm"]) { // True means pm, false means sm
+    res.sendFile(path.join(__dirname + "/models/users/admins/static/pm.html"))
+  }
+  else if (req.body["sm"]) {
+    res.sendFile(path.join(__dirname + "/models/users/admins/static/sm.html"))
+  }
+  else {
+    res.sendStatus(400);
+  }
+})
+
 
 /*********************************** Admin Page *************************************/
 
-// To temporarily store files
-const upload = multer({
-  storage: multer.memoryStorage()
-})
+
 
 // Admin can add products
-
 app.get("/admin/getAddProductPage", authenticateToken, async function (req, res) {
 
     res.sendFile(path.join(__dirname + "/models/users/admins/static/addProduct.html"))
@@ -439,11 +472,39 @@ app.post("/admin/getInvoices", authenticateToken, async function (req, res) {
 });
 
 
+// Pm can change status of deliveries
+app.post("/admin/changeStatus", authenticateToken, async function (req, res) {
+
+  var status = await admins.changeStatus(req.body.oid, req.body.newStatus);
+
+  if (status === true)
+    res.send("Success");
+  else if (status == false)
+    res.send("New status should be one of: 'Delivered', 'Processing' or 'In-Transit' ");
+  else 
+    res.send("Wrong OID")
+});
+
+// Pm Review Invoices List 
+app.post("/admin/getOrders", authenticateToken, async function (req, res) {
+
+    admins.getOrders().then((orders)=> {
+      res.send(orders);
+    }).catch((error) => {res.send(error)});
+
+});
 
 
-// Pm Review Delivery List 
+// Sales Managers can make temporary discounts
+app.post("/admin/Discount", authenticateToken, async function (req, res) {
 
+  admins.changePrice(req.body.pid, req.body.newPrice, req.body.expiresAt).then(()=> {
+    res.send("Success");
+  }).catch((error) => {res.send(error)});
 
+});
+
+setInterval(admins.removeExpired, 10000); //time is in ms
 
 
 app.listen(process.env.PORT, () => {
