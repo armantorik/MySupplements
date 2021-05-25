@@ -2,6 +2,7 @@
 // All the functions related to users are implemented here
 // User info, add2basket, getBasket, getProfile, editProfile, orderBasket and etc should be defined here
 
+const { html } = require('cheerio');
 const { admin, db, firebase } = require('../../utils/admin');
 var debug = require('debug')('user')
 var product = require("../products/products")
@@ -43,50 +44,49 @@ exports.getProductsFromBasket = async function (email) {
     var jsonProducts = {};
     if (userDoc.data().userCart) {
 
-        
+
         var productArr = [];
         var userCart = userDoc.data().userCart;
 
-        async function add2json(){
+        async function add2json() {
             for (const index in userCart) {
 
-                     var basketGet = await userCart[index].get()
-    
-                     basket = basketGet.data();
-                     var productRef = basket.product;
-    
-                     if (productRef) {
-                         var productGet = await productRef.get()
-    
-                         product = productGet.data();
-                         pid = productGet.id;
+                var basketGet = await userCart[index].get()
 
-                         productArr.push({
-                             "id": pid,
-                             "name": product.name,
-                             "info": product.info,
-                             "link": product.thumbnailUrl,
-                             "cQuantity": basket.quantity,
-                             "pQuantity": product.quantity,
+                basket = basketGet.data();
+                var productRef = basket.product;
 
-                             "price": product.price
-                         })
-                         
-                    }
+                if (productRef) {
+                    var productGet = await productRef.get()
+
+                    product = productGet.data();
+                    pid = productGet.id;
+
+                    productArr.push({
+                        "id": pid,
+                        "name": product.name,
+                        "info": product.info,
+                        "link": product.thumbnailUrl,
+                        "cQuantity": basket.quantity,
+                        "pQuantity": product.quantity,
+
+                        "price": product.price
+                    })
+
+                }
             }
             jsonProducts.productArr = productArr;
             return jsonProducts;
         }
         return await add2json();
-    } 
+    }
     else return jsonProducts.exist = "false";
 }
 exports.add2basket = async function (email, pid) {
+
     var basketCol = db.collection('basket');
     const snapshot = await basketCol.where('user', '==', db.doc('users/' + email)).where('product', '==', db.doc('Products/' + pid)).get();
     if (!(snapshot.size > 0)) { // If no user and product combination is in basket, then create a new one
-        var basketRef = basketCol.get().then(async function (snap) {
-
             var newId;
             await db.collection('basket').add({
                 quantity: 1,
@@ -100,11 +100,10 @@ exports.add2basket = async function (email, pid) {
                     console.error("Error adding document: ", error);
                     return false;
                 });
-            
+
             await db.collection('users').doc(email).update({
                 userCart: admin.firestore.FieldValue.arrayUnion(db.doc('basket/' + newId))
-            });
-        })
+            })
             .catch((error) => {
                 console.log(error)
                 return false;
@@ -122,8 +121,9 @@ exports.add2basket = async function (email, pid) {
 
         const basketRef2update = db.collection('basket').doc(currId.toString());
 
-        // Set the 'capital' field of the city
-        const res = await basketRef2update.update({ quantity: oldQuantity + 1 });
+        await basketRef2update.update({ quantity: oldQuantity + 1 }).catch((error)=>{
+            return error
+        });
     }
 }
 
@@ -178,7 +178,7 @@ exports.decrementFromBasket = async function (email, pid) {
 exports.order = async function (email) {
     const usersRef = db.collection('users').doc(email); // user reference
     const userDoc = await usersRef.get(); // user get
-    
+
     if (userDoc.exists && userDoc.data().userCart) { // If user exists and has no empty basket
 
         var data = userDoc.data();
@@ -204,21 +204,32 @@ exports.order = async function (email) {
 
             if (basketRef) {
 
+
                 var basketGet = await basketRef.get()
 
                 basket = basketGet.data();
                 var inBasket = basket.quantity;
-                
                 var productRef = basket.product;
+
+
+                 // Decrement products from stocks
                 if (productRef) {
                     var productGet = await productRef.get()
                     product = productGet.data(); // fetch current product in cart
 
                     var oldQuantity = product.quantity
-                    const res = await productRef.update({ quantity: oldQuantity - inBasket });
+                    await productRef.update({ quantity: oldQuantity - inBasket });
+                    var pid = productRef.id;
 
+
+                    const proInfo = {
+                        pid: pid,
+                        quantity:inBasket
+                    }
+
+                   // var proInfo = {map: (pid, inBasket)}
                     db.collection('orders').doc(id).update({
-                        products: FieldValue.arrayUnion(productRef.id)
+                        products: FieldValue.arrayUnion(proInfo)
                     })
 
                 }
@@ -243,46 +254,42 @@ exports.order = async function (email) {
     else return null;
 };
 
-
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
-
 exports.retrieveOrders = async function (email, res) {
-    const usersRef = db.collection('users').doc(email);
+
     const snapshot = await db.collection("orders").where('user', '==', db.doc('users/' + email)).get();
 
-        var orders = {};
-        var ordersArr = [];
-        var count=0;
-        if (snapshot.size > 0) { 
-            snapshot.forEach(async function (orderRef, callback) {
-                var pros = [];
-                var order = orderRef.data();
-                var oid = orderRef.id;
-                await Promise.all(
-                     order.products.map(async (pid)=>{
-                        var pro = await product.getProducts(pid);
-                        pros.push(pro.product);
-                     })
-                )
-                    ordersArr.push({
-                    time: order.orderTime,
-                    pros: pros,
-                    status: order.status,
-                    oid: oid
-                });
-                if (snapshot.size - 1 == count){
-                    res.jsonp(
-                        {
-                          orders:ordersArr
-                        })
-                }
-                count+=1;
-            })
-        }
+    var ordersArr = [];
+    var count = 0;
+    if (snapshot.size > 0) {
+        snapshot.forEach(async function (orderRef) {
+            var pros = [];
+            var order = orderRef.data();
+            var oid = orderRef.id;
+
+            for await (pid of order.products)
+            {
+                var pro = await product.getProducts(pid.pid);
+                pros.push(pro.product);
+            }
+                
+            ordersArr.push({
+                time: order.orderTime,
+                pros: pros,
+                status: order.status,
+                oid: oid
+            });
+            
+            if (snapshot.size - 1 == count) {
+                
+                res.jsonp(
+                    {
+                        orders: ordersArr
+                    })
+            }
+            count += 1;
+        })
+    }
+    else res.status(400);
 };
 
 
@@ -291,23 +298,102 @@ exports.getProfile = async function (email) {
     const userDoc = await usersRef.get();
     if (!userDoc.exists) {
         var profile = {
-        exist:false
+            exist: false
         }
         return profile;
 
     } else {
         var data = userDoc.data();
-        
+
         var profile = {
-            fname:data.fname,
-            lname:data.lname,
-            phone:data.phone,
-            address:data.address,
-            gender:data.gender,
-            bio:data.bio,
-            exist:true
+            fname: data.fname,
+            lname: data.lname,
+            phone: data.phone,
+            address: data.address,
+            gender: data.gender,
+            bio: data.bio,
+            exist: true
         }
         return profile;
     }
 };
 
+
+function intersect(a, b) {
+    var setB = new Set(b);
+    return [...new Set(a)].filter(x => setB.has(x));
+  }
+exports.search = async (queries) => {
+
+
+    var union = [];
+    var queryArr = queries.split(" ");
+    var proJson = {};
+    var count = 0;
+        for await (const query of queryArr)  {
+
+            const snap = await db.collection("Products").where('keywords', 'array-contains', query).get();
+            var proArr = [] // Array of products filtered by query
+    
+            snap.forEach((product) => {
+                proArr.push(product.data());
+            });
+            
+            if (count == 0) {
+                union = proArr;
+                count++;
+            }
+            else {
+                intersect(union, proArr)
+            }
+            
+        }
+        proJson.proArr = union;
+        return proJson;
+}
+
+
+exports.getByCat = async (cat) => {
+
+    var snap = await db.collection("Products").where('category', '==', cat).get();
+
+    proJson = {};
+    proArr = [];
+
+    snap.forEach((product) => {
+        debug(product.data());
+        proArr.push(product.data());
+    })
+
+    proJson.proArr = proArr;
+
+    return proJson;
+}
+
+exports.askToCancel = async (email, oid) => {
+
+    var Query = await db.collection("orders").doc(oid).get();
+
+    var order = Query.data(); // Order that is gonna be cancelled if not already delivered
+
+    if (order) // if oid valid, get user's email
+        var verEmail = order.user.id;
+    else return null;
+
+    var status = order.status;
+    if (status == "Delivered") // if it is delivered, then it is too late
+        return null;
+    
+    if (email == verEmail){ // the emails should match
+
+        await db.collection("orders").doc(oid).update({
+            cancelRequest:true // Cancel Request
+        })
+        return true;
+    }
+    else return false;
+
+
+
+
+}

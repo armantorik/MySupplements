@@ -310,8 +310,7 @@ color:white;
     }
 
      $("#signout").click(async function(){
-
-      console.log("hello")
+      document.cookie = "session= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
       const token = await firebase.auth().currentUser.getIdToken()
       fetch("/sessionLogout", {
         method: "POST",
