@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html>
+	<style>
+		.backback {
+  background-image: url("https://clarksvillenow.sagacom.com/files/2019/02/workout-gym-exercise-equipment-shutterstock.jpg");
+  background-size: cover;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
+	</style>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/signin.css" media="screen"></link>
 <link rel='icon' href='favicon.ico' type='image/x-icon'/>
 </head>
-  <body>
+  <body class="backback">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
@@ -21,9 +34,9 @@
 <div class="container" id="container">
 	<div class="form-container sign-in-container">
 		<form action="/logingin" method="post" id="login">
-			<h1 style="color:#008080;">Login</h1>
+			<h1 style="color:#20977d;">Login</h1>
 			<div class="social-container">
-				<a onclick="googleSignin()"" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a onclick="googleSignin()" class="social"><i class="fab fa-google-plus-g"></i></a>
 			</div>
 			<span>or use your account</span>
 			<input name="email" id="email" type="email" placeholder="E-mail" />
@@ -47,8 +60,8 @@
 			<div class="overlay-panel overlay-right">
 				<h1 style="color:#ffffff;">Hello, Friend!</h1>
 				<p style="color:#ffffff;">Enter your personal details and start journey with us</p>
-				<button  style="color:#008080;"class="ghost" id="signUp">
-				<a href="signup.html"/>
+				<button  style="color:#20977d;"class="ghost" id="signUp">
+				<a href="signup.html">
 					Sign Up
 				</button>
 			</div>
@@ -57,6 +70,7 @@
 </div>
              </div>
      </div>
+	</div>
 	 
 	 <script>
 		// Your web app's Firebase configuration
@@ -77,4 +91,5 @@
 	  </script>
      <script src="/js/signin.js"></script>
   </body>
+
 </html>
