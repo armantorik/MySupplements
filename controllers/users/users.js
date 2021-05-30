@@ -2,7 +2,6 @@
 // All the functions related to users are implemented here
 // User info, add2basket, getBasket, getProfile, editProfile, orderBasket and etc should be defined here
 
-const { html } = require('cheerio');
 const { admin, db, firebase } = require('../../utils/admin');
 var debug = require('debug')('user')
 var product = require("../products/products")
@@ -44,24 +43,22 @@ exports.getProductsFromBasket = async function (email) {
     var jsonProducts = {};
     if (userDoc.data().userCart) {
 
-
         var productArr = [];
         var userCart = userDoc.data().userCart;
 
         async function add2json() {
-            for (const index in userCart) {
+            for (const proOfCart of userCart) {
 
-                var basketGet = await userCart[index].get()
+                var basketGet = await proOfCart.get()
 
                 basket = basketGet.data();
                 var productRef = basket.product;
-
                 if (productRef) {
                     var productGet = await productRef.get()
 
                     product = productGet.data();
                     pid = productGet.id;
-
+                    debug(productGet)
                     productArr.push({
                         "id": pid,
                         "name": product.name,

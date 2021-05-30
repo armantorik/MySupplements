@@ -339,7 +339,7 @@ body {
         Settings
         <span class="three-d-box"><span class="front">Settings</span><span class="back">Settings</span></span>
       </a></li>
-      <li id="signout"><a href="/html/signin.html"  class="three-d">
+      <li id="signout"><a class="three-d">
         Sign Out
         <span class="three-d-box"><span class="front">Sign Out</span><span class="back">Sign Out</span></span>
       </a></li>
@@ -438,14 +438,14 @@ body {
     }
 
      $("#signout").click(async function(){
-      document.cookie = "session= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+
       const token = await firebase.auth().currentUser.getIdToken()
+
       fetch("/sessionLogout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          "CSRF-Token": getCookie("XSRF-TOKEN"),
           Authorization: token
         },
         body: firebase.auth().currentUser.email
