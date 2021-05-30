@@ -37,6 +37,17 @@ body {
     margin: 10px auto;
     max-width: 600px
 }
+.backback {
+  background-image: url("https://clarksvillenow.sagacom.com/files/2019/02/workout-gym-exercise-equipment-shutterstock.jpg");
+  background-size: cover;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
 
 h4 {
     letter-spacing: -1px;
@@ -134,10 +145,9 @@ select:focus {
 }
   
     </style>  
-    <div class="background">
     <head>
 
-    <div>
+    <div class="backback">
 
     <title>Account Settings</title>
     <link rel='icon' href='favicon.ico' type='image/x-icon' />
@@ -150,7 +160,7 @@ select:focus {
         crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="background">
+    
     <div class="wrapper bg-white mt-sm-5">
         <h4 class="pb-4 border-bottom">Account Settings</h4>
     
@@ -195,7 +205,7 @@ select:focus {
                 <i class="zmdi zmdi-account-box-mail"></i>
             </div>
             <div class="py-3 pb-4 border-bottom"> 
-                <button id="btn-update" style = "background-color: white" class="btn btn-primary mr-3"><a>Save Changes</a></button>
+                <button id="btn-update" style = "background-color: rgba(51, 86, 163, 0.849)" class="btn btn-primary mr-3"><a>Save Changes</a></button>
                  <button class="btn border button" onclick="window.history.back();">Cancel</button> 
                 <i class="zmdi zmdi-arrow-right"></i>
             </div>

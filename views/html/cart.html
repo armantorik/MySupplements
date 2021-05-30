@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 
@@ -433,357 +434,385 @@ position: fixed;
 	clear: both;
 	padding: 0px;
 	margin: 0px;
-}
+=======
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-/*  COLUMN SETUP  */
-.col {
-	display: block;
-	float:left;
-	margin: 1% 0 1% 1.6%;
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+  </head>
+  <style>
+.backback {
+  background-image: url("https://clarksvillenow.sagacom.com/files/2019/02/workout-gym-exercise-equipment-shutterstock.jpg");
+  background-size: cover;
 }
-.col:first-child { margin-left: 0; }
-
-
-/*  GROUPING  */
-.group:before,
-.group:after {
-	content:"";
-	display:table;
-}
-.group:after {
-	clear:both;
-}
-.group {
-    zoom:1; /* For IE 6/7 */
-}
-
-/*  GRID OF THREE  */
-.span_3_of_3 {
-	width: 100%;
-}
-.span_2_of_3 {
-	width: 66.1%;
-}
-.span_1_of_3 {
-	width: 32.2%;
-}
-
-/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
-
-@media only screen and (max-width: 480px) {
-	.col { margin: 1% 0 1% 0%;}
-	.span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
-}
-.product-filter {
-  display: flex;
-}
-.product-filter h1 {
-  flex-grow: 1;
-}
-.sort {
-  display: flex;
-}
-.products {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.collection-sort {
-  display: flex;
-  flex-direction: column;
-}
-.products {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.product-card {
-  padding: 1%;
-  flex-grow: 1;
-  flex-basis: 10%;
-
-  display: flex; /* so child elements can use flexbox stuff too! */
-}
-.product-image img {
-  max-width: 65%;
-}
-.product-info {
-  margin-top: auto;
-}
-@media (max-width: 920px) {
-  .product-card {
-    flex: 1 21%;
-  }
-}
-.products .product-card:first-child, 
-.products .product-card:nth-child(2) {
-  flex: 2 46%;
-}
-@media (max-width: 600px) {
-  .product-card {
-    flex: 1 46%;
-  }
-}
-.container {
-    width: var(--container-width);
-    height: var(--container-height);
-    margin-left: -820px;
-    margin-top: -400px;
-    top: 44%;
-    left: 50%;
-    position: absolute;
-    z-index: 1;
-}
-
-.main-menu {
+    body {
+    background: #ddd;
+    min-height: 100vh;
+    vertical-align: middle;
     display: flex;
-    list-style: none;
-    margin: auto 0;
-    padding: 0.6em 0 0 0;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold
+>>>>>>> ff8fcb74a83ff484e69d51a667fd6bf97e8872be
 }
 
-.main-menu > li {
-    box-sizing: border-box;
-    height: var(--menu-item-size);
-    width: calc(5 * var(--menu-item-size));  
-    line-height: var(--menu-item-size);
-    padding: 0 2em;
-    margin: 5px;
-    transition: 0.5s linear all;
-    background: var(--green-color);
-    color: var(--dark-green-color);
-    cursor: pointer;
-    font-size: 16px;
-    user-select: none;
+.title {
+    margin-bottom: 5vh
 }
 
-.main-menu > li:not(.with-submenu) {
-    clip-path: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
-    shape-outside: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+.card {
+    margin: auto;
+    max-width: 950px;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent
 }
 
-.main-menu > li:nth-child(2) {
-    transform: translateX(-5%);
+@media(max-width:767px) {
+    .card {
+        margin: 3vh auto
+    }
 }
 
-.main-menu > li:nth-child(3) {
-    transform: translateX(-10%)
+.cart {
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem
 }
 
-.main-menu > li:nth-child(4) {
-    transform: translateX(-15%)
+@media(max-width:767px) {
+    .cart {
+        padding: 4vh;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 1rem
+    }
 }
 
-.main-menu i {
-    margin-right: 5px;
+.summary {
+    background-color: #ddd;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: rgb(65, 65, 65)
 }
 
-.main-menu > li:hover:not(.active) {
-    background: linear-gradient(to right, var(--green-color), var(--blue-color));
-    color: var(--white-color);
+@media(max-width:767px) {
+    .summary {
+        border-top-right-radius: unset;
+        border-bottom-left-radius: 1rem
+    }
 }
 
-.main-menu > li:active:not(.active),
-.main-menu > li:active:not(.with-submenu){
-    background: var(--blue-color);
-    color: var(--white-color);
+.summary .col-2 {
+    padding: 0
 }
 
-.main-menu > li:hover i:not(li.active) {
-    color: #175c58;
+.summary .col-10 {
+    padding: 0
 }
 
-.main-menu .active {
-    color: var(--white-color);
-    background: var(--blue-color);
-    cursor: default;
-    text-shadow: 1px 1px 1px var(--dark-green-color);
-    font-size: 18px;
+.row {
+    margin: 0
 }
 
-article {
-   background: var(--gray-color);
-   padding: 1em;
-   border-radius: 0 0 5px 5px;
-   box-shadow: 5px 5px 5px #CCC;
-   position: relative;
-   z-index: -1;
+.title b {
+    font-size: 1.5rem
 }
 
-h1 {
-    font-size: 115%;
-    margin: 1em 2em;
-    padding: 0;
-    position: relative;
-    color: rgb(255, 255, 255);
-}
-
-.content {
-    padding: 0 0 0 3em;
-    font-size: 16px;
-}
-
-.submenu {
-    display: none;
-    position: absolute;
-    z-index: 10;
-    list-style: none;
-    left: 0;
+.main {
     margin: 0;
-    padding: 0;
-    min-width: calc(3.5 * var(--menu-item-size) - 5%);
-    box-shadow: 5px 5px 5px #CCC;
+    padding: 2vh 0;
+    width: 100%
 }
 
-.with-submenu {
-    position: relative;
-    display: inline-block;
-    clip-path: polygon(10% 0%, 0% 100%, 0% 500%, 95% 500%, 95% 100%, 100% 50%, 95% 0%);
-    shape-outside: polygon(10% 0%, 0% 100%, 95% 100%, 100% 50%, 95% 0%);
+.col-2,
+.col {
+    padding: 0 1vh
 }
 
-.with-submenu:hover .submenu {
-    display: block;
+a {
+    padding: 0 1vh
 }
 
-.submenu > li {
-    background: #dedede;
-    border-bottom: 1px solid var(--gray-color); 
-    color: rgb(255, 253, 253);
-    padding: 1.2em 1em;
-    transition: 0.3s all linear;
-    display: block;
-    line-height: 0%;
+.close {
+    margin-left: auto;
+    font-size: 0.7rem
 }
 
-.submenu > li:hover {
-    background: var(--gray-color)
+img {
+    width: 3.5rem
 }
 
-.submenu > li:active {
-    background: var(--white-color);
+.back-to-shop {
+    margin-top: 4.5rem
 }
 
-</style>
-</head>
+h5 {
+    margin-top: 4vh
+}
 
+hr {
+    margin-top: 1.25rem
+}
 
-<body>
+form {
+    padding: 2vh 0
+}
 
-  <div class="background">
-    <div id="nav">
-      <ul class="nav-menu clearfix unstyled">
-        <li><a href="/html/home.html">
-          Home
-          <span class="three-d-box"><span class="front">Home</span><span class="back">Home</span></span>
-        </a></li>
-        <li><a href="/html/accountSettings.html" class="three-d">
-          Settings
-          <span class="three-d-box"><span class="front">Settings</span><span class="back">Settings</span></span>
-        </a></li>
-        <li><a href="/html/signin.html" class="three-d">
-          Sign Out
-          <span class="three-d-box"><span class="front">Sign Out</span><span class="back">Sign Out</span></span>
-        </a></li>
-        <li><a href="#" class="three-d">
-          About
-          <span class="three-d-box"><span class="front">About</span><span class="back">About</span></span>
-        </a></li>
-        <li><a href="#" class="three-d">
-          Contact
-          <span class="three-d-box"><span class="front">Contact</span><span class="back">Contact</span></span>
-        </a></li> 
-        <li><a href="/html/cart.html" class="three-d active">
-          Shopping Cart
-          <span class="three-d-box"><span class="front">Shopping Cart</span><span class="back">Shopping Cart</span></span>
-        </a></li>
-      </ul>
-    </div>
-  
-        
-    <h1>&ensp;</h1>
-    <h1>YOUR SHOPPING CART</h1>
-    <h2 class="sub-heading">Free shipping from 100₺!</h2>
-    <div class="_column checkout">
-      <button onclick="checkout()" class="_btn checkout-btn entypo-forward" >Checkout</button>
-    </div>
-    <div style= "height: 1000px; overflow-y: scroll;">
-  
-    <section class="shopping-cart">
-      <ol class="ui-list shopping-cart--list" id="shopping-cart--list">
-        <div id="productRows">
-          
-        </div>
-      </ol>
-      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+select {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1.5vh 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
 
-      <!-- The core Firebase JS SDK is always required and must be listed first -->
-      <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-     
-      <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
-      <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-     
-      <script>
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        var firebaseConfig = {
-          apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
-          authDomain: "ecommerce-ca57f.firebaseapp.com",
-          databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
-          projectId: "ecommerce-ca57f",
-          storageBucket: "ecommerce-ca57f.appspot.com",
-          messagingSenderId: "450193218046",
-          appId: "1:450193218046:web:ed740c91c94096998288af",
-          measurementId: "G-SV0VSC22KY"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-     
-        function checkout(){
-          if(firebase.auth().currentUser.isAnonymous){
-            alert("You need to be signed in to buy products!")
-            window.location.href = "/html/signin.html";
-          }
-          else{
-            window.location.href = "order.html";
-          }
+input {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
+
+input:focus::-webkit-input-placeholder {
+    color: transparent
+}
+
+.btn {
+    background-color: #000;
+    border-color: #000;
+    color: white;
+    width: 100%;
+    font-size: 0.7rem;
+    margin-top: 4vh;
+    padding: 1vh;
+    border-radius: 0
+}
+
+.btn:focus {
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    -webkit-box-shadow: none;
+    -webkit-user-select: none;
+    transition: none
+}
+
+.btn:hover {
+    color: white
+}
+
+a {
+    color: black
+}
+
+a:hover {
+    color: black;
+    text-decoration: none
+}
+
+#code {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center
+}
+    .white-color {
+color:white;
+}
+    .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px; 
+}
+
+            .search input[type=text]{
+            width:300px;
+            height:25px;
+            border-radius:25px;
+            border: none;
+ 
         }
-      </script>
-     
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     
-       <script src="/js/cart.js"></script>
-      <footer class="_grid cart-totals">
-        <div class="_column subtotal" id="subtotalCtr">
-          <div class="cart-totals-key">Subtotal</div>
-          <div class="cart-totals-value" id="subtot">0.00₺</div>
-        </div>
-        <div class="_column shipping" id="shippingCtr">
-          <div class="cart-totals-key">Shipping</div>
-          <div class="cart-totals-value" id="ship">0.00₺</div>
-        </div>
-        <div class="_column taxes" id="taxesCtr">
-          <div class="cart-totals-key">Taxes (6%)</div>
-          <div class="cart-totals-value" id="taxes">0.00₺</div>
-        </div>
-        <div class="_column total" id="totalCtr">
-          <div class="cart-totals-key">Total</div>
-          <div class="cart-totals-value" id="tot">0.00₺</div>
-        </div>
-        
-      </footer>
-      
-      <div>
-        
+         
+        .search{
+            margin-right: 20%;
+            margin:7px;
+ 
+        }
+         
+        .search button{
+            background-color: #0074d900;
+            color: #f2f2f2;
+            float: right;
+            padding: 5px 10px;
+            margin-right: 16px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  font-size: 18px;
+  background-color: #c67605;
+}
+  </style>
+  <body class="backback">
+    
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+  <a class="navbar-brand"  style="color:red;" href="#">Navigate</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item ">
+        <a class="nav-link disabled" href="/home"style="color:red;">Home </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="/html/signin.html"style="color:red;">Sign In</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="/html/accountSettings.html"style="color:red;">Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#"style="color:red;">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="/html/cart.html"style="color:red;">Cart</a>
+      </li>
+    </ul>
+    <div class="search">
+      <form action="#">
+          <input type="text"
+              placeholder="   Search Product "
+              name="search">
+          <button>
+              <i class="fa fa-search"
+                  style="font-size: 18px;">
+              </i>
+          </button>
+      </form>
+  </div>
+  </div>
+  <li>
+  <i  class="fa fa-cart white-color" style="font-size:50px">&#xf07a;</i><span class='badge badge-warning' id='lblCartCount'> 3 </span>
+  </li>
+
+</nav>
+
+
+<div class="card">
+  <div class="row">
+      <div class="col-md-8 cart">
+          <div class="title">
+              <div class="row">
+                  <div class="col">
+                      <h4><b>Shopping Cart</b></h4>
+                  </div>
+                  <div class="col align-self-center text-right text-muted">3 items</div>
+              </div>
+          </div>
+          <div class="row border-top border-bottom">
+              <div class="row main align-items-center">
+                  <div class="col-2"><img class="img-fluid" src="img/glukoz.jpeg"></div>
+                  <div class="col">
+                      <div class="row text-muted">Glucose</div>
+                      <div class="row">Glucose</div>
+                  </div>
+                  <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
+                  <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="row main align-items-center">
+                  <div class="col-2"><img class="img-fluid" src="img/Pea protein.pgn"></div>
+                  <div class="col">
+                      <div class="row text-muted">Protein</div>
+                      <div class="row">Impact Whey Protein</div>
+                  </div>
+                  <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
+                  <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+              </div>
+          </div>
+          <div class="row border-top border-bottom">
+              <div class="row main align-items-center">
+                  <div class="col-2"><img class="img-fluid" src=""></div>
+                  <div class="col">
+                      <div class="row text-muted">Protein</div>
+                      <div class="row">Pea Protein</div>
+                  </div>
+                  <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
+                  <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+              </div>
+          </div>
+          <div class="back-to-shop"><a href="/home">&leftarrow;<span class="text-muted">  Back to shop</span></a></div>
       </div>
-    </section>
+      <div class="col-md-4 summary">
+          <div>
+              <h5><b>Summary</b></h5>
+          </div>
+          <hr>
+          <div class="row">
+              <div class="col" style="padding-left:0;">ITEMS 3</div>
+              <div class="col text-right">&euro; 132.00</div>
+          </div>
+          <form>
+              <p>SHIPPING</p> <select>
+                  <option class="text-muted">Standard-Delivery- Free </option>
+              </select>
+              <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
+          </form>
+          <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+              <div class="col">TOTAL PRICE</div>
+              <div class="col text-right">&euro; 132.00</div>
+          </div> <button class="btn">CHECKOUT</button>
+      </div>
   </div>
 </div>
-
-
-
-</body>
-
+</div>
+  </body>
 </html>
+

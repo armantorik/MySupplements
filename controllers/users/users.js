@@ -124,6 +124,122 @@ exports.add2basket = async function (email, pid) {
     }
 }
 
+exports.postcomment = async function (email, pid, comment) {
+
+  //Eğer hiç comment atılmamışsa önce comment map array ini açması
+  //daha once comment atmış mı tara
+
+  var can_comment = true;
+  var productRef = db.collection('Products').doc(pid);
+  const productDoc = await productRef.get();
+  var comment_array = productDoc.get('comments');
+
+  const new_comment = {
+  
+    comment: comment,
+    user: email,
+    verified: false
+  };
+
+  if(comment_array == null)
+  {
+      const res = await db.collection('Products').doc(pid).update({
+        comments: new_comment
+     });
+      return true;
+  }
+  
+  for (const commentx of comment_array)
+  {
+    if(commentx.user == email)
+    {
+        can_comment = false;
+        break;
+    }
+  }
+
+  console.log(can_comment)
+
+  if (can_comment == false) { // If the user has already made a comment for this product do not allow for a new one
+    return false;
+  }
+  else{ //atmadıysa burda comment atabilir yazdığı comment database de comments arrayine gidicek userid ile birlikte
+
+      // Add a new comment to the comment_array
+     const res = await db.collection('Products').doc(pid).update( {
+        comments: admin.firestore.FieldValue.arrayUnion(new_comment)
+       
+     });
+     return true;
+  }
+  
+}
+
+exports.postrating = async function (email, pid, rating) { // şu an integer üzerinden çalışıyor float a convertlemek lazım
+  
+    var has_rated = false;
+    var rating_num = Number(rating);
+    var productRef = db.collection('Products').doc(pid);
+    const productDoc = await productRef.get();
+    var rating_array = productDoc.get('ratings');
+    var rating_count = productDoc.get('rating_count');
+    var overall_rating = productDoc.get('ovr_rating');
+
+    const new_rating = {
+        rating: rating_num,
+        user: email
+    };
+
+    console.log(rating_array)
+
+    if(rating_array == null)
+    {
+        const res = await db.collection('Products').doc(pid).update({
+            ratings: new_rating
+        });
+        const res2 = await db.collection('Products').doc(pid).update({
+            rating_count: 1
+        });
+        const res3 = await db.collection('Products').doc(pid).update({
+            ovr_rating: rating_num
+        });
+
+        console.log(new_rating, rating_num)
+
+        return true;
+    } 
+    for (const ratingx of rating_array)
+    {
+        if(ratingx.user == email)
+        {
+            has_rated = true;
+            break;
+        }
+    }
+
+    if (has_rated == true) { // If the user has already rated this product update it with the new rating
+        return false;
+    }
+    else{ //atmadıysa burda yeni rating
+
+        // Add a new rating to the rating_array
+        const res = await db.collection('Products').doc(pid).update( {
+            ratings: admin.firestore.FieldValue.arrayUnion(new_rating)        
+        });
+        const res3 = await db.collection('Products').doc(pid).update({
+            ovr_rating: ((overall_rating*rating_count) + rating_num)/(rating_count+1)
+        });
+        const res2 = await db.collection('Products').doc(pid).update({
+            rating_count: rating_count+1
+        });
+       
+        return true;
+    }
+}
+
+
+
+
 exports.removeFromBasket = async function rmBasket(email, pid) { // Delete a basket document without looking 
 
     const basketRef = await db.collection('basket').where('user', '==', db.doc('users/' + email)).where('product', '==', db.doc('Products/' + pid))

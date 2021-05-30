@@ -322,6 +322,60 @@ app.get("/api/getOrders", function (req, res) {
 
 })
 
+// Users can post comments on products
+app.get("/api/postcomment", function (req, res) {
+
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
+    var email = decodedClaims["email"];
+    var pid = req.param("pid");
+    var comment = req.param("comm");
+    if (user.postcomment(email, pid, comment)) {
+
+      res.jsonp({
+        status: true
+      })
+    }
+    else {
+      res.jsonp({
+        status: false
+      })
+    }
+
+  }).catch((error) => {
+    console.log("no cookie")
+    console.log(error)
+  }
+  )
+})
+
+// Users can post comments on products
+app.get("/api/postrating", function (req, res) {
+
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
+    var email = decodedClaims["email"];
+    var pid = req.param("pid");
+    var rat = req.param("rat");
+    if (user.postrating(email, pid, rat)) {
+
+      res.jsonp({
+        status: true
+      })
+    }
+    else {
+      res.jsonp({
+        status: false
+      })
+    }
+
+  }).catch((error) => {
+    console.log("no cookie")
+    console.log(error)
+  }
+  )
+})
+
 // Users can create their account with their information
 app.put("/api/createAccount", function (req, res) {
   var params = req.query;
@@ -383,7 +437,7 @@ function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(' ')[0]
   if (token == null) return res.sendStatus(401)
 
-  jwt.verify(token, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     
 
     if (err) {console.log(err); return res.sendFile(path.join(__dirname + "/views/html/signin.html"));}
