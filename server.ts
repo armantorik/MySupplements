@@ -1,4 +1,4 @@
-/*************** Controllers *********************/
+/*************** Server Routers *********************/
 
 // Global Port
 process.env.PORT = "3000";
@@ -388,9 +388,9 @@ app.put("/api/createAccount", function (req, res) {
 });
 
 // Users can get their information
-app.get("/api/getProfile", function (req, res) {
+app.get("/api/getProfile/", function (req, res) {
   var params = req.query;
-
+  console.log(req.param("email"))
   user.getProfile(params.email).then((profile) => {
     res.jsonp({
       profile: profile

@@ -1,451 +1,489 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Home Page</title>
-  </head>
-  <style>
-    .teal-color {
-color:#60bda9;
-}
-#section1 {
-  height: 600px;
-}
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-#section2 {
-  height: 20px;
-}
-    .white-color {
-color:white;
-}
-    .badge {
-  padding-left: 9px;
-  padding-right: 9px;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
-}
-html {
-  scroll-behavior: smooth;
-}
-.label-warning[href],
-.badge-warning[href] {
-  background-color: #c67605;
-}
-#lblCartCount {
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Home Page</title>
+</head>
+<style>
+  .teal-color {
+    color: #60bda9;
+  }
+
+  #section1 {
+    height: 600px;
+  }
+
+  #section2 {
+    height: 20px;
+  }
+
+  .white-color {
+    color: white;
+  }
+
+  .badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .label-warning[href],
+  .badge-warning[href] {
+    background-color: #c67605;
+  }
+
+  #lblCartCount {
     font-size: 12px;
     background: #ff0000;
     color: #fff;
     padding: 0 5px;
     vertical-align: top;
-    margin-left: -10px; 
-}
+    margin-left: -10px;
+  }
 
-            .search input[type=text]{
-            width:300px;
-            height:25px;
-            border-radius:25px;
-            border: none;
- 
-        }
-         
-        .search{
-            margin-right: 20%;
-            margin:7px;
- 
-        }
-         
-        .search button{
-            background-color: #0074d900;
-            color: #f2f2f2;
-            float: right;
-            padding: 5px 10px;
-            margin-right: 16px;
-            font-size: 12px;
-            border: none;
-            cursor: pointer;
-        }
-        .badge {
-  padding-left: 9px;
-  padding-right: 9px;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
-}
+  .search input[type=text] {
+    width: 300px;
+    height: 25px;
+    border-radius: 25px;
+    border: none;
 
-.label-warning[href],
-.badge-warning[href] {
-  font-size: 18px;
-  background-color: #c67605;
-}
-  </style>
-  <body>
-   
-   
+  }
+
+  .search {
+    margin-right: 20%;
+    margin: 7px;
+
+  }
+
+  .search button {
+    background-color: #0074d900;
+    color: #f2f2f2;
+    float: right;
+    padding: 5px 10px;
+    margin-right: 16px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+
+  .label-warning[href],
+  .badge-warning[href] {
+    font-size: 18px;
+    background-color: #c67605;
+  }
+</style>
+
+<body>
+
+
   <nav class="navbar navbar-expand-lg fixed-top">
-  <a class="navbar-brand" href="#">SUPPLEMENTS</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/html/signin.html">Sign In</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/html/accountSettings.html">Settings </a>
-      </li>
-    </ul>
-    <div class="search">
-      <form action="#">
-          <input type="text"
-              placeholder="   Search Product "
-              name="search">
+    <a class="navbar-brand" href="#">SUPPLEMENTS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/html/signin.html">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/html/accountSettings.html">Settings </a>
+        </li>
+      </ul>
+      <div class="search">
+        <form action="#">
+          <input type="text" placeholder="   Search Product " name="search">
           <button>
-              <i class="fa fa-search"
-                  style="font-size: 18px;">
-              </i>
+            <i class="fa fa-search" style="font-size: 18px;">
+            </i>
           </button>
-      </form>
-  </div>
-  </div>
-  <script>
-    window.localStorage.getItem('username');
-  </script>
-  <li>
-    <a class="generated_button open-cart" href="/html/cart.html">
-  <i class="fa fa-cart teal-color "  style="font-size:50px">&#xf07a;</i><span class='badge badge-warning' id='lblCartCount'> 5 </span>
-</a>
-  </li>
-</nav>
-
-   
-   
-   
-   
-    <div id="carouselExampleIndicators" class="carousel slide" id="section1" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="img/p1.jpg" alt="First slide">
-      <div class="carousel-caption d-none d-md-block">
-    <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
-    <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR WOMEN AVAILABLE IN SHOP</p>
-    <a href="#section2" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
-  </div>
+        </form>
+      </div>
     </div>
-    
-    <div class="carousel-item">
-      <img class="d-block w-100" src="img/p2.jpeg" alt="Second slide">
-      <div class="carousel-caption d-none d-md-block">
-   <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
-    <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR MEN AVAILABLE IN SHOP</p>
-    <a href="#section2" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
-  </div>
-    </div>
-    
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
 
-      <div class="container-fluid">
-      <div class="row bg-gray  wow slideInDown">
-        <div class="col-md-4"><div class="icon-text"><i class="fa fa-money" aria-hidden="true"></i> FAST SECURE PAYMENTS </div></div>
-         <div class="col-md-4 bg-teal"><div class="icon-text"><i class="fa fa-star" aria-hidden="true"></i> PREMIUM PRODUCTS </div></div>
-         <div class="col-md-4"><div class="icon-text"><i class="fa fa-truck" aria-hidden="true"></i> FREE & FAST DELIVERY </div></div>
-       </div>    
+    <li>
+      <a class="generated_button open-cart" href="/html/cart.html">
+        <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+          id='lblCartCount'> 5 </span>
+      </a>
+    </li>
+  </nav>
+
+
+
+
+
+  <div id="carouselExampleIndicators" class="carousel slide" id="section1" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="/img/p1.jpg" alt="First slide">
+        <div class="carousel-caption d-none d-md-block">
+          <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
+          <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR WOMEN AVAILABLE IN SHOP</p>
+          <a href="#section2" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
+        </div>
       </div>
 
-      <div class="container mt-5">
-        <div class="row wow flash">
-          <div id="section2" class="col-md-12 text-center"><h1>LATEST PRODUCTS</h1></div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="/img/p2.jpeg" alt="Second slide">
+        <div class="carousel-caption d-none d-md-block">
+          <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
+          <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR MEN AVAILABLE IN SHOP</p>
+          <a href="#section2" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
         </div>
+      </div>
 
-
-          <div class="row mt-5">
-            <div class="col-md-3 wow zoomInDown">
-            <div class="card">
-              <a href="/html/product.html">
-              <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
-              <div class="card-body">
-                <div class="card-heading">Glucosamine</div>
-              </a>
-                 <p class="card-text">Glucosamine is a natural compound found in cartilage...</p>
-                 <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-              </div>
-            </div>
-          </div>
-      
-
-            <div class="col-md-3 wow zoomInRight">
-            <div class="card">
-              <a href="/html/product.html">
-              <img  class="card-img-top img-fluid" alt="img1" src="img/Pea protein.png">
-              <div class="card-body">
-               <div class="card-heading">Pea Protein</div>
-              </a>
-                <p class="card-text">Keto Advanced 1500 is a popular keto diet pill for ...</p>
-                <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-              </div>
-            </div>
-          </div>
-      
-
-    <div class="col-md-3 wow zoomInUp">
-      <div class="card">
-        <a href="/html/product.html">
-       <img class="card-img-top img-fluid" alt="img1" src="img/multivitamin.jpeg">
-       <div class="card-body">
-         <div class="card-heading">Multivitamin</div>
-       </a>
-           <p class="card-text">A fully dosed pre-workout of 13 powerful ingredients ...</p>
-           <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-        </div>
-     </div>
     </div>
-  
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
 
-    <div class="col-md-3 wow zoomInDown">
-     <div class="card">
-      <a href="/html/product.html">
-        <img class="card-img-top img-fluid" alt="img1" src="img/impact_whey_protein.jpeg">
-        <div class="card-body">
-          <div class="card-heading">Impact Whey Protein</div>
-        </a>
-           <p class="card-text">Premium whey packed with 21g of protein per serving ...</p>
+  <div class="container-fluid">
+    <div class="row bg-gray  wow slideInDown">
+      <div class="col-md-4">
+        <div class="icon-text"><i class="fa fa-money" aria-hidden="true"></i> FAST SECURE PAYMENTS </div>
+      </div>
+      <div class="col-md-4 bg-teal">
+        <div class="icon-text"><i class="fa fa-star" aria-hidden="true"></i> PREMIUM PRODUCTS </div>
+      </div>
+      <div class="col-md-4">
+        <div class="icon-text"><i class="fa fa-truck" aria-hidden="true"></i> FREE & FAST DELIVERY </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row wow flash">
+      <div id="section2" class="col-md-12 text-center">
+        <h1>LATEST PRODUCTS</h1>
+      </div>
+    </div>
+
+
+    <div class="row mt-5">
+      <div class="col-md-3 wow zoomInDown">
+        <div class="card">
+          <a href="/html/product.html">
+            <img class="card-img-top img-fluid" alt="img1" src="/img/glukoz.jpeg">
+            <div class="card-body">
+              <div class="card-heading">Glucosamine</div>
+          </a>
+          <p class="card-text">Glucosamine is a natural compound found in cartilage...</p>
           <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
         </div>
       </div>
     </div>
-    </div>
-</div>
 
 
-<div class="container-fluid bc">
-  <div class="container pt-5 pb-5">
-    <div class="row inner-text">
-      <div class="col-md-6 text-light">
-        <h3 class="wow slideInUp">       </h3>
-        <h1 class="mt-4 wow slideInDown text-center">                                                                                                                   </h1>
-        <h1 class="mt-4 wow slideInDown text-center">        </h1><h1 class="mt-4 wow slideInDown text-center">        </h1>
-        <h1 class="mt-4 wow slideInDown text-center">        </h1><h1 class="mt-4 wow slideInDown text-center">        </h1>
+    <div class="col-md-3 wow zoomInRight">
+      <div class="card">
+        <a href="/html/product.html">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/Pea protein.png">
+          <div class="card-body">
+            <div class="card-heading">Pea Protein</div>
+        </a>
+        <p class="card-text">Keto Advanced 1500 is a popular keto diet pill for ...</p>
+        <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
       </div>
     </div>
   </div>
-</div>
-
-<div class="container mt-5 text-center">
-  <div class="row wow flash">
-    <div class="col-md-12 text-center"><h1>BROWSE THE TOP SELLING PRODUCTS</h1></div>
-  </div>
-<div class="row mt-4 wow bounceIn">
-  <div class="col-md-12"> <div class="col-md-12">
-    <a class="btn btn-light m1-4">PROTEIN</a><a class="btn btn-light m1-4">KETOGENIC</a> 
-    <a class="btn btn-light m1-4">GLUCOSE</a><a class="btn btn-light m1-4">VITAMINS</a> </div>
-  </div>
-</div>
 
 
-<div class="row mt-5">
-  <div class="col-md-3 wow slideInDown">
+  <div class="col-md-3 wow zoomInUp">
     <div class="card">
-      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
-      <div class="card-body">
-        <div class="card-heading">Product 1</div>
-         <p class="card-text">smth smth smth smth</p>
-         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3 wow slideInLeft">
-    <div class="card">
-      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
-      <div class="card-body">
-        <div class="card-heading">Product 2</div>
-         <p class="card-text">Glucosamine is a natural compound found in cartilage — the tough tissue that cushions joints.  In supplement form, glucosamine is harvested from shells of shellfish or made in a lab. There are several forms of glucosamine, including glucosamine sulfate, glucosamine hydrochloride and N-acetyl glucosamine. These supplements aren't considered interchangeable.  People use glucosamine sulfate orally to treat a painful condition caused by the inflammation, breakdown and eventual loss of cartilage (osteoarthritis).</p>
-         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="col-md-3 wow slideInRight">
-    <div class="card">
-      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
-      <div class="card-body">
-        <div class="card-heading">Product 3</div>
-         <p class="card-text">smth smth smth smth</p>
-         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-3 wow slideInUp">
-    <div class="card">
-      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
-      <div class="card-body">
-        <div class="card-heading">Product 4</div>
-         <p class="card-text">smth smth smth smth</p>
-         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-
-
-<div class="row mt-5">
-  <div class="col-md-3 wow flipInX">
-  <div class="card">
-    <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
-    <div class="card-body">
-      <div class="card-heading"></div>
-       <p class="card-text">Glucosamine is a natural compound found in cartilage — the tough tissue that cushions joints.  In supplement form, glucosamine is harvested from shells of shellfish or made in a lab. There are several forms of glucosamine, including glucosamine sulfate, glucosamine hydrochloride and N-acetyl glucosamine. These supplements aren't considered interchangeable.  People use glucosamine sulfate orally to treat a painful condition caused by the inflammation, breakdown and eventual loss of cartilage (osteoarthritis).</p>
-       <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-    </div>
-  </div>
-</div>
-
-
-  <div class="col-md-3 wow flipInY">
-  <div class="card">
-    <img class="card-img-top img-fluid" alt="img1" src="img/keto.jpeg">
-    <div class="card-body">
-     <div class="card-heading">Keto</div>
-      <p class="card-text">smth smth smth smth</p>
+      <a href="/html/product.html">
+        <img class="card-img-top img-fluid" alt="img1" src="/img/multivitamin.jpeg">
+        <div class="card-body">
+          <div class="card-heading">Multivitamin</div>
+      </a>
+      <p class="card-text">A fully dosed pre-workout of 13 powerful ingredients ...</p>
       <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
     </div>
   </div>
-</div>
+  </div>
 
 
-<div class="col-md-3 wow flipInX">
-<div class="card">
-<img class="card-img-top img-fluid" alt="img1" src="img/multivitamin.jpeg">
-<div class="card-body">
-<div class="card-heading">Multivitamin</div>
- <p class="card-text">smth smth smth smth</p>
- <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-</div>
-</div>
-</div>
+  <div class="col-md-3 wow zoomInDown">
+    <div class="card">
+      <a href="/html/product.html">
+        <img class="card-img-top img-fluid" alt="img1" src="/img/impact_whey_protein.jpeg">
+        <div class="card-body">
+          <div class="card-heading">Impact Whey Protein</div>
+      </a>
+      <p class="card-text">Premium whey packed with 21g of protein per serving ...</p>
+      <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
 
 
-<div class="col-md-3 wow flipInY">
-<div class="card">
-<img class="card-img-top img-fluid" alt="img1" src="img/impact_whey_protein.jpeg">
-<div class="card-body">
-<div class="card-heading">Impact Whey Protein</div>
- <p class="card-text">smth smth smth smth</p>
-<a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-
-
-
-
-<footer class="bg-dark">
-  <div class="container">
-     <div class="row">
-      <div class="col-md-12 pt-5"><img src="img/logo.png" alt="footer image" class="img-fluid footer-image wow slideInDown"></div>
+  <div class="container-fluid bc">
+    <div class="container pt-5 pb-5">
+      <div class="row inner-text">
+        <div class="col-md-6 text-light">
+          <h3 class="wow slideInUp"> </h3>
+          <h1 class="mt-4 wow slideInDown text-center"> </h1>
+          <h1 class="mt-4 wow slideInDown text-center"> </h1>
+          <h1 class="mt-4 wow slideInDown text-center"> </h1>
+          <h1 class="mt-4 wow slideInDown text-center"> </h1>
+          <h1 class="mt-4 wow slideInDown text-center"> </h1>
+        </div>
       </div>
-      
+    </div>
+  </div>
+
+  <div class="container mt-5 text-center">
+    <div class="row wow flash">
+      <div class="col-md-12 text-center">
+        <h1>BROWSE THE TOP SELLING PRODUCTS</h1>
+      </div>
+    </div>
+    <div class="row mt-4 wow bounceIn">
+      <div class="col-md-12">
+        <div id="cats" class="col-md-12">
+        </div>
+      </div>
+    </div>
+
+
+    <div   class="row mt-5">
+      <div >
+        <div  id="product" class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/glukoz.jpeg">
+          <div class="card-body">
+            <div class="card-heading">Product 1</div>
+            <p class="card-text">smth smth smth smth</p>
+            <!-- <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-3 wow slideInLeft">
+        <div class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/glukoz.jpeg">
+          <div class="card-body">
+            <div class="card-heading">Product 2</div>
+            <p class="card-text">Glucosamine is a natural compound found in cartilage — the tough tissue that cushions
+              joints. In supplement form, glucosamine is harvested from shells of shellfish or made in a lab. There are
+              several forms of glucosamine, including glucosamine sulfate, glucosamine hydrochloride and N-acetyl
+              glucosamine. These supplements aren't considered interchangeable. People use glucosamine sulfate orally to
+              treat a painful condition caused by the inflammation, breakdown and eventual loss of cartilage
+              (osteoarthritis).</p>
+            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 wow slideInRight">
+        <div class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/glukoz.jpeg">
+          <div class="card-body">
+            <div class="card-heading">Product 3</div>
+            <p class="card-text">smth smth smth smth</p>
+            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 wow slideInUp">
+        <div class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/glukoz.jpeg">
+          <div class="card-body">
+            <div class="card-heading">Product 4</div>
+            <p class="card-text">smth smth smth smth</p>
+            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="row mt-5">
+      <div class="col-md-3 wow flipInX">
+        <div class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/glukoz.jpeg">
+          <div class="card-body">
+            <div class="card-heading"></div>
+            <p class="card-text">Glucosamine is a natural compound found in cartilage — the tough tissue that cushions
+              joints. In supplement form, glucosamine is harvested from shells of shellfish or made in a lab. There are
+              several forms of glucosamine, including glucosamine sulfate, glucosamine hydrochloride and N-acetyl
+              glucosamine. These supplements aren't considered interchangeable. People use glucosamine sulfate orally to
+              treat a painful condition caused by the inflammation, breakdown and eventual loss of cartilage
+              (osteoarthritis).</p>
+            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 wow flipInY">
+        <div class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/keto.jpeg">
+          <div class="card-body">
+            <div class="card-heading">Keto</div>
+            <p class="card-text">smth smth smth smth</p>
+            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 wow flipInX">
+        <div class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/multivitamin.jpeg">
+          <div class="card-body">
+            <div class="card-heading">Multivitamin</div>
+            <p class="card-text">smth smth smth smth</p>
+            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 wow flipInY">
+        <div class="card">
+          <img class="card-img-top img-fluid" alt="img1" src="/img/impact_whey_protein.jpeg">
+          <div class="card-body">
+            <div class="card-heading">Impact Whey Protein</div>
+            <p class="card-text">smth smth smth smth</p>
+            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ -->
+
+
+
+
+  <footer class="bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 pt-5"><img src="/img/logo.png" alt="footer image"
+            class="img-fluid footer-image wow slideInDown"></div>
+      </div>
+
       <div class="row text-light mt-5">
-          <div class="col-md-3 wow slideInLeft">
+        <div class="col-md-3 wow slideInLeft">
           <div class="footer-heading">
-          ABOUT
+            ABOUT
           </div>
-          <p class="footer-text mt-3">Always pushing forward for self betterment, supplements are here to boost you on your journey. We have been trying to boost our customers progress day by day with our hard work since the day we've been established.</p>
-          <img src="img/cards.webp" class="img-fluid mt-2" alt="card">
+          <p class="footer-text mt-3">Always pushing forward for self betterment, supplements are here to boost you on
+            your journey. We have been trying to boost our customers progress day by day with our hard work since the
+            day we've been established.</p>
+          <img src="/img/cards.webp" class="img-fluid mt-2" alt="card">
+        </div>
+
+        <div class="col-md-3 wow slideInRight">
+          <div class="footer-heading">
+            QUESTIONS
           </div>
-          
-          <div class="col-md-3 wow slideInRight">
-           <div class="footer-heading">
-          QUESTIONS
-          </div>
-              <div class="row">
-              <div class="col-md-6">
-                  <ul class="footer-list mt-3">
+          <div class="row">
+            <div class="col-md-6">
+              <ul class="footer-list mt-3">
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Track Orders</a></li>
                 <li><a href="#">Returns</a></li>
-                <li><a href="#">Jobs</a></li> 
-                <li><a href="#">Shipping</a></li> 
-                <li><a href="#">Blog</a></li>  
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Blog</a></li>
               </ul>
-                  </div>
-            
-              </div>
-              
-              
+            </div>
+
           </div>
-          
-          <div class="col-md-3 wow slideInDown">
-          <div class="footer-heading"> RECENT POSTS </div>
-          <div class="media mt-3"> <img src="images/media/1.jpg" class="mr-3" alt="...">
-              <div class="media-body">
-              <h5 class="mt-0">Newest science in muscle building</h5>
-              Scientists came up with a new formula that promotes muscle growth... </div>
-            </div>
-          <div class="media"> <img src="images/media/2.jpg" class="mr-3 img-fluid" alt="...">
-              <div class="media-body">
-              <h5 class="mt-0">Is ketogenic=bad? </h5>
-              There has been several discussions going on about how keto is not always... </div>
-            </div>
+
+
         </div>
-          
-          <div class="col-md-3 wow slideInUp">
-          <div class="footer-heading">
-          CONTACT US
+
+        <div class="col-md-3 wow slideInDown">
+          <div class="footer-heading"> RECENT POSTS </div>
+          <div class="media mt-3"> <img src="/images/media/1.jpg" class="mr-3" alt="...">
+            <div class="media-body">
+              <h5 class="mt-0">Newest science in muscle building</h5>
+              Scientists came up with a new formula that promotes muscle growth...
+            </div>
           </div>
-          <p class="footer-text mt-3"><i class="fa fa-home" aria-hidden="true"></i> : supplement place at supplement street no 21</p>
+          <div class="media"> <img src="/images/media/2.jpg" class="mr-3 img-fluid" alt="...">
+            <div class="media-body">
+              <h5 class="mt-0">Is ketogenic=bad? </h5>
+              There has been several discussions going on about how keto is not always...
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 wow slideInUp">
+          <div class="footer-heading">
+            CONTACT US
+          </div>
+          <p class="footer-text mt-3"><i class="fa fa-home" aria-hidden="true"></i> : supplement place at supplement
+            street no 21</p>
           <p> <i class="fa fa-envelope-o" aria-hidden="true"></i> : supplements@gmail.com</p>
           <p><i class="fa fa-phone" aria-hidden="true"></i> : +90 216 546 13 92</p>
-          <p><i class="fa fa-fax" aria-hidden="true"></i> : 044 61151556 55</p>  
-              
-          </div>
-          
-          
+          <p><i class="fa fa-fax" aria-hidden="true"></i> : 044 61151556 55</p>
+
+        </div>
+
+
       </div>
-      
+
       <hr>
-      
-      <div class="footer-endline text-center text-light mt-2 pb-4 wow fadeIn" >This Webpage Was Made By CS308 Group 19 As a Project</div>
-     </div> 
- </footer> 
+
+      <div class="footer-endline text-center text-light mt-2 pb-4 wow fadeIn">This Webpage Was Made By CS308 Group 19 As
+        a Project</div>
+    </div>
+  </footer>
 
 
 
@@ -456,35 +494,59 @@ html {
 
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
-    
-
-    <script>
-
-      window.addEventListener('load', function () {
-        var productJson = __SERVER_DATA__["jsonObject"]["detail"];
-        productJson.forEach(element => {
-          var imgLink = element["link"];
-          var pname = element["name"];
-          var pid = element["id"];
-          var quantity = element["quantity"];
-          if (quantity <= 0){
-            document.getElementById("product").innerHTML += "<div class='col-md-3 wow zoomInDown' > <div class='card'> <a class='card-heading' href=/products?pid=" + pid + ">" + pname + "<img class='grImg' filter='gray' width='300' height='300' src=" + imgLink + "></img> </div> </div> </div> </a>";
-          } else {
-            document.getElementById("product").innerHTML += "<div class='item' height='200px'> <div class='custom'> <a class='custom' href=/products?pid=" + pid + ">" + pname + "<img width='300' height='300' src=" + imgLink + "></img> </div> </div> </div> </a>";
-          }
-        });
-      });
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
   
-    </script>
+  <script>function getServerData(data) { window.SERVER_DATA = data; }</script>
+  <script src="/api/products?callback=getServerData"></script> 
+
+  <script>
+
+    window.addEventListener('load', function () {
+      var productJson = window.SERVER_DATA["jsonObject"]["detail"];
+      productJson.forEach(element => {
+        var imgLink = element["link"];
+        var pname = element["name"];
+        var pid = element["id"];
+        var quantity = element["quantity"];
+        if (quantity <= 0) {
+          document.getElementById("product").innerHTML += " <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' width='300' height='300' src=" + imgLink + "></img><div class='card-body'> <div class='card-heading'  + pname +  </div></a>";
+        } else {
+          document.getElementById("product").innerHTML += " <img class='card-img-top img-fluid' width='300' height='300' src=" + imgLink + "></img><div class='card-body'> <div class='card-heading' href=/products?pid=" + pid + ">" + pname + "</div> </div>";
+        }
+      });
+      dispCats()
+    });
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+     async function dispCats(){
+      
+     
+      const response = await fetch('/api/getCats');
+      const myJson = await response.json(); //extract JSON from the http response
+      // do something with myJson
+      myJson.categories.forEach((cat)=> {
+        document.getElementById("cats").innerHTML += " <a class='btn btn-light m1-4'>"+ cat + "</a>";
+      })
+
+    }
+
+
+
+  </script>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -533,7 +595,7 @@ html {
       if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
-     $("#signout").click(async function(){
+    $("#signout").click(async function () {
 
       const token = await firebase.auth().currentUser.getIdToken()
 
@@ -546,34 +608,43 @@ html {
         },
         body: firebase.auth().currentUser.email
       });
-      firebase.auth().signOut().then(()  => {
-        
+      firebase.auth().signOut().then(() => {
+
         window.location.href = "/html/signin.html"
       }).catch((error) => {
         window.alert("Error: " + error);
       });
     })
-       
+
 
 
     firebase.auth().onAuthStateChanged(user => {
-      if(user){
+      if (user) {
         if (!user.isAnonymous) {
-        console.log("user");
+          
+          const getUserInfo = async () => {
+          const url = '/api/getProfile?email=' + user.email;
+          const response = await fetch(url);
+          const myJson = await response.json(); //extract JSON from the http response
+          sessionStorage.setItem("lastname", myJson.profile.lname);
+          sessionStorage.setItem("fname", myJson.profile.fname);
+          console.log(sessionStorage.getItem("fname"))
+        }
+        getUserInfo()
+        }
+        else {
+          document.getElementById("signout").innerHTML = '<li id="signout"><a href="/html/signin.html"  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
+          console.log("anon");
+        }
       }
       else {
         document.getElementById("signout").innerHTML = '<li id="signout"><a href="/html/signin.html"  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
-        console.log("anon");
-        }
-      }
-      else{
-        document.getElementById("signout").innerHTML = '<li id="signout"><a href="/html/signin.html"  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
         console.log("no user");
-        }
-      })
+      }
+    })
 
 
   </script>
-  </body>
-</html>
+</body>
 
+</html>
