@@ -1,432 +1,139 @@
 <html>
+  <head>
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
   <style>
-     @import url('https://fonts.googleapis.com/css?family=Dosis');
-.myButton {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-	background-color:#ffffff;
-	border-radius:6px;
-	border:1px solid #dcdcdc;
-	display:inline-block;
-	cursor:pointer;
-	color:#666666;
-	font-family:Arial;
-	font-size:30px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+        .teal-color {
+color:#60bda9;
 }
-.myButton:hover {
-	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-	background-color:#f6f6f6;
-}
-.myButton:active {
-	position:relative;
-	top:1px;
-}
-:root {
-  /* generic */
-  --gutterSm: 0.4rem;
-  --gutterMd: 0.8rem;
-  --gutterLg: 1.6rem;
-  --gutterXl: 2.4rem;
-  --gutterXx: 7.2rem;
-  --colorPrimary400: #7e57c2;
-  --colorPrimary600: #5e35b1;
-  --colorPrimary800: #4527a0;
-  --fontFamily: "Dosis", sans-serif;
-  --fontSizeSm: 1.2rem;
-  --fontSizeMd: 1.6rem;
-  --fontSizeLg: 2.1rem;
-  --fontSizeXl: 2.8rem;
-  --fontSizeXx: 3.6rem;
-  --lineHeightSm: 1.1;
-  --lineHeightMd: 1.8;
-  --transitionDuration: 300ms;
-  --transitionTF: cubic-bezier(0.645, 0.045, 0.355, 1);
-  
-  /* floated labels */
-  --inputPaddingV: var(--gutterMd);
-  --inputPaddingH: var(--gutterLg);
-  --inputFontSize: var(--fontSizeLg);
-  --inputLineHeight: var(--lineHeightMd);
-  --labelScaleFactor: 0.8;
-  --labelDefaultPosY: 50%;
-  --labelTransformedPosY: calc(
-    (var(--labelDefaultPosY)) - 
-    (var(--inputPaddingV) * var(--labelScaleFactor)) - 
-    (var(--inputFontSize) * var(--inputLineHeight))
-  );
-  --inputTransitionDuration: var(--transitionDuration);
-  --inputTransitionTF: var(--transitionTF);
+#section1 {
+  height: 600px;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+#section2 {
+  height: 20px;
 }
-
+    .white-color {
+color:white;
+}
+    .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
 html {
-  font-size: 10px;
+  scroll-behavior: smooth;
+}
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px; 
 }
 
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
-  color: #fdfbfb;
-  background-color: #7E57C2;
-  font-family: var(--fontFamily);
-  font-size: 19px;
-  line-height: var(--lineHeightMd);
+            .search input[type=text]{
+            width:300px;
+            height:25px;
+            border-radius:25px;
+            border: none;
+ 
+        }
+         
+        .search{
+            margin-right: 20%;
+            margin:7px;
+ 
+        }
+         
+        .search button{
+            background-color: #0074d900;
+            color: #f2f2f2;
+            float: right;
+            padding: 5px 10px;
+            margin-right: 16px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
 }
 
-.Wrapper {
-  flex: 0 0 80%;
-  max-width: 80%;
-}
+.label-warning[href],
+.badge-warning[href] {
+  font-size: 18px;
+  background-color: #c67605}
 
-.Title {
-  margin: 0 0 var(--gutterXx) 0;
-  padding: 0;
-  color: #fff;
-  font-size: var(--fontSizeXx);
-  font-weight: 400;
-  line-height: var(--lineHeightSm);
-  text-align: center;
-  text-shadow: -0.1rem 0.1rem 0.2rem var(--colorPrimary800);
+.backback {
+  background-image: url("https://clarksvillenow.sagacom.com/files/2019/02/workout-gym-exercise-equipment-shutterstock.jpg");
+  background-size: cover;
 }
-
-.Input {
-  position: relative;
-}
-
-.Input-text {
-  display: block;
-  margin: 0;
-  padding: var(--inputPaddingV) var(--inputPaddingH);
-  color: inherit;
-  width: 100%;
-  font-family: inherit;
-  font-size: var(--inputFontSize);
-  font-weight: inherit;
-  line-height: var(--inputLineHeight);
-  border: none;
-  border-radius: 0.4rem;
-  transition: box-shadow var(--transitionDuration);
-}
-
-.Input-text::placeholder {
-  color: #B0BEC5;
-}
-
-.Input-text:focus {
-  outline: none;
-  box-shadow: 0.2rem 0.8rem 1.6rem var(--colorPrimary600);
-}
-
-.Input-label {
-  display: block;
-  position: absolute;
-  bottom: 50%;
-  left: 1rem;
-  color: #fff;
-  font-family: inherit;
-  font-size: var(--inputFontSize);
-  font-weight: inherit;
-  line-height: var(--inputLineHeight);
-  opacity: 0;
-  transform: 
-    translate3d(0, var(--labelDefaultPosY), 0)
-    scale(1);
-  transform-origin: 0 0;
-  transition:
-    opacity var(--inputTransitionDuration) var(--inputTransitionTF),
-    transform var(--inputTransitionDuration) var(--inputTransitionTF),
-    visibility 0ms var(--inputTransitionDuration) var(--inputTransitionTF),
-    z-index 0ms var(--inputTransitionDuration) var(--inputTransitionTF);
-}
-
-.Input-text:placeholder-shown + .Input-label {
-  visibility: hidden;
-  z-index: -1;
-}
-
-.Input-text:not(:placeholder-shown) + .Input-label,
-.Input-text:focus:not(:placeholder-shown) + .Input-label {
-  visibility: visible;
-  z-index: 1;
-  opacity: 1;
-  transform:
-    translate3d(0, var(--labelTransformedPosY), 0)
-    scale(var(--labelScaleFactor));
-  transition:
-    transform var(--inputTransitionDuration),
-    visibility 0ms,
-    z-index 0ms;
-}
-  .centered {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-h1 { color: rgb(227, 229, 231); font-family: 'Open Sans Condensed', sans-serif; font-size: 55px; font-weight: 700; line-height: 64px; margin: 0 0 0; padding: 20px 30px; text-align: center; text-transform: uppercase; }
-  .background {
-    background: #43cea2;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #185a9d, #43cea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-position: fixed; 
-  top: 0; 
-  left: 0; 
-  /* Preserve aspet ratio */
-  min-width: 100%;
-  min-height: 100%;
-
-  }
-  
-
-   @import url("https://www.w3cplus.com/demo/css3/base.css");
-
-@font-face {
-    font-family: 'sansationregular';
-    src: url('https://www.w3cplus.com/demo/css3/3DAnimationDropdownMenu/sansation_regular-webfont.eot');
-    src: url('https://www.w3cplus.com/demo/css3/3DAnimationDropdownMenu/sansation_regular-webfont.eot?#iefix') format('https://www.w3cplus.com/demo/css3/3DAnimationDropdownMenu/embedded-opentype'),
-         url('https://www.w3cplus.com/demo/css3/3DAnimationDropdownMenu/sansation_regular-webfont.woff') format('woff'),
-         url('https://www.w3cplus.com/demo/css3/3DAnimationDropdownMenu/sansation_regular-webfont.ttf') format('truetype'),
-         url('https://www.w3cplus.com/demo/css3/3DAnimationDropdownMenu/sansation_regular-webfont.svg#sansationregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-body {
-	background-color:#edecec;
-}
-ul, li {
-  list-style: none outside none;
-}
-.background {
-    background: #43cea2;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #185a9d, #43cea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-position: fixed; 
-  top: 0; 
-  left: 0; 
-	
-  /* Preserve aspet ratio */
-  min-width: 100%;
-  min-height: 100%;
-
-}
-/* basic menu styles */
-.nav-menu {
-  display: block;
-	background: #74adaa;
-	width:951px;
-	margin: 50px auto 15px;
-}
-.nav-menu > li {
-  display: inline;
-  float:left;			
-	border-right:1px solid #94c0be;
-  position: relative;
-}
-.nav-menu > li:last-child {
-  border-right: none;
-}
-.nav-menu li a {
-  color: #fff;
-	display: block;
-	text-decoration: none;
-	font-family: 'sansationregular';
-	-webkit-font-smoothing: antialiased;
-	-moz-font-smoothing: antialiased;
-	text-transform: capitalize;
-	overflow: visible;
-	line-height: 20px;
-	font-size: 20px;
-	padding: 15px 30px 15px 31px;			
-}
-
-/* animation domination */
-.three-d {
-  -webkit-perspective: 200px;
-  -moz-perspective: 200px;
-  -ms-perspective: 200px;
-  -o-perspective: 200px;
-  perspective: 200px;
-  -webkit-transition: all .07s linear;
-  -moz-transition: all .07s linear;
-  -ms-transition: all .07s linear;
-  -o-transition: all .07s linear;
-  transition: all .07s linear;
-  position: relative;
-}
-
-.three-d:not(.active):hover {
-  cursor: pointer;
-}
-
-.three-d:not(.active):hover .three-d-box, 
-.three-d:not(.active):focus .three-d-box {
-  -wekbit-transform: translateZ(-25px) rotateX(90deg);
-  -moz-transform: translateZ(-25px) rotateX(90deg);
-  -o-transform: translateZ(-25px) rotateX(90deg);
-  -ms-transform: translateZ(-25px) rotateX(90deg);
-  transform: translateZ(-25px) rotateX(90deg);
-}
-
-.three-d-box {
-  -webkit-transition: all .3s ease-out;
-  -moz-transition: all .3s ease-out;
-  -ms-transition: all .3s ease-out;
-  -o-transition: all .3s ease-out;
-  transition: all .3s ease-out;
-  -webkit-transform: translatez(-25px);
-  -moz-transform: translatez(-25px);
-  -ms-transform: translatez(-25px);
-  -o-transform: translatez(-25px);
-  transform: translatez(-25px);
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  -ms-transform-style: preserve-3d;
-  -o-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-pointer-events: none;
-  -moz-pointer-events: none;
-  -ms-pointer-events: none;
-  -o-pointer-events: none;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-	left: 0;
-	display: block;
-	width: 100%;
-	height: 100%;
-}
-
-.front {
-  -webkit-transform: rotatex(0deg) translatez(25px);
-  -moz-transform: rotatex(0deg) translatez(25px);
-  -ms-transform: rotatex(0deg) translatez(25px);
-  -o-transform: rotatex(0deg) translatez(25px);
-  transform: rotatex(0deg) translatez(25px);
-}
-
-.back {
-  -webkit-transform: rotatex(-90deg) translatez(25px);
-  -moz-transform: rotatex(-90deg) translatez(25px);
-  -ms-transform: rotatex(-90deg) translatez(25px);
-  -o-transform: rotatex(-90deg) translatez(25px);
-  transform: rotatex(-90deg) translatez(25px);
-  color: #FFE7C4;
-}
-
-.front, .back {
-  display: block;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: #74adaa;
-	padding: 15px 30px 15px 31px;	
-	color: white;
-	-webkit-pointer-events: none;
-  -moz-pointer-events: none;
-  -ms-pointer-events: none;
-  -o-pointer-events: none;
-  pointer-events: none;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.nav-menu li .active .front,
-.nav-menu li .active .back,
-.nav-menu li a:hover .front,
-.nav-menu li a:hover .back {
-  background-color: #51938f;
-  -webkit-background-size: 5px 5px;
-  background-size: 5px 5px;
-  background-position: 0 0, 30px 30px;
-  background-image: -webit-linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480), linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480);
-  background-image: -moz-linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480), linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480);
-	background-image: -ms-linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480), linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480);
-  background-image: -o-linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480), linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480);
-  background-image: linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480), linear-gradient(45deg, #478480 25%, transparent 25%, transparent 75%, #478480 75%, #478480);
-}
-.nav-menu ul {
-  position: absolute;
-  left: -40px;
-	text-align: left;
-	line-height: 40px;
-	font-size: 14px;
-	width: 200px;
-	-webkit-transition: all 0.3s ease-in;
-  -moz-transition: all 0.3s ease-in;
-  -ms-transition: all 0.3s ease-in;
-  -o-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-  -webkit-transform-origin: 0px 0px;
-  -moz-transform-origin: 0px 0px;
-  -ms-transform-origin: 0px 0px;
-  -o-transform-origin: 0px 0px;
-  transform-origin: 0px 0px;
-  -webkit-transform: rotateX(-90deg);
-  -moz-transform: rotateX(-90deg);
-  -ms-transform: rotateX(-90deg);
-  -o-transform: rotateX(-90deg);
-  transform: rotateX(-90deg);
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-.nav-menu > li:hover ul {
-  display: block;
-  -webkit-transform: rotateX(0deg);
-  -moz-transform: rotateX(0deg);
-  -ms-transform: rotateX(0deg);
-  -o-transform: rotateX(0deg);
-	transform: rotateX(0deg);
-}
-  
   </style>
-  <div class="background">
-<body>
-  <div id="nav">
-    <ul class="nav-menu clearfix unstyled">
-      <li><a href="/html/home.html" class="three-d">
-        Home
-        <span class="three-d-box"><span class="front">Home</span><span class="back">Home</span></span>
-      </a></li>
-      <li><a href="/html/accountSettings.html" class="three-d">
-        Settings
-        <span class="three-d-box"><span class="front">Settings</span><span class="back">Settings</span></span>
-      </a></li>
-      <li><a href="/html/signin.html" id="signout" class="three-d">
-        Sign Out
-        <span class="three-d-box"><span class="front">Sign Out</span><span class="back">Sign Out</span></span>
-      </a></li>
-      <li><a href="#" class="three-d">
-        About
-        <span class="three-d-box"><span class="front">About</span><span class="back">About</span></span>
-      </a></li>
-      <li><a href="#" class="three-d">
-        Contact
-        <span class="three-d-box"><span class="front">Contact</span><span class="back">Contact</span></span>
-      </a></li> 
-      <li><a href="/html/cart.html" class="three-d">
-        Shopping Cart
-        <span class="three-d-box"><span class="front">Shopping Cart</span><span class="back">Shopping Cart</span></span>
-      </a></li>
+  <body class="backback">
+<div class="backback">
+    
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+  <a class="navbar-brand"  style="color:red;" href="#">SUPPLEMENTS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item ">
+        <a style="font-size: 16px;color:red;" class="nav-link disabled" href="/home"style="color:red;">Home </a>
+      </li>
+      <li class="nav-item">
+        <a style="font-size: 16px;color:red;" class="nav-link disabled" href="/html/signin.html"style="color:red;">Sign In</a>
+      </li>
+      <li class="nav-item">
+        <a style="font-size: 16px;color:red;"class="nav-link disabled" href="/html/accountSettings.html"style="color:red;">Settings</a>
+      </li>
     </ul>
+    <div class="search parent">
+      <form action="#">
+          <input type="text"
+              placeholder="   Search Product "
+              name="search">
+          <button>
+              <i class="fa fa-search"
+                  style="font-size: 18px;">
+              </i>
+          </button>
+      </form>
   </div>
+  </div>
+  <li>
+    <a class="generated_button open-cart" href="/html/cart.html">
+      <i class="fa fa-cart white-color "  style="font-size:50px">&#xf07a;</i><span class='badge badge-warning' id='lblCartCount'> 5 </span>
+    </a>
+  </li>
+
+</nav>
 
   <p>&nbsp</p>
   <p>&nbsp</p>
@@ -450,6 +157,7 @@ position: fixed;
   
 
 </div>
+</body>
   <button onclick="addbasket()" class="add-to-cart" type="button" id="add-to-cart">ADD TO CART</button>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

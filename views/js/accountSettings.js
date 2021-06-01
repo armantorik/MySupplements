@@ -26,7 +26,7 @@ $("#btn-update").click(function () {
         var lName = $("#lastName").val();
         var country = $("#country").val();
         var gender = $("#gender").val();
-
+        window.localStorage.setItem('username',fName,lName);
         const url = window.location.search;
         var email;
         firebase.auth().onAuthStateChanged(async(user) => {

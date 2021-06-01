@@ -17,7 +17,16 @@
     <title>Home Page</title>
   </head>
   <style>
-    
+    .teal-color {
+color:#60bda9;
+}
+#section1 {
+  height: 600px;
+}
+
+#section2 {
+  height: 20px;
+}
     .white-color {
 color:white;
 }
@@ -28,7 +37,9 @@ color:white;
   -moz-border-radius: 9px;
   border-radius: 9px;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 .label-warning[href],
 .badge-warning[href] {
   background-color: #c67605;
@@ -84,7 +95,7 @@ color:white;
    
    
   <nav class="navbar navbar-expand-lg fixed-top">
-  <a class="navbar-brand" href="#">Navigate</a>
+  <a class="navbar-brand" href="#">SUPPLEMENTS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
   </button>
@@ -97,13 +108,7 @@ color:white;
         <a class="nav-link" href="/html/signin.html">Sign In</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/html/accountSettings.html">Settings</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="/html/cart.html">Cart</a>
+        <a class="nav-link" href="/html/accountSettings.html">Settings </a>
       </li>
     </ul>
     <div class="search">
@@ -119,8 +124,13 @@ color:white;
       </form>
   </div>
   </div>
+  <script>
+    window.localStorage.getItem('username');
+  </script>
   <li>
-  <i class="fa fa-cart white-color" style="font-size:50px">&#xf07a;</i><span class='badge badge-warning' id='lblCartCount'> 5 </span>
+    <a class="generated_button open-cart" href="/html/cart.html">
+  <i class="fa fa-cart teal-color "  style="font-size:50px">&#xf07a;</i><span class='badge badge-warning' id='lblCartCount'> 5 </span>
+</a>
   </li>
 </nav>
 
@@ -128,7 +138,7 @@ color:white;
    
    
    
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" id="section1" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -140,7 +150,7 @@ color:white;
       <div class="carousel-caption d-none d-md-block">
     <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
     <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR WOMEN AVAILABLE IN SHOP</p>
-    <a class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
+    <a href="#section2" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
   </div>
     </div>
     
@@ -149,7 +159,7 @@ color:white;
       <div class="carousel-caption d-none d-md-block">
    <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
     <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR MEN AVAILABLE IN SHOP</p>
-    <a class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">LIKE & SHARE</a>
+    <a href="#section2" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
   </div>
     </div>
     
@@ -174,17 +184,19 @@ color:white;
 
       <div class="container mt-5">
         <div class="row wow flash">
-          <div class="col-md-12 text-center"><h1>LATEST PRODUCTS</h1></div>
+          <div id="section2" class="col-md-12 text-center"><h1>LATEST PRODUCTS</h1></div>
         </div>
 
 
           <div class="row mt-5">
             <div class="col-md-3 wow zoomInDown">
             <div class="card">
+              <a href="/html/product.html">
               <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
               <div class="card-body">
-                <div class="card-heading"></div>
-                 <p class="card-text">smth smth smth smth</p>
+                <div class="card-heading">Glucosamine</div>
+              </a>
+                 <p class="card-text">Glucosamine is a natural compound found in cartilage...</p>
                  <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
               </div>
             </div>
@@ -193,10 +205,12 @@ color:white;
 
             <div class="col-md-3 wow zoomInRight">
             <div class="card">
-              <img class="card-img-top img-fluid" alt="img1" src="img/keto.jpeg">
+              <a href="/html/product.html">
+              <img  class="card-img-top img-fluid" alt="img1" src="img/Pea protein.png">
               <div class="card-body">
-               <div class="card-heading">Keto</div>
-                <p class="card-text">smth smth smth smth</p>
+               <div class="card-heading">Pea Protein</div>
+              </a>
+                <p class="card-text">Keto Advanced 1500 is a popular keto diet pill for ...</p>
                 <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
               </div>
             </div>
@@ -205,10 +219,12 @@ color:white;
 
     <div class="col-md-3 wow zoomInUp">
       <div class="card">
+        <a href="/html/product.html">
        <img class="card-img-top img-fluid" alt="img1" src="img/multivitamin.jpeg">
        <div class="card-body">
          <div class="card-heading">Multivitamin</div>
-           <p class="card-text">smth smth smth smth</p>
+       </a>
+           <p class="card-text">A fully dosed pre-workout of 13 powerful ingredients ...</p>
            <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
         </div>
      </div>
@@ -217,16 +233,227 @@ color:white;
 
     <div class="col-md-3 wow zoomInDown">
      <div class="card">
+      <a href="/html/product.html">
         <img class="card-img-top img-fluid" alt="img1" src="img/impact_whey_protein.jpeg">
         <div class="card-body">
           <div class="card-heading">Impact Whey Protein</div>
-           <p class="card-text">smth smth smth smth</p>
+        </a>
+           <p class="card-text">Premium whey packed with 21g of protein per serving ...</p>
           <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
         </div>
       </div>
     </div>
-    
+    </div>
 </div>
+
+
+<div class="container-fluid bc">
+  <div class="container pt-5 pb-5">
+    <div class="row inner-text">
+      <div class="col-md-6 text-light">
+        <h3 class="wow slideInUp">       </h3>
+        <h1 class="mt-4 wow slideInDown text-center">                                                                                                                   </h1>
+        <h1 class="mt-4 wow slideInDown text-center">        </h1><h1 class="mt-4 wow slideInDown text-center">        </h1>
+        <h1 class="mt-4 wow slideInDown text-center">        </h1><h1 class="mt-4 wow slideInDown text-center">        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5 text-center">
+  <div class="row wow flash">
+    <div class="col-md-12 text-center"><h1>BROWSE THE TOP SELLING PRODUCTS</h1></div>
+  </div>
+<div class="row mt-4 wow bounceIn">
+  <div class="col-md-12"> <div class="col-md-12">
+    <a class="btn btn-light m1-4">PROTEIN</a><a class="btn btn-light m1-4">KETOGENIC</a> 
+    <a class="btn btn-light m1-4">GLUCOSE</a><a class="btn btn-light m1-4">VITAMINS</a> </div>
+  </div>
+</div>
+
+
+<div class="row mt-5">
+  <div class="col-md-3 wow slideInDown">
+    <div class="card">
+      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
+      <div class="card-body">
+        <div class="card-heading">Product 1</div>
+         <p class="card-text">smth smth smth smth</p>
+         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 wow slideInLeft">
+    <div class="card">
+      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
+      <div class="card-body">
+        <div class="card-heading">Product 2</div>
+         <p class="card-text">Glucosamine is a natural compound found in cartilage — the tough tissue that cushions joints.  In supplement form, glucosamine is harvested from shells of shellfish or made in a lab. There are several forms of glucosamine, including glucosamine sulfate, glucosamine hydrochloride and N-acetyl glucosamine. These supplements aren't considered interchangeable.  People use glucosamine sulfate orally to treat a painful condition caused by the inflammation, breakdown and eventual loss of cartilage (osteoarthritis).</p>
+         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3 wow slideInRight">
+    <div class="card">
+      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
+      <div class="card-body">
+        <div class="card-heading">Product 3</div>
+         <p class="card-text">smth smth smth smth</p>
+         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 wow slideInUp">
+    <div class="card">
+      <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
+      <div class="card-body">
+        <div class="card-heading">Product 4</div>
+         <p class="card-text">smth smth smth smth</p>
+         <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="row mt-5">
+  <div class="col-md-3 wow flipInX">
+  <div class="card">
+    <img class="card-img-top img-fluid" alt="img1" src="img/glukoz.jpeg">
+    <div class="card-body">
+      <div class="card-heading"></div>
+       <p class="card-text">Glucosamine is a natural compound found in cartilage — the tough tissue that cushions joints.  In supplement form, glucosamine is harvested from shells of shellfish or made in a lab. There are several forms of glucosamine, including glucosamine sulfate, glucosamine hydrochloride and N-acetyl glucosamine. These supplements aren't considered interchangeable.  People use glucosamine sulfate orally to treat a painful condition caused by the inflammation, breakdown and eventual loss of cartilage (osteoarthritis).</p>
+       <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+    </div>
+  </div>
+</div>
+
+
+  <div class="col-md-3 wow flipInY">
+  <div class="card">
+    <img class="card-img-top img-fluid" alt="img1" src="img/keto.jpeg">
+    <div class="card-body">
+     <div class="card-heading">Keto</div>
+      <p class="card-text">smth smth smth smth</p>
+      <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-3 wow flipInX">
+<div class="card">
+<img class="card-img-top img-fluid" alt="img1" src="img/multivitamin.jpeg">
+<div class="card-body">
+<div class="card-heading">Multivitamin</div>
+ <p class="card-text">smth smth smth smth</p>
+ <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3 wow flipInY">
+<div class="card">
+<img class="card-img-top img-fluid" alt="img1" src="img/impact_whey_protein.jpeg">
+<div class="card-body">
+<div class="card-heading">Impact Whey Protein</div>
+ <p class="card-text">smth smth smth smth</p>
+<a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a>
+</div>
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<footer class="bg-dark">
+  <div class="container">
+     <div class="row">
+      <div class="col-md-12 pt-5"><img src="img/logo.png" alt="footer image" class="img-fluid footer-image wow slideInDown"></div>
+      </div>
+      
+      <div class="row text-light mt-5">
+          <div class="col-md-3 wow slideInLeft">
+          <div class="footer-heading">
+          ABOUT
+          </div>
+          <p class="footer-text mt-3">Always pushing forward for self betterment, supplements are here to boost you on your journey. We have been trying to boost our customers progress day by day with our hard work since the day we've been established.</p>
+          <img src="img/cards.webp" class="img-fluid mt-2" alt="card">
+          </div>
+          
+          <div class="col-md-3 wow slideInRight">
+           <div class="footer-heading">
+          QUESTIONS
+          </div>
+              <div class="row">
+              <div class="col-md-6">
+                  <ul class="footer-list mt-3">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Track Orders</a></li>
+                <li><a href="#">Returns</a></li>
+                <li><a href="#">Jobs</a></li> 
+                <li><a href="#">Shipping</a></li> 
+                <li><a href="#">Blog</a></li>  
+              </ul>
+                  </div>
+            
+              </div>
+              
+              
+          </div>
+          
+          <div class="col-md-3 wow slideInDown">
+          <div class="footer-heading"> RECENT POSTS </div>
+          <div class="media mt-3"> <img src="images/media/1.jpg" class="mr-3" alt="...">
+              <div class="media-body">
+              <h5 class="mt-0">Newest science in muscle building</h5>
+              Scientists came up with a new formula that promotes muscle growth... </div>
+            </div>
+          <div class="media"> <img src="images/media/2.jpg" class="mr-3 img-fluid" alt="...">
+              <div class="media-body">
+              <h5 class="mt-0">Is ketogenic=bad? </h5>
+              There has been several discussions going on about how keto is not always... </div>
+            </div>
+        </div>
+          
+          <div class="col-md-3 wow slideInUp">
+          <div class="footer-heading">
+          CONTACT US
+          </div>
+          <p class="footer-text mt-3"><i class="fa fa-home" aria-hidden="true"></i> : supplement place at supplement street no 21</p>
+          <p> <i class="fa fa-envelope-o" aria-hidden="true"></i> : supplements@gmail.com</p>
+          <p><i class="fa fa-phone" aria-hidden="true"></i> : +90 216 546 13 92</p>
+          <p><i class="fa fa-fax" aria-hidden="true"></i> : 044 61151556 55</p>  
+              
+          </div>
+          
+          
+      </div>
+      
+      <hr>
+      
+      <div class="footer-endline text-center text-light mt-2 pb-4 wow fadeIn" >This Webpage Was Made By CS308 Group 19 As a Project</div>
+     </div> 
+ </footer> 
+
+
+
+
+
 
 
 
