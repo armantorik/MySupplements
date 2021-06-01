@@ -46,7 +46,6 @@
                 headers: {
                   Accept: "application/json",
                   "Content-Type": "application/json",
-                  "CSRF-Token": Cookies.get("XSRF-TOKEN"),
                 },
                 body: JSON.stringify({ idToken }),
               });
@@ -55,9 +54,9 @@
 
           .then(() => {
             window.location.href = "/html/home.html";
+          }).catch((error) => {
+            window.alert(error);
           });
-        return false;
-
         }
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -74,7 +73,6 @@
                   headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
-                    "CSRF-Token": Cookies.get("XSRF-TOKEN"),
                   },
                   body: JSON.stringify({ idToken }),
                 });

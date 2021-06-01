@@ -4,7 +4,7 @@ async function getProducts2js() {
     firebase.auth().onAuthStateChanged(async(user) => {
     if (user) {
         console.log(user.email);
-        var queryurl = "/api/basketQuery.json?&email=" + user.email;
+        var queryurl = "/api/basketQuery.json";
 
 
         $.get(queryurl).then(response => {
@@ -80,8 +80,8 @@ function addP(pid){
         alert("Sorry! No product left")
     }
     else {
-    queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
-    axios.put(queryurl).then(
+    queryurl = "/api/add2basket" + firebase.auth().currentUser.email + "&pid=" + pid;
+    axios.get(queryurl).then(
     (response) => {
       var result = response.data;
       console.log('Processing Request');

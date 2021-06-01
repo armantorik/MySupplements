@@ -3,14 +3,14 @@ const assert = require('chai').assert;
 var expect = require('chai').expect;
 
 // Imported functions to be tested
-const getProductsFromBasket = require('../models/users/users.js').getProductsFromBasket 
-const createAccount = require('../models/users/users.js').createAccount 
-const add2basket = require('../models/users/users.js').add2basket 
-const removeAccount = require('../models/users/users.js').removeAccount 
-const removeFromBasket = require('../models/users/users.js').removeFromBasket 
-const decrementFromBasket = require('../models/users/users.js').decrementFromBasket 
-const order = require('../models/users/users.js').order 
-const getOrder =  require('../models/users/users.js').retrieveOrders
+const getProductsFromBasket = require('../controllers/users/users.js').getProductsFromBasket 
+const createAccount = require('../controllers/users/users.js').createAccount 
+const add2basket = require('../controllers/users/users.js').add2basket 
+const removeAccount = require('../controllers/users/users.js').removeAccount 
+const removeFromBasket = require('../controllers/users/users.js').removeFromBasket 
+const decrementFromBasket = require('../controllers/users/users.js').decrementFromBasket 
+const order = require('../controllers/users/users.js').order 
+const getOrder =  require('../controllers/users/users.js').retrieveOrders
 var email = "test:" + Math.random();
 
 describe('Create Account', () => {

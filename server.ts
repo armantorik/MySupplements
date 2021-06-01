@@ -1,5 +1,4 @@
-// Main Script
-
+/*************** Controllers *********************/
 
 // Global Port
 process.env.PORT = "3000";
@@ -27,9 +26,9 @@ function generateAccessToken(username) {
 
 //custom modules
 
-const products = require("./models/products/products");
-const user = require("./models/users/users");
-const admins = require("./models/users/admins/admins");
+const products = require("./controllers/products/products");
+const user = require("./controllers/users/users");
+const admins = require("./controllers/users/admins/admins");
 const { firebase, admin, db } = require("./utils/admin");
 
 
@@ -37,6 +36,7 @@ const firebaseConfig = require("./utils/config");
 firebase.initializeApp(firebaseConfig);
 
 // Script
+//app.use()
 app.use(cookieParser());
 app.use(express.static('views'));
 app.use(express.static('assets'));
@@ -70,7 +70,7 @@ app.post("/logingin", (req, res) => {
       (sessionCookie) => {
         const options = { maxAge: expiresIn, httpOnly: false, secure: true };
         res.cookie("session", sessionCookie, options);
-        res.end(JSON.stringify({ status: "success" }));
+        res.end(JSON.stringify({ status: "success", session: sessionCookie }));
       },
       (error) => {
         res.status(401).send("UNAUTHORIZED REQUEST!");
@@ -81,7 +81,8 @@ app.post("/logingin", (req, res) => {
 // Users can log out
 app.post('/sessionLogout', (req, res) => {
   const sessionCookie = req.cookies.session || '';
-  res.clearCookie('session');
+  debug(sessionCookie)
+  res.clearCookie('session', {domain: 'localhost', path: '/'});
   admin
     .auth()
     .verifySessionCookie(sessionCookie)
@@ -92,6 +93,7 @@ app.post('/sessionLogout', (req, res) => {
       res.redirect('/html/signin.html');
     })
     .catch((error) => {
+      debug(error)
       res.redirect('/html/signin.html');
     });
 });
@@ -226,8 +228,8 @@ app.all('/api/basketQuery.json', function (req, res) {
   const sessionCookie = req.cookies.session || "";
   debug(sessionCookie)
   admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
-
     var email = decodedClaims["email"];
+    debug(email)
     user.getProductsFromBasket(email).then(function (jsonProducts) {
 
       res.jsonp({
@@ -238,6 +240,7 @@ app.all('/api/basketQuery.json', function (req, res) {
   }
 
   ).catch((error) => {
+    debug(error)
     res.redirect('/html/signin.html');
   });
 
@@ -270,11 +273,9 @@ app.get("/api/removeFromBasket", function (req, res) {
 
 // Users can add products with their pid to the basket
 app.get("/api/add2basket", function (req, res) {
-
   const sessionCookie = req.cookies.session || "";
   admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
     var email = decodedClaims["email"];
-
     var pid = req.param("pid");
     if (user.add2basket(email, pid)) {
       res.jsonp({
@@ -287,8 +288,9 @@ app.get("/api/add2basket", function (req, res) {
       })
     }
 
-  }).catch(() => {
-    console.log("no cookie")
+  }).catch((error) => {
+    debug(error)
+    res.sendFile(path.join(__dirname + "/views/html/signin.html"));
   }
   )
 });
@@ -318,6 +320,60 @@ app.get("/api/getOrders", function (req, res) {
 
   })
 
+})
+
+// Users can post comments on products
+app.get("/api/postcomment", function (req, res) {
+
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
+    var email = decodedClaims["email"];
+    var pid = req.param("pid");
+    var comment = req.param("comm");
+    if (user.postcomment(email, pid, comment)) {
+
+      res.jsonp({
+        status: true
+      })
+    }
+    else {
+      res.jsonp({
+        status: false
+      })
+    }
+
+  }).catch((error) => {
+    console.log("no cookie")
+    console.log(error)
+  }
+  )
+})
+
+// Users can post comments on products
+app.get("/api/postrating", function (req, res) {
+
+  const sessionCookie = req.cookies.session || "";
+  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
+    var email = decodedClaims["email"];
+    var pid = req.param("pid");
+    var rat = req.param("rat");
+    if (user.postrating(email, pid, rat)) {
+
+      res.jsonp({
+        status: true
+      })
+    }
+    else {
+      res.jsonp({
+        status: false
+      })
+    }
+
+  }).catch((error) => {
+    console.log("no cookie")
+    console.log(error)
+  }
+  )
 })
 
 // Users can create their account with their information
@@ -381,7 +437,7 @@ function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(' ')[0]
   if (token == null) return res.sendStatus(401)
 
-  jwt.verify(token, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     
 
     if (err) {console.log(err); return res.sendFile(path.join(__dirname + "/views/html/signin.html"));}
@@ -428,10 +484,10 @@ app.post('/adminLogin/GetToken', async (req, res) => {
 app.post("/adminLogin", authenticateToken, async function (req, res) {
   debug(req.user)
   if (req.body["pm"]) { // True means pm, false means sm
-    res.sendFile(path.join(__dirname + "/models/users/admins/static/pm.html"))
+    res.sendFile(path.join(__dirname + "/controllers/users/admins/static/pm.html"))
   }
   else if (req.body["sm"]) {
-    res.sendFile(path.join(__dirname + "/models/users/admins/static/sm.html"))
+    res.sendFile(path.join(__dirname + "/controllers/users/admins/static/sm.html"))
   }
   else {
     res.sendStatus(400);
@@ -446,7 +502,7 @@ app.post("/adminLogin", authenticateToken, async function (req, res) {
 // Admin can add products
 app.get("/admin/getAddProductPage", authenticateToken, async function (req, res) {
 
-    res.sendFile(path.join(__dirname + "/models/users/admins/static/addProduct.html"))
+    res.sendFile(path.join(__dirname + "/controllers/users/admins/static/addProduct.html"))
 
 });
 app.post('/admin/addProduct', authenticateToken, upload.single('image'), (req, res) => {

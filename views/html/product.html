@@ -223,15 +223,15 @@ html {
       var queryurl;
       
       if (user) {
-        queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
+        queryurl = "/api/add2basket";
       }
       else {
         console.log("no user");
 
         queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
       }
-
-      axios.put(queryurl).then(
+      alert(queryurl)
+      axios.get(queryurl).then(
           (response) => {
             var result = response.data;
             console.log('Processing Request');
