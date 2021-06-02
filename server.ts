@@ -130,10 +130,9 @@ app.get('/api/products', function (req, res) {
     var jsonObject = {};
     var key = 'detail';
     jsonObject[key] = [];
-
     for (var i = 0; i < doc.arr.length; i++) {
       var details = {
-        "id": i,
+        "id": doc.arr[i].id,
         "name": doc.arr[i].name,
         "quantity": doc.arr[i].quantity,
         "info": doc.arr[i].info,
