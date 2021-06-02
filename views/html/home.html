@@ -101,6 +101,30 @@
     font-size: 18px;
     background-color: #c67605;
   }
+
+
+  #wrapper {
+  display: inline!important;
+  height: 275px;
+  max-width: 540px;
+}
+.box {
+margin : 5px;
+display : inline-block;
+width: 170px;
+height: 275px;
+background-color: #F5FBEF;
+text-align:center;
+vertical-align: top; 
+float: inline-start;
+}
+
+.box-container:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
 </style>
 
 <body>
@@ -197,6 +221,7 @@
     </div>
   </div>
 
+<!-- 
   <div class="container mt-5">
     <div class="row wow flash">
       <div id="section2" class="col-md-12 text-center">
@@ -261,7 +286,7 @@
   </div>
   </div>
   </div>
-  </div>
+  </div> -->
 
 
   <div class="container-fluid bc">
@@ -293,15 +318,9 @@
     </div>
 
 
-    <div   class="row mt-5">
-      <div >
-        <div  id="product" class="card">
-          <img class="card-img-top img-fluid" alt="img1" src="/img/glukoz.jpeg">
-          <div class="card-body">
-            <div class="card-heading">Product 1</div>
-            <p class="card-text">smth smth smth smth</p>
+    <div >
+        <div  style= "display: inline-block;" id="product" class="card">
             <!-- <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a> -->
-          </div>
         </div>
       </div>
 
@@ -520,9 +539,10 @@
         var pid = element["id"];
         var quantity = element["quantity"];
         if (quantity <= 0) {
-          document.getElementById("product").innerHTML += " <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' width='300' height='300' src=" + imgLink + "></img><div class='card-body'> <div class='card-heading'  + pname +  </div></a>";
+          
+          document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div class='card-heading'  + pname +  </div></a></div>";
         } else {
-          document.getElementById("product").innerHTML += " <img class='card-img-top img-fluid' width='300' height='300' src=" + imgLink + "></img><div class='card-body'> <div class='card-heading' href=/products?pid=" + pid + ">" + pname + "</div> </div>";
+          document.getElementById("product").innerHTML += "<div style='float:right'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div class='card-heading'  + pname +  </div></a></div>";
         }
       });
       dispCats()
