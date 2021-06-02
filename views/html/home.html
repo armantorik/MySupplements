@@ -156,10 +156,10 @@
         document.getElementById("lblCartCount").innerHTML = count;
 
       }
-      function onloadFuncs(){
-          getBasketSize()
-          dispName()
-        }
+      function onloadFuncs() {
+        getBasketSize()
+        dispName()
+      }
     </script>
     <li>
       <a class="generated_button open-cart" href="/html/accountSettings.html">
@@ -256,7 +256,7 @@
     </div>
     <div class="row mt-4 wow bounceIn">
       <div id="cats" class="col-md-12">
-        
+
       </div>
     </div>
 
@@ -346,11 +346,6 @@
 
 
 
-
-
-
-
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -369,14 +364,26 @@
 
     <script>
 
-      function filterByCat(cat){
+      async function filterByCat(cat) {
+        console.log(cat)
         const response = await fetch('/api/getByCat?cat=' + cat);
         const myJson = await response.json(); //extract JSON from the http response
-        console.log(myJson)
-      }
-      window.addEventListener('load', function dispPros() {
+        document.getElementById("product").innerHTML = "";
 
-        if (document.getElementById('button').onclick)
+        myJson.proArr.forEach((element) => {
+          var imgLink = element["thumbnailUrl"];
+          var pname = element["name"];
+          var pid = element["id"];
+          var quantity = element["quantity"];
+          if (quantity <= 0) {
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
+          } else {
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
+          }
+        });
+      }
+      async function dispPros() {
+        
         var productJson = window.SERVER_DATA["jsonObject"]["detail"];
         productJson.forEach(element => {
           var imgLink = element["link"];
@@ -384,29 +391,30 @@
           var pid = element["id"];
           var quantity = element["quantity"];
           if (quantity <= 0) {
-
             document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
           } else {
             document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
           }
         });
-        dispCats()
-      });
-
+      }
+      dispPros()
 
       async function dispCats() {
 
 
         const response = await fetch('/api/getCats');
         const myJson = await response.json(); //extract JSON from the http response
-
+        var count = 0;
+        document.getElementById("cats").innerHTML = " <button id='getByCat-1' onclick='dispPros()' class='btn btn-light m1-4'>All</button>";
         myJson.categories.forEach((cat) => {
-          document.getElementById("cats").innerHTML += " <button id='getByCat' onclick='filterByCat(" + cat  + "' class='btn btn-light m1-4'>" + cat + "</button>";
+          var funcCall = 'filterByCat("' + cat + '")';
+          document.getElementById("cats").innerHTML += " <button id='getByCat" + count + "' onclick='" + funcCall + "' class='btn btn-light m1-4'>" + cat + "</button>";
+          count += 1;
         })
-
+        return count;
       }
+      dispCats();
 
-      
 
     </script>
 
