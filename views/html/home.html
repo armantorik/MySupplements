@@ -359,7 +359,7 @@
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 
-    <script>function getServerData(data) { window.SERVER_DATA = data; }</script>
+    <script>function getServerData(data) { window.allPros = data; }</script>
     <script src="/api/products?callback=getServerData"></script>
 
     <script>
@@ -375,6 +375,7 @@
           var pname = element["name"];
           var pid = element["id"];
           var quantity = element["quantity"];
+          
           if (quantity <= 0) {
             document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
           } else {
@@ -384,7 +385,9 @@
       }
       async function dispPros() {
         
-        var productJson = window.SERVER_DATA["jsonObject"]["detail"];
+        var productJson = window.allPros["jsonObject"]["detail"];
+        document.getElementById("product").innerHTML = "";
+
         productJson.forEach(element => {
           var imgLink = element["link"];
           var pname = element["name"];
