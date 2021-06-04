@@ -146,15 +146,15 @@
         document.getElementById("uName").innerHTML += sessionStorage.getItem("lastname");
       }
       async function getBasketSize() {
-        const response = await fetch('/api/basketQuery.json');
+        const response = await fetch('/basket');
         const myJson = await response.json();
-        var count = 0;
-        var arr = myJson.jsonProducts.productArr;
-        arr.forEach((cat) => {
-          count += 1;
-        })
-        document.getElementById("lblCartCount").innerHTML = count;
-
+        var pros = myJson.jsonProducts;
+        console.log(pros)
+        if (pros) {
+          
+          document.getElementById("lblCartCount").innerHTML = pros.productArr.size;
+        }
+        
       }
       function onloadFuncs() {
         getBasketSize()
@@ -360,13 +360,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 
     <script>function getServerData(data) { window.allPros = data; }</script>
-    <script src="/api/products?callback=getServerData"></script>
+    <script src="/products?callback=getServerData"></script>
 
     <script>
 
       async function filterByCat(cat) {
         console.log(cat)
-        const response = await fetch('/api/getByCat?cat=' + cat);
+        const response = await fetch('/products/cats/get?cat=' + cat);
         const myJson = await response.json(); //extract JSON from the http response
         document.getElementById("product").innerHTML = "";
 
@@ -394,9 +394,9 @@
           var pid = element["id"];
           var quantity = element["quantity"];
           if (quantity <= 0) {
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/html/product.html?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
           } else {
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/html/product.html?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
           }
         });
       }
@@ -405,7 +405,7 @@
       async function dispCats() {
 
 
-        const response = await fetch('/api/getCats');
+        const response = await fetch('/products/getCats');
         const myJson = await response.json(); //extract JSON from the http response
         var count = 0;
         document.getElementById("cats").innerHTML = " <button id='getByCat-1' onclick='dispPros()' class='btn btn-light m1-4'>All</button>";
@@ -452,24 +452,6 @@
 
 
     <script>
-      async function getUser() {
-        const token = await firebase.auth().currentUser.getIdToken()
-        fetch("/getUser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-            Authorization: token
-          },
-          body: firebase.auth().currentUser.email
-        });
-      };
-      function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-      }
 
       $("#signout").click(async function () {
 
@@ -499,12 +481,11 @@
           if (!user.isAnonymous) {
 
             const getUserInfo = async () => {
-              const url = '/api/getProfile?email=' + user.email;
+              const url = '/user/getInfo?email=' + user.email;
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
               sessionStorage.setItem("lastname", myJson.profile.lname);
               sessionStorage.setItem("fname", myJson.profile.fname);
-              console.log(sessionStorage.getItem("fname"))
             }
             getUserInfo()
           }
