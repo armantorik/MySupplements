@@ -146,20 +146,20 @@
         document.getElementById("uName").innerHTML += sessionStorage.getItem("lastname");
       }
       async function getBasketSize() {
-        const response = await fetch('/api/basketQuery.json');
+        const response = await fetch('/basket');
         const myJson = await response.json();
-        var count = 0;
-        var arr = myJson.jsonProducts.productArr;
-        arr.forEach((cat) => {
-          count += 1;
-        })
-        document.getElementById("lblCartCount").innerHTML = count;
-
-      }
-      function onloadFuncs(){
-          getBasketSize()
-          dispName()
+        var pros = myJson.jsonProducts;
+        console.log(pros)
+        if (pros) {
+          
+          document.getElementById("lblCartCount").innerHTML = pros.productArr.size;
         }
+        
+      }
+      function onloadFuncs() {
+        getBasketSize()
+        dispName()
+      }
     </script>
     <li>
       <a class="generated_button open-cart" href="/html/accountSettings.html">
@@ -256,7 +256,7 @@
     </div>
     <div class="row mt-4 wow bounceIn">
       <div id="cats" class="col-md-12">
-        
+
       </div>
     </div>
 
@@ -346,11 +346,6 @@
 
 
 
-
-
-
-
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -364,49 +359,65 @@
       crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
 
-    <script>function getServerData(data) { window.SERVER_DATA = data; }</script>
-    <script src="/api/products?callback=getServerData"></script>
+    <script>function getServerData(data) { window.allPros = data; }</script>
+    <script src="/products?callback=getServerData"></script>
 
     <script>
 
-      function filterByCat(cat){
-        const response = await fetch('/api/getByCat?cat=' + cat);
+      async function filterByCat(cat) {
+        console.log(cat)
+        const response = await fetch('/products/cats/get?cat=' + cat);
         const myJson = await response.json(); //extract JSON from the http response
-        console.log(myJson)
-      }
-      window.addEventListener('load', function dispPros() {
+        document.getElementById("product").innerHTML = "";
 
-        if (document.getElementById('button').onclick)
-        var productJson = window.SERVER_DATA["jsonObject"]["detail"];
+        myJson.proArr.forEach((element) => {
+          var imgLink = element["thumbnailUrl"];
+          var pname = element["name"];
+          var pid = element["id"];
+          var quantity = element["quantity"];
+          
+          if (quantity <= 0) {
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
+          } else {
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
+          }
+        });
+      }
+      async function dispPros() {
+        
+        var productJson = window.allPros["jsonObject"]["detail"];
+        document.getElementById("product").innerHTML = "";
+
         productJson.forEach(element => {
           var imgLink = element["link"];
           var pname = element["name"];
           var pid = element["id"];
           var quantity = element["quantity"];
           if (quantity <= 0) {
-
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/html/product.html?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
           } else {
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
+            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/html/product.html?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
           }
         });
-        dispCats()
-      });
-
+      }
+      dispPros()
 
       async function dispCats() {
 
 
-        const response = await fetch('/api/getCats');
+        const response = await fetch('/products/getCats');
         const myJson = await response.json(); //extract JSON from the http response
-
+        var count = 0;
+        document.getElementById("cats").innerHTML = " <button id='getByCat-1' onclick='dispPros()' class='btn btn-light m1-4'>All</button>";
         myJson.categories.forEach((cat) => {
-          document.getElementById("cats").innerHTML += " <button id='getByCat' onclick='filterByCat(" + cat  + "' class='btn btn-light m1-4'>" + cat + "</button>";
+          var funcCall = 'filterByCat("' + cat + '")';
+          document.getElementById("cats").innerHTML += " <button id='getByCat" + count + "' onclick='" + funcCall + "' class='btn btn-light m1-4'>" + cat + "</button>";
+          count += 1;
         })
-
+        return count;
       }
+      dispCats();
 
-      
 
     </script>
 
@@ -441,24 +452,6 @@
 
 
     <script>
-      async function getUser() {
-        const token = await firebase.auth().currentUser.getIdToken()
-        fetch("/getUser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-            Authorization: token
-          },
-          body: firebase.auth().currentUser.email
-        });
-      };
-      function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-      }
 
       $("#signout").click(async function () {
 
@@ -488,12 +481,11 @@
           if (!user.isAnonymous) {
 
             const getUserInfo = async () => {
-              const url = '/api/getProfile?email=' + user.email;
+              const url = '/user/getInfo?email=' + user.email;
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
               sessionStorage.setItem("lastname", myJson.profile.lname);
               sessionStorage.setItem("fname", myJson.profile.fname);
-              console.log(sessionStorage.getItem("fname"))
             }
             getUserInfo()
           }

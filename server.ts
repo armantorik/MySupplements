@@ -1,52 +1,51 @@
-/*************** Server Routers *********************/
+/**************************** Main *********************************/
 
 // Global Port
 process.env.PORT = "3000";
-var debug = require('debug')('server')
 
 // All the imports
+
+var debug = require('debug')('server')
 
 const express = require('express');
 const app = express();
 
 var path = require('path');
-const http = require('http');
-const fs = require('fs');
-const jwt = require('jsonwebtoken');
-const Cookies = require('cookies');
 const cookieParser = require("cookie-parser");
-const multer = require('multer')
 const dotenv = require('dotenv');
+
 dotenv.config();
 process.env.TOKEN_SECRET;
 
-function generateAccessToken(username) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
-}
 
-//custom modules
 
-const products = require("./controllers/products/products");
-const user = require("./controllers/users/users");
+// Routers
+const productRouter = require("./routers/productsRouter");
+const basketRouter = require("./routers/basketRouter");
+const orderRouter = require("./routers/orderRouter");
+const userRouter = require("./routers/userRouter");
+const adminRouter = require("./routers/adminRouter");
+
+
 const admins = require("./controllers/users/admins/admins");
-const { firebase, admin, db } = require("./utils/admin");
+const {firebase, admin, db} = require("./utils/admin");
 
 
 const firebaseConfig = require("./utils/config");
 firebase.initializeApp(firebaseConfig);
 
-// Script
-//app.use()
+
+
 app.use(cookieParser());
 app.use(express.static('views'));
 app.use(express.static('assets'));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-// To temporarily store files
-const upload = multer({
-  storage: multer.memoryStorage()
-})
+
+
+
+// Web Frontend spesific routes
 
 // Users are directed to their home or signin page
 app.get("/", function (req, res) {
@@ -57,6 +56,7 @@ app.get("/", function (req, res) {
       res.redirect("/home");
     })
     .catch((error) => {
+      console.log(error)
       res.redirect("/html/signin.html");
     });
 });
@@ -65,14 +65,16 @@ app.get("/", function (req, res) {
 app.post("/logingin", (req, res) => {
   const idToken = req.body.idToken.toString();
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  debug(idToken)
   admin.auth().createSessionCookie(idToken, { expiresIn })
     .then(
       (sessionCookie) => {
         const options = { maxAge: expiresIn, httpOnly: false, secure: true };
         res.cookie("session", sessionCookie, options);
-        res.end(JSON.stringify({ status: "success", session: sessionCookie }));
+        res.end(JSON.stringify({status: "success", session: sessionCookie}));
       },
       (error) => {
+        console.log(error)
         res.status(401).send("UNAUTHORIZED REQUEST!");
       }
     );
@@ -104,464 +106,42 @@ app.all("/home", function (req, res) {
   const sessionCookie = req.cookies.session || "";
 
   admin.auth().verifySessionCookie(sessionCookie, true)
-    .then((decodedClaims) => {
+    .then(() => {
       res.sendFile(path.join(__dirname + "/views/html/home.html"));
     })
     .catch((error) => {
+      console.log(error)
       res.redirect('/html/signin.html');
     });
 
 });
 
-app.get("/products", function (req, res) {
-  res.sendFile(path.join(__dirname + "/views/html/product.html"));
-});
 
+/************************** API Routers *********************************/
+// These routes connect the endpoints to the controllers
 
 
+// Routes related to products (get, get with pid, etc...)
+app.use('/products', productRouter);
 
-/************************** API START *********************************/
+// Routes related to basket (get basket, add to basket, etc...)
+app.use('/basket', basketRouter);
 
-// Users can see all of the products in database
-app.get('/api/products', function (req, res) {
+// Routes related to user (get user info, create user, etc...)
+app.use('/user', userRouter);
 
-  products.getProducts().then(function (doc) {
+// Routes related to order (get prev orders, create order, etc...)
+app.use('/order', orderRouter);
 
-    var jsonObject = {};
-    var key = 'detail';
-    jsonObject[key] = [];
-    for (var i = 0; i < doc.arr.length; i++) {
-      var details = {
-        "id": doc.arr[i].id,
-        "name": doc.arr[i].name,
-        "quantity": doc.arr[i].quantity,
-        "info": doc.arr[i].info,
-        "link": doc.arr[i].thumbnailUrl,
-        "price": doc.arr[i].price,
-        "distributor": doc.arr[i].distributor
-      };
-      jsonObject[key].push(details);
-    };
+// Routes related to admin (admin login, change delivery status, etc...)
+app.use('/admin', adminRouter);
 
-    res.jsonp({
-      jsonObject
-    });
-  });
-});
-
-
-// Users can get the product information with its pid
-app.get('/api/products/:pid', function (req, res) {
-  var pid = req.params.pid;
-  products.getProducts(pid).then(function (doc) {
-
-    var jsonObject = {};
-    var key = 'detail';
-    jsonObject[key] = [];
-
-
-    var details = {
-      "id": pid,
-      "quantity": doc.product.quantity,
-      "name": doc.product.name,
-      "info": doc.product.info,
-      "link": doc.product.thumbnailUrl,
-      "price": doc.product.price,
-      "distributor": doc.product.distributor
-    };
-    jsonObject[key].push(details);
-
-    res.jsonp({
-      jsonObject
-    });
-  })
-});
-
-
-/************ Users Can search and filter ***************/ 
-app.get('/api/search', async function (req, res) {
-
-  var query = req.param("query");
-  var pros = await user.search(query).catch((error) => {
-    res.status(400).send("Error: " + error);
-  });
-
-    res.jsonp(pros);
-
-});
-
-app.get('/api/getCats',function (req, res) {
-  
-  products.getProducts().then((pros) => {
-    var catArr = [];
-    pros.arr.forEach((product) => {
-      catArr.push(product.category)
-    })
-    var categories = [...new Set(catArr)];
-
-    categories = categories.filter(String);
-
-    res.jsonp({
-      categories:categories
-    })
-  })
-
-});
-
-
-
-app.get('/api/getByCat', async function (req, res) {
-  
-  var cat = req.param("cat");
-
-  var proJson = await user.getByCat(cat);
-
-  res.jsonp(proJson);
-
-});
-
-/********************************************************/ 
-
-// Users can see the products in their basket
-app.all('/api/basketQuery.json', function (req, res) {
-  const sessionCookie = req.cookies.session || "";
-  debug(sessionCookie)
-  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
-    var email = decodedClaims["email"];
-    debug(email)
-    user.getProductsFromBasket(email).then(function (jsonProducts) {
-
-      res.jsonp({
-        jsonProducts
-      })
-    }
-    )
-  }
-
-  ).catch((error) => {
-    debug(error)
-    res.redirect('/html/signin.html');
-  });
-
-
-});
-
-// Users can decrement the product from their basket
-app.get("/api/decrementFromBasket", function (req, res) {
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
-    var email = decodedClaims["email"];
-    var pid = req.param("pid");
-    user.decrementFromBasket(email, pid)
-    res.jsonp({
-      status: true
-    })
-  })
-})
-
-
-// Users can remove all of the product using pid from their basket
-app.get("/api/removeFromBasket", function (req, res) {
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
-    var email = decodedClaims["email"];
-    var pid = req.param("pid");
-    user.removeFromBasket(email, pid)
-  })
-})
-
-// Users can add products with their pid to the basket
-app.get("/api/add2basket", function (req, res) {
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
-    var email = decodedClaims["email"];
-    var pid = req.param("pid");
-    if (user.add2basket(email, pid)) {
-      res.jsonp({
-        status: true
-      })
-    }
-    else {
-      res.jsonp({
-        status: false
-      })
-    }
-
-  }).catch((error) => {
-    debug(error)
-    res.sendFile(path.join(__dirname + "/views/html/signin.html"));
-  }
-  )
-});
-
-// Users can place order the products in their basket
-app.get("/api/order", function (req, res) {
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, true).then(async (decodedClaims) => {
-    var email = decodedClaims["email"];
-    var cardNo = req.param("cardNo");
-    var oid = await user.order(email);
-    res.jsonp(
-      {
-        oid: oid
-      }
-    )
-  })
-});
-
-// Users can see their previous orders
-app.get("/api/getOrders", function (req, res) {
-
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
-    var email = decodedClaims["email"];
-    user.retrieveOrders(email, res);
-
-  })
-
-})
-
-// Users can post comments on products
-app.get("/api/postcomment", function (req, res) {
-
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
-    var email = decodedClaims["email"];
-    var pid = req.param("pid");
-    var comment = req.param("comm");
-    if (user.postcomment(email, pid, comment)) {
-
-      res.jsonp({
-        status: true
-      })
-    }
-    else {
-      res.jsonp({
-        status: false
-      })
-    }
-
-  }).catch((error) => {
-    console.log("no cookie")
-    console.log(error)
-  }
-  )
-})
-
-// Users can post comments on products
-app.get("/api/postrating", function (req, res) {
-
-  const sessionCookie = req.cookies.session || "";
-  admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
-    var email = decodedClaims["email"];
-    var pid = req.param("pid");
-    var rat = req.param("rat");
-    if (user.postrating(email, pid, rat)) {
-
-      res.jsonp({
-        status: true
-      })
-    }
-    else {
-      res.jsonp({
-        status: false
-      })
-    }
-
-  }).catch((error) => {
-    console.log("no cookie")
-    console.log(error)
-  }
-  )
-})
-
-// Users can create their account with their information
-app.put("/api/createAccount", function (req, res) {
-  var params = req.query;
-  user.createAccount(params.email, params.firstName, params.lastName, params.address, params.phone, params.gender, params.bio).then(() => {
-    console.log("Account created successfully");
-  })
-    .catch((error) => {
-      res.end("Error: " + error);
-    });
-});
-
-// Users can get their information
-app.get("/api/getProfile/", function (req, res) {
-  var params = req.query;
-  console.log(req.param("email"))
-  user.getProfile(params.email).then((profile) => {
-    res.jsonp({
-      profile: profile
-    })
-  }).catch((error) => {
-    res.end("Error: " + error);
-  });
-});
-
-
-// Users can request to cancel orders
-app.post("/api/askForRefund", async function (req, res){
-
-  var status = await user.askToCancel(req.body["email"], req.body["oid"]);
-
-  if (status)
-    res.status(200).send("Success!");
-  else if (status == false)
-    res.status(401).send("Forbidden!");
-  else 
-    res.send("Sorry, you can not do that! \n It may be either already delivered or cancelled.")
-
-});
-
-
-// PMs can cancel orders
-app.post("/admin/cancelOrder", authenticateToken, function (req, res){
-
-  var status = admins.cancelOrder(req.body["oid"])
-  if (status)
-    res.status(200).send("Success!");
-  else if (status == false)
-    res.status(401);
-  else 
-    res.send("You can not do that! \n It may be already delivered or cancelled.")
-    
-
-});
-
-
-// Admins can login with their special username and password
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[0]
-  if (token == null) return res.sendStatus(401)
-
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-    
-
-    if (err) {console.log(err); return res.sendFile(path.join(__dirname + "/views/html/signin.html"));}
-
-    req.user = user
-
-    next()
-  })
-}
-
-// Admins have to use their username and password to get their session token
-app.post('/adminLogin/GetToken', async (req, res) => {
-  
-  var username = req.body["username"];
-  var pass = req.body["pass"];
-
-  var adminSwitch = await admins.login(username, pass);
-
-  if (adminSwitch == true){ // it means pm
-    const token = generateAccessToken({ username: req.body.username });
-    res.jsonp({
-      token, 
-      sm:false,
-      pm:true
-      }
-    );
-  }
-  else if (adminSwitch == false){ // it means sm
-    const token = generateAccessToken({ username: req.body.username });
-    res.jsonp({
-        token, 
-        sm:true,
-        pm:false
-        }
-      );
-  }
-  else {
-    res.status(401).send("Forbidden");
-  }
-  
-});
-
-// After they got their token, they can login to their system
-app.post("/adminLogin", authenticateToken, async function (req, res) {
-  debug(req.user)
-  if (req.body["pm"]) { // True means pm, false means sm
-    res.sendFile(path.join(__dirname + "/controllers/users/admins/static/pm.html"))
-  }
-  else if (req.body["sm"]) {
-    res.sendFile(path.join(__dirname + "/controllers/users/admins/static/sm.html"))
-  }
-  else {
-    res.sendStatus(400);
-  }
-})
-
-
-/*********************************** Admin Page *************************************/
-
-
-
-// Admin can add products
-app.get("/admin/getAddProductPage", authenticateToken, async function (req, res) {
-
-    res.sendFile(path.join(__dirname + "/controllers/users/admins/static/addProduct.html"))
-
-});
-app.post('/admin/addProduct', authenticateToken, upload.single('image'), (req, res) => {
-
-  if (!req.file) {
-    res.status(400).send("Error: No files found")
-  } else {
-    admins.addProduct(req.file, req.body)
-    res.status(200).send("Product Added!")
-  }
-});
-
-
-// Pm Review Invoices
-app.post("/admin/getInvoices", authenticateToken, async function (req, res) {
-
-  var invoiceArr = await admins.getInvoices().catch((error) => {
-    res.status(400).send("Error" + error);
-  });
-
-  res.jsonp(invoiceArr);
-
-});
-
-
-// Pm can change status of deliveries
-app.post("/admin/changeStatus", authenticateToken, async function (req, res) {
-
-  var status = await admins.changeStatus(req.body.oid, req.body.newStatus);
-
-  if (status === true)
-    res.send("Success");
-  else if (status == false)
-    res.send("New status should be one of: 'Delivered', 'Processing' or 'In-Transit' ");
-  else 
-    res.send("Wrong OID")
-});
-
-// Pm Review Invoices List 
-app.post("/admin/getOrders", authenticateToken, async function (req, res) {
-
-    admins.getOrders().then((orders)=> {
-      res.send(orders);
-    }).catch((error) => {res.send(error)});
-
-});
-
-
-// Sales Managers can make temporary discounts
-app.post("/admin/Discount", authenticateToken, async function (req, res) {
-
-  admins.changePrice(req.body.pid, req.body.newPrice, req.body.expiresAt).then(()=> {
-    res.send("Success");
-  }).catch((error) => {res.send(error)});
-
-});
-
-setInterval(admins.removeExpired, 10000); //time is in ms
 
 
 app.listen(process.env.PORT, () => {
   console.log(`Ecommerce app listening at http://localhost:${process.env.PORT}`)
 });
+
+
+// Automatically remove expired discounts
+setInterval(admins.removeExpired, 10000); //time is in ms

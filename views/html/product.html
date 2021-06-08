@@ -564,7 +564,7 @@ html {
   
   const url = window.location.search;
   const pid = new URLSearchParams(url).get('pid');
-  var purl = "/api/products/" + pid;
+  var purl = "/products/" + pid;
 
   fetch(purl).then((response) => {
     return response.json();  // converting byte data to json
@@ -594,12 +594,12 @@ html {
       var queryurl;
       
       if (user) {
-        queryurl = "/api/add2basket";
+        queryurl = "/basket/addProduct?&pid=" + pid;
       }
       else {
         console.log("no user");
 
-        queryurl = "/api/add2basket?&email=" + firebase.auth().currentUser.email + "&pid=" + pid;
+        queryurl = "/basket/addProduct?&pid=" + pid;
       }
       alert(queryurl)
       axios.get(queryurl).then(
