@@ -134,8 +134,14 @@ exports.postcomment = async function (email, pid, comment) {
   const productDoc = await productRef.get();
   var comment_array = productDoc.get('comments');
 
+//   function between(min, max) {  
+//     return Math.floor(
+//       Math.random() * (max - min) + min
+//     )
+//   }
+
   const new_comment = {
-  
+    //cid:between(0,2329328),
     comment: comment,
     user: email,
     verified: false

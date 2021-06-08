@@ -52,14 +52,12 @@ The above copyright notice and this permission notice shall be included in all c
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./notifications.html">
-              <i class="material-icons">PC</i>
+            <a class="nav-link" href="/admin/getCommentsPage">
               <p>Pending Comments</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="./notifications.html">
-              <i class="material-icons"></i>
               <p>Order Refund Requests</p>
             </a>
           </li>
@@ -146,12 +144,12 @@ The above copyright notice and this permission notice shall be included in all c
                       <div class="tab-pane active" id="profile">
                         <table class="table">
                           <tbody id="orders">
-                              <th>OrderId</th>
-                              <th>User</th>
-                              <th>Date</th>
-                              <th>Price</th>
-                              <th>Status</th>
-                              <th>Quantity</th>
+                            <th>OrderId</th>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
                             </td>
                             </tr>
                           </tbody>
@@ -170,36 +168,14 @@ The above copyright notice and this permission notice shall be included in all c
                   <div class="card-body table-responsive">
                     <table class="table table-hover">
                       <thead class="text-warning">
-                        <th>ID</th>
+                        <th>PID</th>
                         <th>Name</th>
-                        <th>Salary</th>
-                        <th>Country</th>
+                        <th>Price</th>
+                        <th>Info</th>
+                        <th>Quantity</th>
+                        <th>Distributor</th>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Dakota Rice</td>
-                          <td>$36,738</td>
-                          <td>Niger</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Minerva Hooper</td>
-                          <td>$23,789</td>
-                          <td>Curaçao</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Sage Rodriguez</td>
-                          <td>$56,142</td>
-                          <td>Netherlands</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Philip Chaney</td>
-                          <td>$38,735</td>
-                          <td>Korea, South</td>
-                        </tr>
+                      <tbody id="products">
                       </tbody>
                     </table>
                   </div>
@@ -280,7 +256,7 @@ The above copyright notice and this permission notice shall be included in all c
             <a href="https://www.creative-tim.com/product/material-dashboard" target="_blank"
               class="btn btn-primary btn-block">Free Download</a>
           </li>
-  
+
           <li class="button-container">
             <a href="https://demos.creative-tim.com/material-dashboard/docs/2.1/getting-started/introduction.html"
               target="_blank" class="btn btn-default btn-block">
@@ -525,7 +501,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 
           myJson.arr.forEach(order => {
-            console.log(order.date._seconds);
             var date = new Date(order.date._seconds * 1000);
             document.getElementById("orders").innerHTML += `
             <tr>
@@ -543,7 +518,51 @@ The above copyright notice and this permission notice shall be included in all c
         dispOrders()
 
 
+        async function dispProducts() {
+
+          const response = await fetch('/products/');
+          const myJson = await response.json(); //extract JSON from the http response
+
+
+          myJson.jsonObject.detail.forEach(pro => {
+           
+            document.getElementById("products").innerHTML += `
+            <tr id="${pro.id}">
+            <button class="btn btn-danger" id="bt-${pro.id}" onclick="removeProduct('${pro.id}')">Remove!</button>
+
+              <th>${pro.id}</th>
+              <th>${pro.name}</th>
+              <th>${pro.quantity}</th>
+              <th>${pro.info}</th>
+              <th>${pro.price}</th>
+              <th>${pro.distributor}</th>
+            </tr>
+            </div>
+            `
+          });
+          
+        }
+        dispProducts()
       });
+
+
+        async function removeProduct(pid){
+          var row = document.getElementById(pid);
+          console.log(pid)
+
+          var btn = document.getElementById("bt-" + pid);
+
+          row.remove();
+          btn.remove();
+          //const response = await fetch('/admin/rmProduct?pid' + pid);
+          //const myJson = await response.json(); //extract JSON from the http response
+
+        }
+      
+
+
+
+
     </script>
 </body>
 

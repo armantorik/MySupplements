@@ -79,6 +79,7 @@ exports.login = async (username, password) => {
 
 }
 
+
 exports.addProduct = (image, body) => {
 
   uploadFile(image.originalname, image).then(async () => {
@@ -101,7 +102,66 @@ exports.addProduct = (image, body) => {
 
 }
 
+exports.removeProduct = async (pid) => {
 
+  var query =  await db.collection("Products").doc(pid).get();
+
+  if (query){
+    await db.collection("Products").doc(pid).delete();
+  }
+  else{
+    return false;
+  }
+
+}
+
+
+exports.pendingComments = async () => {
+
+  var snapshot = await db.collection("Products").get();
+
+  var json = {}
+  var jsonArr = []
+  snapshot.forEach(pro => { // Iterate through product docs
+    var commentArr = pro.data().comments;
+    
+    if (commentArr.length > 0) {
+      debug(commentArr.length)
+      var subArr = [];
+      var data = {product:pro.data().name, pid:pro.id}
+      commentArr.forEach(comment => { // Iterate through comments arr in a product
+        if (comment.verified == false){
+          subArr.push(comment);
+        }
+      })
+      data.arr = subArr;
+      jsonArr.push(data)
+    }
+    
+  })
+  json.arr = jsonArr;
+  return json;
+}
+
+exports.verify = async (pid, cid) => {
+
+  var pro = await db.collection("Products").doc(pid).get()
+
+  if (pro) {
+    var comArr = pro.data().comments;
+    var count = 0;
+
+    comArr.forEach((comm) => {
+     if(comm.user = cid)
+      comArr[count].verified = true;
+      count+=1;
+    })
+
+    var snapshot = await db.collection("Products").doc(pid).update({
+      comments:comArr
+  });
+  }
+}
 exports.cancelOrder = async (oid) => {
 
   var Query = await db.collection("orders").doc(oid).get();
@@ -253,3 +313,5 @@ exports.removeExpired = async () => {
   })
 
 }
+
+

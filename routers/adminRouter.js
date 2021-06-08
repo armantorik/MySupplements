@@ -60,10 +60,12 @@ router.post('/getToken', async (req, res) => {
   
   
   
-  // Admin can add products
+  // Pm can add products
   router.get("/getAddProductPage", authenticateToken, async function (req, res) {
     res.sendFile(path.join(__dirname + "/../privateViews/addProduct.html"))
   });
+
+
   router.post('/addProduct', authenticateToken, upload.single('image'), (req, res) => {
   
     debug(req.body)
@@ -75,6 +77,19 @@ router.post('/getToken', async (req, res) => {
     }
   });
   
+// Pm can remove products
+  router.post('/rmProduct', authenticateToken, (req, res) => {
+  
+    var pid = req.param("pid")
+
+    if (pid=null) {
+      res.status(400).send("Error: No files found")
+    } else {
+      admins.removeProduct(pid);
+      res.status(200).send("Product Added!")
+    }
+  });
+
   
   // Pm Review Invoices
   router.post("/getInvoices", authenticateToken, async function (req, res) {
@@ -124,6 +139,32 @@ router.post("/cancelOrder", authenticateToken, function (req, res){
   });
   
   
+
+  // Pm see unverified comments
+  router.get("/getCommentsPage", authenticateToken, async function (req, res) {
+    res.sendFile(path.join(__dirname + "/../privateViews/pendingComments.html"));
+});
+
+  router.get("/pendingComments", authenticateToken, async function (req, res) {
+    admins.pendingComments().then((comments)=> {
+      res.send(comments);
+    }).catch((error) => {res.send(error)});
+
+});
+
+// Pm verifies comments
+router.get("/verifyComments", authenticateToken, async function (req, res) {
+  
+  var pid = req.param("pid")
+  var cid = req.param("cid")
+
+  admins.verify(pid, cid).then(()=> {
+    res.send("Success");
+  }).catch((error) => {res.send(error)});
+
+});
+
+
   // Sales Managers can make temporary discounts
   router.post("/discount", authenticateToken, async function (req, res) {
   
