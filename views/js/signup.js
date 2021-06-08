@@ -8,8 +8,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
         if (email != "" && password != "" && cpassword != "") {
             if (password == cpassword) {
-                await firebase.auth().createUserWithEmailAndPassword(email, password);
-                window.location.href = "/html/accountSettings.html?email=" + email;
+                if (email.includes('@')){
+                    await firebase.auth().createUserWithEmailAndPassword(email, password);
+                    window.location.href = "/html/accountSettings.html?email=" + email;
+                }
+                else{
+                    alert("Please type your email address!")
+                }
+              
             }
             else {
                 window.alert("Passwords do not match!");

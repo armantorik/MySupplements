@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+  <body>
+   <a>Welcome PM</a>
+
+
+    <form enctype="multipart/form-data" method="post" action="http://localhost:3000/admin/addProduct">
+    <input name=name>Name:</input>
+    <input name=category>Category:</input>
+    <input name=shortInfo>Brief:</input>
+    <input name=info>Info:</input>
+    <input name=price>Price:</input>
+    <input name=quantity>Quantity:</input>
+    <input name=distributor>Distributor:</input>
+    <input type="file" id="myFile" name="image">
+    <button id="submit">Add Product!</button>
+   </form>
+
+
+
+  </body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+<script>
+
+$("#submit").click(() => {
+  var file = $("#myFile").val();
+  alert(file)
+});
+
+
+
+async function getToken(){
+// get token from fetch request
+const token = await res.json();
+
+// set token in cookie
+document.cookie = `token=${token}`
+
+}
+
+
+
+</script>

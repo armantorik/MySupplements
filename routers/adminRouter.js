@@ -1,4 +1,4 @@
-const admins = require("../controllers/users/admins/admins");
+const admins = require("../controllers/users/admins");
 var debug = require('debug')('admRouter');
 var path = require('path');
 
@@ -9,7 +9,7 @@ const {authenticateToken, upload, generateAccessToken} = require("../utils/admin
 
 // Admins have to use their username and password to get their session token
 router.post('/getToken', async (req, res) => {
-  
+
     var username = req.body["username"];
     var pass = req.body["pass"];
 
@@ -39,15 +39,16 @@ router.post('/getToken', async (req, res) => {
     }
     
   });
-  console.log(authenticateToken);
+
   // After they got their token, they can login to their system
-  router.post("/login", authenticateToken, async function (req, res) {
-    debug(req.user)
-    if (req.body["pm"]) { // True means pm, false means sm
-      res.sendFile(path.join(__dirname + "/../controllers/users/admins/static/pm.html"))
+  router.get("/login", authenticateToken, async function (req, res) {
+
+
+    if (req.param("pm")) { // True means pm, false means sm
+      res.sendFile(path.join(__dirname + "/../privateViews/pm.html"));
     }
-    else if (req.body["sm"]) {
-      res.sendFile(path.join(__dirname + "/../controllers/users/admins/static/sm.html"))
+    else if (req.param("sm")) {
+      res.sendFile(path.join(__dirname + "/../privateViews/sm.html"));
     }
     else {
       res.sendStatus(400);
@@ -61,12 +62,11 @@ router.post('/getToken', async (req, res) => {
   
   // Admin can add products
   router.get("/getAddProductPage", authenticateToken, async function (req, res) {
-  
-      res.sendFile(path.join(__dirname + "/../controllers/users/admins/static/addProduct.html"))
-  
+    res.sendFile(path.join(__dirname + "/../privateViews/addProduct.html"))
   });
   router.post('/addProduct', authenticateToken, upload.single('image'), (req, res) => {
   
+    debug(req.body)
     if (!req.file) {
       res.status(400).send("Error: No files found")
     } else {
@@ -116,8 +116,7 @@ router.post("/cancelOrder", authenticateToken, function (req, res){
   
   });
   // Pm Review Invoices List 
-  router.post("/getOrders", authenticateToken, async function (req, res) {
-  
+  router.get("/getOrders", authenticateToken, async function (req, res) {
       admins.getOrders().then((orders)=> {
         res.send(orders);
       }).catch((error) => {res.send(error)});

@@ -34,7 +34,7 @@ router.get('/', function (req, res) {
   
   
   // Users can get the product information with its pid
-  router.get('/:pid', function (req, res) {
+  router.get('/get/:pid', function (req, res) {
     var pid = req.params.pid;
     console.log(pid)
     products.getProducts(pid).then(function (doc) {

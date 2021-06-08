@@ -193,7 +193,7 @@ html {
   
   const url = window.location.search;
   const pid = new URLSearchParams(url).get('pid');
-  var purl = "/products/" + pid;
+  var purl = "/products/get" + pid;
 
   fetch(purl).then((response) => {
     return response.json();  // converting byte data to json

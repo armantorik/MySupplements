@@ -27,7 +27,7 @@ const userRouter = require("./routers/userRouter");
 const adminRouter = require("./routers/adminRouter");
 
 
-const admins = require("./controllers/users/admins/admins");
+const admins = require("./controllers/users/admins");
 const {firebase, admin, db} = require("./utils/admin");
 
 
@@ -83,7 +83,7 @@ app.post("/logingin", (req, res) => {
 // Users can log out
 app.post('/sessionLogout', (req, res) => {
   const sessionCookie = req.cookies.session || '';
-  debug(sessionCookie)
+
   res.clearCookie('session', {domain: 'localhost', path: '/'});
   admin
     .auth()
