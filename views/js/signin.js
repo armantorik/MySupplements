@@ -77,7 +77,8 @@ function signinDefault(event) {
       .then(response => {
 
         if (response.token && response.pm != undefined && response.sm != undefined){
-          window.location.href = ('http://localhost:3000/admin/login?sm='+response.sm+'&pm='+response.pm+'&token='+response.token);
+          document.cookie = `token=${response.token}`
+          window.location.href = ('http://localhost:3000/admin/login?sm='+response.sm+'&pm='+response.pm);
         }
 
       });
