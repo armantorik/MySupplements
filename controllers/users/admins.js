@@ -180,7 +180,11 @@ exports.getOrders = async () => {
     }
 
     if (temp.products){
-      data.quantity = temp.products.size;
+      var quan=0;
+      temp.products.forEach(pro => {
+        quan += pro.quantity;
+      })
+      data.quantity = quan;
     }
     if (temp.products){
       data.user = temp.user.id;

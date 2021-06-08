@@ -46,7 +46,7 @@ The above copyright notice and this permission notice shall be included in all c
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./tables.html">
+            <a class="nav-link" href="/admin/getAddProductPage">
               <i class="material-icons">content_paste</i>
               <p>Add Products</p>
             </a>
@@ -119,6 +119,7 @@ The above copyright notice and this permission notice shall be included in all c
         </div>
       </nav>
       <!-- End Navbar -->
+
       <div class="content">
         <div class="container-fluid">
           <div class="row">
@@ -145,15 +146,12 @@ The above copyright notice and this permission notice shall be included in all c
                       <div class="tab-pane active" id="profile">
                         <table class="table">
                           <tbody id="orders">
-                            <tr>
                               <th>OrderId</th>
                               <th>User</th>
                               <th>Date</th>
                               <th>Price</th>
                               <th>Status</th>
                               <th>Quantity</th>
-
-                            </tr>
                             </td>
                             </tr>
                           </tbody>
@@ -215,12 +213,12 @@ The above copyright notice and this permission notice shall be included in all c
             <nav class="float-left">
               <ul>
                 <li>
-                  <a href="https://www.creative-tim.com">
+                  <a>
                     MySupplements-Admin
                   </a>
                 </li>
                 <li>
-                  <a href="https://creative-tim.com/presentation">
+                  <a href="">
                     About Us
                   </a>
                 </li>
@@ -532,7 +530,7 @@ The above copyright notice and this permission notice shall be included in all c
             document.getElementById("orders").innerHTML += `
             <tr>
             <th>${order.oid}</th>
-            <th>${order.email}</th>
+            <th>${order.user}</th>
             <th>${date}</th>
             <th>${order.price}</th>
             <th>${order.status}</th>
