@@ -13,7 +13,6 @@ router.post('/getToken', async (req, res) => {
     var username = req.body["username"];
     var pass = req.body["pass"];
 
-
     var adminSwitch = await admins.login(username, pass);
   
     if (adminSwitch == true){ // it means pm
@@ -42,12 +41,11 @@ router.post('/getToken', async (req, res) => {
 
   // After they got their token, they can login to their system
   router.get("/login", authenticateToken, async function (req, res) {
-
-
-    if (req.param("pm")) { // True means pm, false means sm
+    
+    if (req.param("pm") == "true") { // True means pm, false means sm
       res.sendFile(path.join(__dirname + "/../privateViews/pm.html"));
     }
-    else if (req.param("sm")) {
+    else if (req.param("sm") == "true") {
       res.sendFile(path.join(__dirname + "/../privateViews/sm.html"));
     }
     else {
@@ -102,7 +100,29 @@ router.post('/getToken', async (req, res) => {
   
   });
   
+ // Pm can see orderRefund page
+ router.get("/OrderRefundPage", authenticateToken, async function (req, res) {
+  res.sendFile(path.join(__dirname + "/../privateViews/orderRefund.html"))
+});
+
+
+    // Pm can see the orders to be cancelled
+    router.get("/getOrdersToBeCancelled", authenticateToken, async function (req, res) {
   
+      admins.getOrdersToBeCancelled().then(orders => {
+        res.send(orders)
+      }).catch(error =>{
+        res.send(error)
+      })
+      
+    });
+
+
+      // Pm can see deliveryPage
+  router.get("/deliveryPage", authenticateToken, async function (req, res) {
+    res.sendFile(path.join(__dirname + "/../privateViews/deliveryPage.html"))
+  });
+
   // Pm can change status of deliveries
   router.post("/changeDeliveryStatus", authenticateToken, async function (req, res) {
   

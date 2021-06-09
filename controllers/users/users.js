@@ -308,7 +308,8 @@ exports.order = async function (email) {
         const order = {
             "user": db.doc('users/' + email),
             "status": "Processing",
-            "orderTime": FieldValue.serverTimestamp()
+            "orderTime": FieldValue.serverTimestamp(),
+            "address": data.address
         };
 
         var orderRef = await db.collection('orders').add(order);

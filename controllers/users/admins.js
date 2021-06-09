@@ -59,6 +59,7 @@ async function uploadFile(iname, file, encoding = 'ascii') {
 
 exports.login = async (username, password) => {
 
+  
   if (username && password) {
     var receivedHashedPass = hash(password);
 
@@ -162,6 +163,35 @@ exports.verify = async (pid, cid) => {
   });
   }
 }
+
+
+exports.getOrdersToBeCancelled  = async () => {
+
+  var Query = await db.collection("orders").where("cancelRequest", "==", true).get();
+
+
+  var json = {};
+  var jsonArr = [];
+
+  Query.forEach(order => {
+
+    var data = {
+      user:order.data().user.id,
+      price:order.data().totalPrice,
+      date:order.data().orderTime,
+      delStatus:order.data().status,
+      id:order.id
+    }
+
+    jsonArr.push(data)
+  
+  })
+
+  json.arr = jsonArr;
+  return json;
+}
+
+
 exports.cancelOrder = async (oid) => {
 
   var Query = await db.collection("orders").doc(oid).get();
@@ -236,7 +266,8 @@ exports.getOrders = async () => {
       date:temp.orderTime,
       price:temp.totalPrice,
       status:temp.status,
-      oid:doc.id
+      oid:doc.id,
+      address:temp.address
     }
 
     if (temp.products){

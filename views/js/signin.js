@@ -75,10 +75,10 @@ function signinDefault(event) {
     fetch('http://localhost:3000/admin/getToken', options)
       .then(response => response.json())
       .then(response => {
-
+        
         if (response.token && response.pm != undefined && response.sm != undefined){
-          document.cookie = `token=${response.token}`
-          window.location.href = ('http://localhost:3000/admin/login?sm='+response.sm+'&pm='+response.pm);
+          document.cookie = `token=${response.token}; path=/`
+          location.href = ('http://localhost:3000/admin/login?sm='+response.sm+'&pm='+response.pm);
         }
 
       });

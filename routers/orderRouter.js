@@ -9,12 +9,14 @@ const {admin} = require("../utils/admin");
 router.post("/post", function (req, res) {
 
     const sessionCookie = req.cookies.session || "";
-    debug(sessionCookie)
+    //debug(sessionCookie)
     admin.auth().verifySessionCookie(sessionCookie, true).then(async (decodedClaims) => {
       var email = decodedClaims["email"];
-      var cardNo = req.param("cardNo");
+      var cardNo = req.body["cardNo"];
       var oid = await user.order(email);
       res.jsonp({oid})
+    }).catch(error =>{
+      debug("error")
     })
   });
   

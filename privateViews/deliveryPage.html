@@ -28,6 +28,13 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="/material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="/material-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
+    <style>
+        .btn-primary.custom-btn {
+            background-color: rgb(37, 199, 9);
+            border-color: rgb(255, 255, 255);
+        }
+    </style>
+    
 </head>
 
 <body class="">
@@ -51,24 +58,21 @@ The above copyright notice and this permission notice shall be included in all c
                             <p>Add Products</p>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/admin/getCommentsPage">
                             <p>Pending Comments</p>
                         </a>
                     </li>
-                    
+                   
                 </ul>
             </div>
         </div>
         <script src="../js/logout.js"></script>
-        
         <div class="main-panel">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                 <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">Dashboard</a>
-                    </div>
+
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
                         aria-expanded="false" aria-label="Toggle navigation">
                         <span class="sr-only">Toggle navigation</span>
@@ -116,7 +120,6 @@ The above copyright notice and this permission notice shall be included in all c
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-
                         <div class="row">
                             <div class="col-lg-20 col-md-20">
                                 <div class="card">
@@ -126,10 +129,14 @@ The above copyright notice and this permission notice shall be included in all c
                                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                                     <li class="nav-item">
                                                         <a class="nav-link active" href="#profile" data-toggle="tab">
-                                                            <i class="material-icons"></i> Comments to be verified
+                                                            <i class="material-icons"></i> Delivery List
                                                             <div class="ripple-container"></div>
                                                         </a>
                                                     </li>
+                                                    <div class="container text-right" color>
+                                                        <p class="d-inline">Done</p>
+                                                        <button onclick="changeStatus()" type="button" class="btn-primary.custom-btn">&#x2705</button>
+                                                    </div>
                                                 </ul>
                                             </div>
                                         </div>
@@ -138,12 +145,12 @@ The above copyright notice and this permission notice shall be included in all c
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="profile">
                                                 <table class="table">
-                                                    <tbody id="comments">
-                                                        <th>Product</th>
+                                                    <tbody id="delivery">
+                                                        <th>Delivery Id</th>
                                                         <th>User</th>
-                                                        <th>Comment</th>
+                                                        <th>Address</th>
+                                                        <th>Order Date</th>
                                                         <th>Status</th>
-                                                        <th>Verify</th>
                                                         </td>
                                                         </tr>
                                                     </tbody>
@@ -465,52 +472,91 @@ The above copyright notice and this permission notice shall be included in all c
                     });
                 });
             });
-            async function verify(pid, cid, bid){
-                var vr = document.getElementById("vr-" + bid).innerHTML = "true"
-                var btn = document.getElementById("btn-" + bid);
-                btn.remove();
-                const response = await fetch('/admin/verifyComments?pid=' + pid + '&cid=' + cid);
-                const myJson = await response.json(); //extract JSON from the http response
-                
-                
+            async function changeStatus() {
+                var newVal = RadioValue("survey");
+
+                fetch('/admin/changeDeliveryStatus', {
+                method: "POST",
+                headers: {"Content-type": "application/json;charset=UTF-8"},
+                body: JSON.stringify({oid:window.oid, newStatus:newVal})
+                })
+
+
             }
+
+
+            function RadioValue(radio) {
+            var ele = document.getElementsByName(radio);
+              
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
             $(document).ready(function () {
                 // Javascript method's body can be found in assets/js/demos.js
                 md.initDashboardPageCharts();
 
-                async function dispComms() {
+                async function disDelivery() {
 
-                    const response = await fetch('/admin/pendingComments/');
+                    const response = await fetch('/admin/getOrders/');
                     const myJson = await response.json(); //extract JSON from the http response
+                    const url = window.location.search;
+                    const oid = new URLSearchParams(url).get('oid');
+                    window.oid = oid;
+                    myJson.arr.forEach(order => {
+                        console.log(order.oid)
+                        console.log(oid)
+                        if (order.oid == oid){
+                            var date = new Date(order.date._seconds * 1000);
 
+                            var isActiveProcessing = "";
+                            var isActiveIntr = "";
+                            var isActiveDelivered = "";
 
-                    myJson.arr.forEach(commArr => {
+                            if (order.status == "Processing"){
+                                isActiveProcessing = "checked"
+                            } else if (order.status == "In-Transit") {
+                                isActiveIntr = "checked"
+                            } else if (order.status == "Delivered") {
+                                isActiveDelivered = "checked"
+                            }
 
-                        
-                        commArr.arr.forEach(comm => {
-                            var id = commArr.pid + "-" + comm.user;
+                            document.getElementById("delivery").innerHTML += `
 
-                            document.getElementById("comments").innerHTML += `
-                                <tr >
-
-                                <th>${commArr.product}</th>
-                                <th>${comm.user}</th>
-                                <th>${comm.comment}</th>
-                                <th id="vr-${id}">${comm.verified}</th>
-                                <td>
-                                <button class="btn btn-success" id="btn-${id}" onclick="verify('${commArr.pid}', '${comm.user}', '${id}')">Verify!</button>
-                                </td>
+                                <tr id="${order.oid}">
+                                    <th>${order.oid}</th>
+                                    <th>${order.user}</th>
+                                    <th>${order.address}</th>
+                                    <th>${date}</th>
+                                    <td>
+                                        <div class="container">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="survey" id="Radios1" value="Processing" ${isActiveProcessing} >
+                                            Processing
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input  type="radio" name="survey" id="Radios2" value="In-Transit" ${isActiveIntr}>
+                                            In-Transit
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="survey" id="Radios3" value="Delivered" ${isActiveDelivered}>
+                                            Delivered
+                                        </label>
+                                        </div>
+                                    </td>
                                 </tr>
                                 </div>
                                 `
-                        })
-
+                        }
+                        
                     });
 
                 }
-                
-                dispComms();
-                
+
+                disDelivery();
+
             });
 
 

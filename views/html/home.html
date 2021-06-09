@@ -123,7 +123,7 @@
           <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/html/signin.html">Sign In</a>
+          <a class="nav-link" id="signout">Sign In</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/html/accountSettings.html">Settings </a>
@@ -362,6 +362,16 @@
     <script>function getServerData(data) { window.allPros = data; }</script>
     <script src="/products?callback=getServerData"></script>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
+    <script src="../js/logout.js"></script>
     <script>
 
       async function filterByCat(cat) {
@@ -418,20 +428,6 @@
       }
       dispCats();
 
-
-    </script>
-
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-
-    <script>
       // Your web app's Firebase configuration
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       var firebaseConfig = {
@@ -448,34 +444,6 @@
       firebase.initializeApp(firebaseConfig);
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
-    </script>
-
-
-    <script>
-
-      $("#signout").click(async function () {
-
-        const token = await firebase.auth().currentUser.getIdToken()
-
-        fetch("/sessionLogout", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: token
-          },
-          body: firebase.auth().currentUser.email
-        });
-        firebase.auth().signOut().then(() => {
-
-          window.location.href = "/html/signin.html"
-        }).catch((error) => {
-          window.alert("Error: " + error);
-        });
-      })
-
-
-
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           if (!user.isAnonymous) {
@@ -490,12 +458,12 @@
             getUserInfo()
           }
           else {
-            document.getElementById("signout").innerHTML = '<li id="signout"><a href="/html/signin.html"  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
+            document.getElementById("signout").innerHTML = '<li id="signout"><a class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
             console.log("anon");
           }
         }
         else {
-          document.getElementById("signout").innerHTML = '<li id="signout"><a href="/html/signin.html"  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
+          document.getElementById("signout").innerHTML = '<li id="signout"><a  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
           console.log("no user");
         }
       })
