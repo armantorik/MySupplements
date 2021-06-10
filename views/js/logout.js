@@ -34,6 +34,9 @@ $("#signout").click(function () {
       window.alert("Error: " + error);
     });
   } else {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+
     window.location.href = '../html/signin.html';
   }
 })

@@ -288,72 +288,75 @@ color:white;
   background-color: #c67605;
 }
   </style>
-  <body class="backback" onload="getBasketSize()">
+  <body class="backback" onload="onloadFuncs()">
     
     <nav class="navbar navbar-expand-lg fixed-top">
-      <a class="navbar-brand" href="#">SUPPLEMENTS</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="signout">Sign In</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
-          </li>
-        </ul>
-        <div class="search" id="searchid">
-            <input type="text" placeholder="   Search Product " name="search" id="searchinput">
-            <button onclick="dosearch()">
-              <i class="fa fa-search" style="font-size: 18px;">
-              </i>
-            </button>
-          <div id="results"> </div>
-  
+        <a class="navbar-brand" href="#">SUPPLEMENTS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="signout">Sign In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
+            </li>
+          </ul>
+          <div class="search" id="searchid">
+              <input type="text" placeholder="   Search Product " name="search" id="searchinput">
+              <button onclick="dosearch()">
+                <i class="fa fa-search" style="font-size: 18px;">
+                </i>
+              </button>
+            <div id="results"> </div>
+    
+          </div>
         </div>
-      </div>
-  
-      <script src="../js/search.js" ></script>
-  
-      <script>
-        function dispName(fname, lname) {
-              document.getElementById("uName").innerHTML += fname + " " +  lname;
+    
+        <script src="../js/search.js" ></script>
+    
+        <script>
+          function dispName(fname, lname) {
+                document.getElementById("uName").innerHTML += fname + " " +  lname;
+              }
+          async function getBasketSize() {
+            const response = await fetch('/basket');
+            const myJson = await response.json();
+            var pros = myJson.jsonProducts;
+            console.log(pros)
+            if (pros) {
+              
+              document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
             }
-        async function getBasketSize() {
-          const response = await fetch('/basket');
-          const myJson = await response.json();
-          var pros = myJson.jsonProducts;
-          console.log(pros)
-          if (pros) {
             
-            document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
           }
-          
-        }
-      </script>
-      <li>
-        <a class="generated_button open-cart" href="/html/cart.html">
-          <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
-            id='lblCartCount'>0</span>
-        </a>
-      </li>
-      <li>
-        <a class="generated_button open-cart" href="/html/accountSettings.html">
-          <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
-  
-        </a>
-      </li>
-  
-      
-    </nav>
-  
-
+          function onloadFuncs() {
+            getBasketSize()
+            dispName()
+          }
+        </script>
+        <li>
+          <a class="generated_button open-cart" href="/html/cart.html">
+            <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+              id='lblCartCount'>0</span>
+          </a>
+        </li>
+        <li>
+          <a class="generated_button open-cart" href="/html/accountSettings.html">
+            <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
+    
+          </a>
+        </li>
+    
+        
+      </nav>
+    
 <div class="card">
   <div class="row">
       <div class="col-md-8 cart">
@@ -403,7 +406,8 @@ firebase.auth().onAuthStateChanged(user => {
               const url = '/user/getInfo?email=' + user.email;
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
-              dispName(myJson.profile.fname, myJson.profile.lname);
+              sessionStorage.setItem("lastname", myJson.profile.lname);
+              sessionStorage.setItem("fname", myJson.profile.fname);
             }
             document.getElementById("signout").innerHTML = '<li id="signout" class="pointer" three-d-box"><a class="three-d">Sign Out</a></li>'
             getUserInfo()

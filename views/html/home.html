@@ -113,8 +113,7 @@
   }
 </style>
 
-<body onload="onloadFuncs()">
-
+<body onload="getBasketSize()">
 
   <nav class="navbar navbar-expand-lg fixed-top">
     <a class="navbar-brand" href="#">SUPPLEMENTS</a>
@@ -131,7 +130,7 @@
           <a class="nav-link" id="signout">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/html/accountSettings.html">Settings </a>
+          <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
         </li>
       </ul>
       <div class="search" id="searchid">
@@ -148,10 +147,9 @@
     <script src="../js/search.js" ></script>
 
     <script>
-      function dispName() {
-        document.getElementById("uName").innerHTML += sessionStorage.getItem("fname") + " ";
-        document.getElementById("uName").innerHTML += sessionStorage.getItem("lastname");
-      }
+      function dispName(fname, lname) {
+            document.getElementById("uName").innerHTML += fname + " " +  lname;
+          }
       async function getBasketSize() {
         const response = await fetch('/basket');
         const myJson = await response.json();
@@ -169,18 +167,19 @@
       }
     </script>
     <li>
+      <a class="generated_button open-cart" href="/html/cart.html">
+        <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+          id='lblCartCount'>0</span>
+      </a>
+    </li>
+    <li>
       <a class="generated_button open-cart" href="/html/accountSettings.html">
         <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
 
       </a>
     </li>
 
-    <li>
-      <a class="generated_button open-cart" href="/html/cart.html">
-        <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
-          id='lblCartCount'>0</span>
-      </a>
-    </li>
+    
   </nav>
 
 
@@ -486,15 +485,14 @@
               const url = '/user/getInfo?email=' + user.email;
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
-              sessionStorage.setItem("lastname", myJson.profile.lname);
-              sessionStorage.setItem("fname", myJson.profile.fname);
+              dispName(myJson.profile.fname, myJson.profile.lname);
             }
             document.getElementById("signout").innerHTML = '<li id="signout" class="pointer" three-d-box"><a class="three-d">Sign Out</a></li>'
             getUserInfo()
           }
           else {
             document.getElementById("signout").innerHTML = '<li id="signout" class="pointer"   three-d-box"><a class="three-d">Sign Out</a></li>'
-            console.log("anon");
+            console.log("anon");  
           }
         }
         else {

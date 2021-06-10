@@ -33,13 +33,16 @@ router.all('/', function (req, res) {
 
     // Users can add products with their pid to the basket
     router.get("/addProduct", function (req, res) {
+      var pid = req.param("pid");
+      if (!pid){
+        res.status(400).send("Bad Request, please make sure you set the pid correct")
+        return
+      }
       const sessionCookie = req.cookies.session || "";
       admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
         var email = decodedClaims["email"];
-        var pid = req.param("pid");
-        if (pid == undefined){
-          res.status(400).send("Bad Request, please make sure you set the pid correct")
-        }
+        debug(pid)
+        
         if (user.add2basket(email, pid)) {
           res.jsonp({
             status: true
@@ -76,10 +79,17 @@ router.all('/', function (req, res) {
   // Users can remove all of the product using pid from their basket
   router.get("/removeProduct", function (req, res) {
     const sessionCookie = req.cookies.session || "";
-    admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
+    admin.auth().verifySessionCookie(sessionCookie, true).then(async (decodedClaims) => {
       var email = decodedClaims["email"];
       var pid = req.param("pid");
-      user.removeFromBasket(email, pid)
+      user.removeFromBasket(email, pid).then(()=>{
+        res.send("Success")
+      }).catch(error => {
+        res.send(error)
+      })
+      
+    }).catch(error => {
+      res.send(error)
     })
   })
   

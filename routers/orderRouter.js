@@ -14,9 +14,11 @@ router.post("/post", function (req, res) {
       var email = decodedClaims["email"];
       var cardNo = req.body["cardNo"];
       var oid = await user.order(email);
+      debug(oid)
       res.jsonp({oid})
-    }).catch(error =>{
+    }).catch(error => {
       debug("error")
+      res.send(error)
     })
   });
   

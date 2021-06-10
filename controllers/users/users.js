@@ -55,10 +55,9 @@ exports.getProductsFromBasket = async function (email) {
                 var productRef = basket.product;
                 if (productRef) {
                     var productGet = await productRef.get()
-
                     product = productGet.data();
                     pid = productGet.id;
-                    debug(productGet)
+                    debug(productRef)
                     productArr.push({
                         "id": pid,
                         "name": product.name,
@@ -364,10 +363,8 @@ exports.order = async function (email) {
 
 
         // Remove the 'userCart' field from the document
-        const res = await usersRef.update({
-            userCart: FieldValue.delete()
-        });
-
+        await usersRef.update({userCart: FieldValue.delete()});
+        debug("hey")
         return id;
 
     }
@@ -389,6 +386,7 @@ exports.retrieveOrders = async function (email, res) {
             for await (pid of order.products)
             {
                 var pro = await product.getProducts(pid.pid);
+                pro.product.quantity = pid.quantity;
                 pros.push(pro.product);
             }
                 
