@@ -20,11 +20,13 @@
      <title>Product info</title>
   </head>
   <style>
-      .center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+     .center {
+  width: 90%;
+  height: 600px;
+  left: 50%;
+  object-position:70%;
 }
+
       .parent {
   position: relative;
   height: 70px;
@@ -49,15 +51,15 @@
 }
 
 .card {
-    
-    max-width: 950px;
+    object-position: center;
+    max-width: 1950px;
     width: 90%;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 1rem;
     border: transparent
 }
 
-@media(max-width:2000px) {
+@media(max-width:200px) {
     .card {
         margin: 3vh auto
     }
@@ -436,6 +438,8 @@ html {
 </style>
 }
   </style>
+  <body class="backback" onload="onloadFuncs()">
+<div >
   <body onload="onloadFuncs()">
 <div class="backback">
     
@@ -510,14 +514,14 @@ html {
   <p class="title">
     Product Page:
   </p>
-<div class="centered">
+<div class="center">
   
 
   &nbsp;
   &nbsp;
   &nbsp;
-
-  <div class="card center">
+<div class="center">
+  <div class="card">
             <div class="row border-top border-bottom">
                 <div class="row main align-items-center">
                     <div class="col">
@@ -535,6 +539,7 @@ html {
 </div>
 </body>
   <button onclick="addbasket()" class="add-to-cart centered" type="button" id="add-to-cart">ADD TO CART</button>
+</div>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
