@@ -317,7 +317,7 @@ exports.order = async function (email) {
         /**********************************************************/
 
 
-
+        //var totPrice = 0;
 
         /**************************  ITERATE OVER ITEMS IN BASKET - Start ****************************************/
         userCart.forEach(async function (basketRef) {

@@ -187,12 +187,43 @@ router.get("/verifyComments", authenticateToken, async function (req, res) {
 
   // Sales Managers can make temporary discounts
   router.post("/discount", authenticateToken, async function (req, res) {
-  
-    admins.changePrice(req.body.pid, req.body.newPrice, req.body.expiresAt).then(()=> {
-      res.send("Success");
+
+    admins.changePrice(req.body.pid, req.body.discountRate, req.body.expiresAt).then((returned)=> {
+      res.send("Returned: " + returned);
     }).catch((error) => {res.send(error)});
   
   });
+  
+
+  router.get("/InvoicePage", authenticateToken, async function (req, res) {
+    res.sendFile(path.join(__dirname + "/../privateViews/invoices.html"))
+  })
+
+  // Sales Managers can see revenues with range
+  router.get("/getRevenues", authenticateToken, async function (req, res) {
+  
+
+    admins.getRevenues().then(revenues => {
+      var start = new Date(req.query.start);
+      var end = new Date(req.query.end);
+      debug(start)
+      if (req.query.start == null && req.query.end == null)
+        res.send(revenues);
+        else if (start != null && end != null) {
+
+          res.send(revenues.arr.filter(ele => {
+            return ele.date >= start && ele.date <= end 
+          }))
+        }
+    }).catch((error) => {res.send(error)});
+  
+  });
+  
+  router.get("/productPage", authenticateToken, async function (req, res) {
+    res.sendFile(path.join(__dirname + "/../privateViews/products.html"))
+  })
+
+
   
   
   module.exports = router;

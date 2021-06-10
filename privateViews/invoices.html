@@ -30,7 +30,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link href="/material-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
 </head>
 <script src="../js/logout.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white"
@@ -40,27 +40,27 @@ The above copyright notice and this permission notice shall be included in all c
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active ">
-            <a class="nav-link" href="/admin/login?pm=false&sm=true">
-                <i class="material-icons">dashboard</i>
-                <p>Dashboard</p>
-            </a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="/admin/productPage">
-              <p>Products</p>
-          </a>
-      </li>
-        <li class="nav-item ">
-            <a class="nav-link" href="/admin/OrderRefundPage">
-                <p>Order Refund Requests</p>
-            </a>
-        </li>
-        <li class="nav-item ">
-            <a class="nav-link" href="/admin/InvoicePage">
-                <p>Revenue</p>
-            </a>
-        </li>
+            <li class="nav-item  ">
+                <a class="nav-link" href="/admin/login?pm=false&sm=true">
+                    <i class="material-icons">dashboard</i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="/admin/productPage">
+                  <p>Products</p>
+              </a>
+          </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/admin/OrderRefundPage">
+                    <p>Order Refund Requests</p>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/InvoicePage">
+                    <p>Revenue</p>
+                </a>
+            </li>
         </ul>
       </div>
     </div>
@@ -128,7 +128,7 @@ The above copyright notice and this permission notice shall be included in all c
                         <ul class="nav nav-tabs" data-tabs="tabs">
                           <li class="nav-item">
                             <a class="nav-link active" href="#profile" data-toggle="tab">
-                              <i class="material-icons"></i> Graph
+                              <i class="material-icons"></i> Invoices
                               <div class="ripple-container"></div>
                             </a>
                           </li>
@@ -139,32 +139,20 @@ The above copyright notice and this permission notice shall be included in all c
                   <div class="card-body">
                     <div class="tab-content">
                       <div class="tab-pane active" id="profile">
-                        <canvas id="revChart"></canvas>
+                        <table class="table">
+                          <tbody id="orders">
+                            <th>OrderId</th>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-12 col-md-12">
-                <div class="card">
-                  <div class="card-header card-header-warning">
-                    <h4 class="card-title">Products</h4>
-                    <p class="card-category">See and remove products!</p>
-                  </div>
-                  <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                      <thead class="text-warning">
-                        <th>PID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Info</th>
-                        <th>Quantity</th>
-                        <th>Distributor</th>
-                        <th>Remove</th>
-                      </thead>
-                      <tbody id="products">
-                      </tbody>
-                    </table>
                   </div>
                 </div>
               </div>
@@ -479,88 +467,37 @@ The above copyright notice and this permission notice shall be included in all c
       });
 
 
-  
+      function Redirect(oid){
+        location.href="/admin/deliveryPage?oid=" + oid;
+      }
+
       $(document).ready(function () {
         // Javascript method's body can be found in assets/js/demos.js
         md.initDashboardPageCharts();
 
-        async function dispGraph() {
+        async function dispOrders() {
 
-          const response = await fetch('/admin/getRevenues');
+          const response = await fetch('/admin/getOrders');
           const myJson = await response.json(); //extract JSON from the http response
 
-          var ctx  = document.getElementById("revChart");
-          ctx.height = 500;
-          ctx.width = 100;
-          var dates = [];
-          var prices = [];
 
-          myJson.arr.forEach(elmnt =>{
-            dates.push(elmnt.date)
-            prices.push(elmnt.price)
-          } )
-          var myChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                  labels:dates,
-                  datasets: [{
-                      label: 'Revenue per Day in $',
-                      data: prices,
-                      backgroundColor: [
-                          'rgba(255, 99, 132, 0.2)',
-                          'rgba(54, 162, 235, 0.2)',
-                          'rgba(255, 206, 86, 0.2)',
-                          'rgba(75, 192, 192, 0.2)',
-                          'rgba(153, 102, 255, 0.2)',
-                          'rgba(255, 159, 64, 0.2)'
-                      ],
-                      borderColor: [
-                          'rgba(255, 99, 132, 1)',
-                          'rgba(54, 162, 235, 1)',
-                          'rgba(255, 206, 86, 1)',
-                          'rgba(75, 192, 192, 1)',
-                          'rgba(153, 102, 255, 1)',
-                          'rgba(255, 159, 64, 1)'
-                      ],
-                      borderWidth: 1
-                  }]
-              },
-              options: {maintainAspectRatio: false,
+          myJson.arr.forEach(order => {
+            var date = new Date(order.date._seconds * 1000);
+            document.getElementById("orders").innerHTML += `
 
-                  scales: {
-                      y: {
-                          beginAtZero: true
-                      }
-                  }
-              }
+            <tr onclick="Redirect('${order.oid}');">
+            <th>${order.oid}</th>
+            <th>${order.user}</th>
+            <th>${date}</th>
+            <th>${order.price}</th>
+            <th>${order.status}</th>
+            <th>${order.quantity}</th>
+          </tr>
+        `
           });
 
-        //     <tr onclick="Redirect('${order.oid}');">
-        //     <th>${order.oid}</th>
-        //     <th>${order.user}</th>
-        //     <th>${date}</th>
-        //     <th>${order.price}</th>
-        //     <th>${order.status}</th>
-        //     <th>${order.quantity}</th>
-        //   </tr>
-
-        //   myJson.arr.forEach(order => {
-        //     var date = new Date(order.date._seconds * 1000);
-        //     document.getElementById("revChart").innerHTML += `
-
-        //     <tr onclick="Redirect('${order.oid}');">
-        //     <th>${order.oid}</th>
-        //     <th>${order.user}</th>
-        //     <th>${date}</th>
-        //     <th>${order.price}</th>
-        //     <th>${order.status}</th>
-        //     <th>${order.quantity}</th>
-        //   </tr>
-        // `
-        //   });
-
         }
-        dispGraph()
+        dispOrders()
 
 
         async function dispProducts() {

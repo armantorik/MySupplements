@@ -21,7 +21,8 @@ router.get('/', function (req, res) {
           "info": doc.arr[i].info,
           "link": doc.arr[i].thumbnailUrl,
           "price": doc.arr[i].price,
-          "distributor": doc.arr[i].distributor
+          "distributor": doc.arr[i].distributor,
+          "discounted": doc.arr[i].discounted
         };
         jsonObject[key].push(details);
       };

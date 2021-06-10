@@ -288,7 +288,7 @@ exports.getOrders = async () => {
   
 };
 
-exports.changePrice = async (pid, newPrice, expiresAt) => {
+exports.changePrice = async (pid, discountRate, expiresAt) => {
 
   var proRef = db.collection("Products").doc(pid);
 
@@ -296,53 +296,100 @@ exports.changePrice = async (pid, newPrice, expiresAt) => {
 
   var oldPrice = queryRef.data().price;
 
+  var newPrice = oldPrice * (100 - discountRate) / 100;
+
   if (queryRef.data().discounted)
     return false;
 
-  if (newPrice < oldPrice) {
+    var datetime = new Date();
+
+    if (expiresAt < datetime) {
+      debug(expiresAt + datetime)
+      return false;
+    }
+
     await proRef.update({
       discounted: true,
       price: newPrice
     })
-
-    debug(expiresAt)
-    var datetime = new Date();
-    if (expiresAt < datetime) {
-      return false;
-    }
     await db.collection("Discounted Products").add({
       product: pid,
       newPrice: newPrice,
-      expiresAt: expiresAt,
+      expiresAt: new Date(expiresAt),
       oldPrice
     });
 
-  }
-  else {
-    debug("too exp")
-    return false;
-  }
+}
 
 
+
+exports.getRevenues = async (start, end) => {
+  
+  var orders = await db.collection("orders").get();
+  var ordersArr = []
+  var orderData = {}
+  orders.forEach(order => {
+    var date = new Date(order.data().orderTime._seconds * 1000);
+    orderData = {pros:order.data().products, date:date.toLocaleDateString()}
+    ordersArr.push(orderData)
+  })
+
+
+var newArr = ordersArr.reduce((filter, current) => {
+  var dk = filter.find(item => item.date === current.date);
+  if (!dk) {
+    return filter.concat([current]);
+  } else {
+    return filter;
+  }
+}, []);
+  debug(newArr)
+
+  var json = {}
+  var jsonArr = []
+
+    var price = 0;
+
+    for await (order of newArr) {
+      var proArr = order.pros;
+      var date = order.date;
+      if (proArr){
+        for await (pro of proArr) {
+            var product = await db.collection("Products").doc(pro.pid).get()
+            price += product.data().price * pro.quantity;
+        }
+      
+      }
+
+      var data = {date, price}
+      jsonArr.push(data);
+
+    }
+    debug(jsonArr)
+
+    json.arr = jsonArr;
+    
+    return json
+
+ 
 }
 
 exports.removeExpired = async () => {
-
+  
   var datetime = new Date();
 
+ 
   var snapshot = await db.collection("Discounted Products").where("expiresAt", "<=", datetime).get();
   snapshot.forEach(async (doc) => {
-    pid = doc.pid;
-
+    pid = doc.data().product;
+    price = doc.data().oldPrice
     await db.collection("Products").doc(pid).update({
-      price: discP,
+      price,
       discounted: false
     });
-
-    doc.delete();
-
+    db.collection("Discounted Products").doc(doc.id).delete().catch(error => {
+      return error;
+    })
   })
 
 }
-
-
