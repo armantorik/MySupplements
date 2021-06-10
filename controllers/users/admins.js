@@ -90,6 +90,12 @@ exports.addProduct = (image, body) => {
       metadata.metadata.firebaseStorageDownloadTokens;
 
     // Add keywords to search
+
+    body.price = parseInt(body.price)
+    body.quantity = parseInt(body.quantity)
+
+
+
     body.keywords = body.name.split(" ");
     if (body.name.includes("gr")) {
       body.keywords.splice(body.keywords.indexOf("gr"), 1);
