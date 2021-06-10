@@ -94,6 +94,9 @@
     border: none;
     cursor: pointer;
   }
+  li.pointer {
+        cursor: pointer;
+      }
 
   .badge {
     padding-left: 9px;
@@ -486,15 +489,16 @@
               sessionStorage.setItem("lastname", myJson.profile.lname);
               sessionStorage.setItem("fname", myJson.profile.fname);
             }
+            document.getElementById("signout").innerHTML = '<li id="signout" class="pointer" three-d-box"><a class="three-d">Sign Out</a></li>'
             getUserInfo()
           }
           else {
-            document.getElementById("signout").innerHTML = '<li id="signout" three-d-box"><a class="three-d">Sign Out</a></li>'
+            document.getElementById("signout").innerHTML = '<li id="signout" class="pointer"   three-d-box"><a class="three-d">Sign Out</a></li>'
             console.log("anon");
           }
         }
         else {
-          document.getElementById("signout").innerHTML = '<li id="signout" three-d-box"><a  class="three-d">Sign In</a></li>'
+          document.getElementById("signout").innerHTML = '<li id="signout" class="pointer"   three-d-box"><a class="three-d">Sign In</a></li>'
           console.log("no user");
         }
       })
