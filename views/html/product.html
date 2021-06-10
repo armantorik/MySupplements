@@ -7,7 +7,7 @@
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="../css/style.css">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,15 +19,10 @@
      <link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
      <title>Product info</title>
   </head>
-  <style>
-     .center {
-  width: 90%;
-  height: 600px;
-  left: 50%;
-  object-position:70%;
+  
 }
-
-      .parent {
+<style>
+        .parent {
   position: relative;
   height: 70px;
 }
@@ -51,15 +46,15 @@
 }
 
 .card {
-    object-position: center;
-    max-width: 1950px;
+    margin: auto;
+    max-width: 950px;
     width: 90%;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 1rem;
     border: transparent
 }
 
-@media(max-width:200px) {
+@media(max-width:767px) {
     .card {
         margin: 3vh auto
     }
@@ -72,7 +67,7 @@
     border-top-left-radius: 1rem
 }
 
-@media(max-width:2000px) {
+@media(max-width:767px) {
     .cart {
         padding: 4vh;
         border-bottom-left-radius: unset;
@@ -88,7 +83,7 @@
     color: rgb(65, 65, 65)
 }
 
-@media(max-width:2000px) {
+@media(max-width:767px) {
     .summary {
         border-top-right-radius: unset;
         border-bottom-left-radius: 1rem
@@ -114,7 +109,7 @@
 .main {
     margin: 0;
     padding: 2vh 0;
-    width: cover;
+    width: 100%
 }
 
 .col-2,
@@ -207,6 +202,7 @@ a:hover {
 }
 
 #code {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
     background-repeat: no-repeat;
     background-position-x: 95%;
     background-position-y: center
@@ -272,177 +268,11 @@ color:white;
   font-size: 18px;
   background-color: #c67605;
 }
- 
-        .teal-color {
-color:#60bda9;
-}
-#section1 {
-  height: 600px;
-}
-
-#section2 {
-  height: 20px;
-}
-    .white-color {
-color:white;
-}
-    .badge {
-  padding-left: 9px;
-  padding-right: 9px;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
-}
-html {
-  scroll-behavior: smooth;
-}
-.label-warning[href],
-.badge-warning[href] {
-  background-color: #c67605;
-}
-#lblCartCount {
-    font-size: 12px;
-    background: #ff0000;
-    color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: -10px; 
-}
-
-            .search input[type=text]{
-            width:300px;
-            height:25px;
-            border-radius:25px;
-            border: none;
- 
-        }
-         
-        .search{
-            margin-right: 20%;
-            margin:7px;
- 
-        }
-         
-        .search button{
-            background-color: #0074d900;
-            color: #f2f2f2;
-            float: right;
-            padding: 5px 10px;
-            margin-right: 16px;
-            font-size: 12px;
-            border: none;
-            cursor: pointer;
-        }
-        .badge {
-  padding-left: 9px;
-  padding-right: 9px;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
-}
-
-.label-warning[href],
-.badge-warning[href] {
-  font-size: 18px;
-  background-color: #c67605}
-
-.backback {
-  background-image: url("https://clarksvillenow.sagacom.com/files/2019/02/workout-gym-exercise-equipment-shutterstock.jpg");
-  background-size: cover;
-  }
-  .teal-color {
-    color: #60bda9;
-  }
-
-  #section1 {
-    height: 600px;
-  }
-
-  #section2 {
-    height: 20px;
-  }
-
-  .white-color {
-    color: white;
-  }
-
-  .badge {
-    padding-left: 9px;
-    padding-right: 9px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: auto auto;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  .label-warning[href],
-  .badge-warning[href] {
-    background-color: #c67605;
-  }
-
-  #lblCartCount {
-    font-size: 12px;
-    background: #ff0000;
-    color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: -10px;
-  }
-
-  .search input[type=text] {
-    width: 300px;
-    height: 25px;
-    border-radius: 25px;
-    border: none;
-
-  }
-
-  .search {
-    margin-right: 20%;
-    margin: 7px;
-
-  }
-
-  .search button {
-    background-color: #0074d900;
-    color: #f2f2f2;
-    float: right;
-    padding: 5px 10px;
-    margin-right: 16px;
-    font-size: 12px;
-    border: none;
-    cursor: pointer;
-  }
-
-  .badge {
-    padding-left: 9px;
-    padding-right: 9px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
-  }
-
-  .label-warning[href],
-  .badge-warning[href] {
-    font-size: 18px;
-    background-color: #c67605;
-  }
-</style>
-}
   </style>
-  <body class="backback" onload="onloadFuncs()">
+  <body class="backback" style="background-image:url('http://localhost:3000/img/gym.jpeg')" onload="onloadFuncs()">
 <div >
   <body onload="onloadFuncs()">
 <div class="backback">
-    
   <nav class="navbar navbar-expand-lg fixed-top">
     <a class="navbar-brand" href="#">SUPPLEMENTS</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
