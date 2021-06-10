@@ -70,9 +70,8 @@ router.get('/', function (req, res) {
     var pros = await user.search(query).catch((error) => {
       res.status(400).send("Error: " + error);
     });
-  
       res.jsonp(pros);
-  
+      
   });
   
   router.get('/cats/get',function (req, res) {

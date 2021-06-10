@@ -456,7 +456,8 @@ exports.search = async (queries) => {
             var proArr = [] // Array of products filtered by query
     
             snap.forEach((product) => {
-                proArr.push(product.data());
+                var data = {product: product.data(), id: product.id};
+                proArr.push(data);
             });
             
             if (count == 0) {

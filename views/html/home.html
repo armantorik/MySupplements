@@ -18,6 +18,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<!-- CSS Files -->
+<link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+<!-- CSS Just for demo purpose, don't include it in your project -->
+<link href="../material-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
+
   <title>Home Page</title>
 </head>
 <style>
@@ -68,13 +77,7 @@
     margin-left: -10px;
   }
 
-  .search input[type=text] {
-    width: 300px;
-    height: 25px;
-    border-radius: 25px;
-    border: none;
-
-  }
+  
 
   .search {
     margin-right: 20%;
@@ -129,16 +132,16 @@
           <a class="nav-link" href="/html/accountSettings.html">Settings </a>
         </li>
       </ul>
-      <div class="search">
-        <form action="#">
-          <input type="text" placeholder="   Search Product " name="search">
-          <button>
+      <div class="search" id="searchid">
+          <input type="text" placeholder="   Search Product " name="search" id="searchinput">
+          <button onclick="dosearch()">
             <i class="fa fa-search" style="font-size: 18px;">
             </i>
           </button>
-        </form>
       </div>
     </div>
+
+    <script src="../js/search.js" ></script>
 
     <script>
       function dispName() {
