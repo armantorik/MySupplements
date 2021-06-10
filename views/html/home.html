@@ -12,15 +12,23 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<!-- CSS Files -->
+<link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+
   <title>Home Page</title>
 </head>
 <style>
+
   .teal-color {
     color: #60bda9;
   }
@@ -68,13 +76,7 @@
     margin-left: -10px;
   }
 
-  .search input[type=text] {
-    width: 300px;
-    height: 25px;
-    border-radius: 25px;
-    border: none;
-
-  }
+  
 
   .search {
     margin-right: 20%;
@@ -92,6 +94,9 @@
     border: none;
     cursor: pointer;
   }
+  li.pointer {
+        cursor: pointer;
+      }
 
   .badge {
     padding-left: 9px;
@@ -129,16 +134,18 @@
           <a class="nav-link" href="/html/accountSettings.html">Settings </a>
         </li>
       </ul>
-      <div class="search">
-        <form action="#">
-          <input type="text" placeholder="   Search Product " name="search">
-          <button>
+      <div class="search" id="searchid">
+          <input type="text" placeholder="   Search Product " name="search" id="searchinput">
+          <button onclick="dosearch()">
             <i class="fa fa-search" style="font-size: 18px;">
             </i>
           </button>
-        </form>
+        <div id="results"> </div>
+
       </div>
     </div>
+
+    <script src="../js/search.js" ></script>
 
     <script>
       function dispName() {
@@ -152,7 +159,7 @@
         console.log(pros)
         if (pros) {
           
-          document.getElementById("lblCartCount").innerHTML = pros.productArr.size;
+          document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
         }
         
       }
@@ -192,7 +199,7 @@
         <div class="carousel-caption d-none d-md-block">
           <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
           <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR WOMEN AVAILABLE IN SHOP</p>
-          <a href="#product" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
+          <a href="#contents" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
         </div>
       </div>
 
@@ -201,7 +208,7 @@
         <div class="carousel-caption d-none d-md-block">
           <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
           <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR MEN AVAILABLE IN SHOP</p>
-          <a href="#product" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
+          <a href="#contents" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
         </div>
       </div>
 
@@ -236,17 +243,32 @@
   <div class="container mt-5 text-center">
     <div class="row wow flash">
       <div class="col-md-12 text-center">
-        <h1>BROWSE THE TOP SELLING PRODUCTS</h1>
+        <h1 id="contents">BROWSE THE TOP SELLING PRODUCTS</h1>
       </div>
     </div>
     <div class="row mt-4 wow bounceIn">
+      
+
       <div id="cats" class="col-md-12">
 
+      </div>
+      <div id="sort" class="col-md-12">
+          <div class="row">
+              <div>
+                <th>Sort By</th>
+                <select class="custom-select custom-select-sm" id="sortType">
+                  <option selected>Default</option>
+                  <option value="0">Name</option>
+                  <option value="1">Price</option>
+                  <option value="2">Time</option>
+                </select>  
+              </div>
+              <button class='btn btn-info' id="btn-sort">Ascending</button>
+        </div>
       </div>
     </div>
 
     <div style="display: inline-block;" id="product" class="card">
-      <!-- <a class="btn btn-pink text-light"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add To Cart </a> -->
     </div>
 </div>
     <footer class="bg-dark">
@@ -258,7 +280,7 @@
 
         <div class="row text-light mt-5">
           <div class="col-md-3 wow slideInLeft">
-            <div class="footer-heading">
+            <div class="footer-heading" id="about">
               ABOUT
             </div>
             <p class="footer-text mt-3">Always pushing forward for self betterment, supplements are here to boost you on
@@ -274,7 +296,7 @@
             <div class="row">
               <div class="col-md-6">
                 <ul class="footer-list mt-3">
-                  <li><a href="#">About Us</a></li>
+                  <li><a href="#about">About Us</a></li>
                   <li><a href="#">Track Orders</a></li>
                   <li><a href="#">Returns</a></li>
                   <li><a href="#">Jobs</a></li>
@@ -290,13 +312,13 @@
 
           <div class="col-md-3 wow slideInDown">
             <div class="footer-heading"> RECENT POSTS </div>
-            <div class="media mt-3"> <img src="/images/media/1.jpg" class="mr-3" alt="...">
+            <div class="media mt-3">
               <div class="media-body">
                 <h5 class="mt-0">Newest science in muscle building</h5>
                 Scientists came up with a new formula that promotes muscle growth...
               </div>
             </div>
-            <div class="media"> <img src="/images/media/2.jpg" class="mr-3 img-fluid" alt="...">
+            <div class="media"> 
               <div class="media-body">
                 <h5 class="mt-0">Is ketogenic=bad? </h5>
                 There has been several discussions going on about how keto is not always...
@@ -308,20 +330,15 @@
             <div class="footer-heading">
               CONTACT US
             </div>
-            <p class="footer-text mt-3"><i class="fa fa-home" aria-hidden="true"></i> : supplement place at supplement
-              street no 21</p>
+            <p class="footer-text mt-3"><i class="fa fa-home" aria-hidden="true"></i> : Online</p>
             <p> <i class="fa fa-envelope-o" aria-hidden="true"></i> : supplements@gmail.com</p>
             <p><i class="fa fa-phone" aria-hidden="true"></i> : +90 216 546 13 92</p>
             <p><i class="fa fa-fax" aria-hidden="true"></i> : 044 61151556 55</p>
 
           </div>
-
-
         </div>
-
         <hr>
-
-        <div class="footer-endline text-center text-light mt-2 pb-4 wow fadeIn">This Webpage Was Made By CS308 Group 19
+        <div class="footer-endline text-center text-light mt-2 pb-4 wow fadeIn">This Webpage Was Made By CS308 Group 14
           As
           a Project</div>
       </div>
@@ -359,48 +376,65 @@
     <script src="../js/logout.js"></script>
     <script>
 
+
       async function filterByCat(cat) {
         console.log(cat)
-        const response = await fetch('/products/cats/get?cat=' + cat);
+        const response = await fetch('/products/cats/getProducts?cat=' + cat);
         const myJson = await response.json(); //extract JSON from the http response
-        document.getElementById("product").innerHTML = "";
+        document.getElementById("product").innerHTML = ``;
 
         myJson.proArr.forEach((element) => {
           var imgLink = element["thumbnailUrl"];
           var pname = element["name"];
           var pid = element["id"];
+          var price = Math.round(element["price"]);
+          var ts = element["publishedDate"];
+          var date = new Date(ts['_seconds'] * 1000);
           var quantity = element["quantity"];
           
           if (quantity <= 0) {
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`
           } else {
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
           }
         });
+        $proList = $('#product');
+        $pro = $proList.children('div');
+        console.log($proList)
       }
+
+      
+
       async function dispPros() {
         
         var productJson = window.allPros["jsonObject"]["detail"];
-        document.getElementById("product").innerHTML = "";
+        document.getElementById("product").innerHTML = '';
+        
 
         productJson.forEach(element => {
           var imgLink = element["link"];
           var pname = element["name"];
           var pid = element["id"];
+          var price = Math.round(element["price"]);;
+          var ts = element["date"];
+          var date = new Date(ts['_seconds'] * 1000);
           var quantity = element["quantity"];
           if (quantity <= 0) {
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/html/product.html?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
           } else {
-            document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/html/product.html?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
           }
         });
+        $proList = $('#product');
+        $pro = $proList.children('div');
+        
       }
       dispPros()
 
       async function dispCats() {
 
 
-        const response = await fetch('/products/getCats');
+        const response = await fetch('/products/cats/get');
         const myJson = await response.json(); //extract JSON from the http response
         var count = 0;
         document.getElementById("cats").innerHTML = " <button id='getByCat-1' onclick='dispPros()' class='btn btn-light m1-4'>All</button>";
@@ -440,18 +474,78 @@
               sessionStorage.setItem("lastname", myJson.profile.lname);
               sessionStorage.setItem("fname", myJson.profile.fname);
             }
+            document.getElementById("signout").innerHTML = '<li id="signout" class="pointer" three-d-box"><a class="three-d">Sign Out</a></li>'
             getUserInfo()
           }
           else {
-            document.getElementById("signout").innerHTML = '<li id="signout"><a class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
+            document.getElementById("signout").innerHTML = '<li id="signout" class="pointer"   three-d-box"><a class="three-d">Sign Out</a></li>'
             console.log("anon");
           }
         }
         else {
-          document.getElementById("signout").innerHTML = '<li id="signout"><a  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
+          document.getElementById("signout").innerHTML = '<li id="signout" class="pointer"   three-d-box"><a class="three-d">Sign In</a></li>'
           console.log("no user");
         }
       })
+
+
+var ascending = true;
+
+
+
+
+$('#btn-sort').on('click', function () {
+  var $proList = $('#product');
+var $pro = $proList.children('div');
+var sortList = Array.prototype.sort.bind($pro);
+
+
+var doSort = function ( ascending, sortType ) {
+    
+    sortList(function ( a, b ) {
+
+      if (sortType != "Default"){
+        var aText = a.innerHTML.split("-")[sortType];
+        var bText = b.innerHTML.split("-")[sortType];
+        if (sortType == 2){
+          aText = aText.substr(0, aText.indexOf('"')); 
+          bText = bText.substr(0, bText.indexOf('"')); 
+          
+        }
+      }
+      else {
+        var aText = a.innerHTML;
+        var bText = b.innerHTML;
+      }
+        
+      console.log(aText)
+        if ( aText < bText ) {
+            return ascending ? -1 : 1;
+        }
+
+        if ( aText > bText ) {
+            return ascending ? 1 : -1;
+        }
+
+        return 0;
+    });
+    
+    $proList.append($pro);
+
+};
+
+    var sortType = $('#sortType').val();
+    console.log($proList)
+    doSort(ascending, sortType)
+
+    ascending = !ascending;
+    if (ascending)
+      document.querySelector("#btn-sort").childNodes[0].textContent="Ascending";
+    else {
+      document.querySelector("#btn-sort").childNodes[0].textContent="Descending";
+      
+    }
+});
 
 
     </script>

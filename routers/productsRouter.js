@@ -20,8 +20,10 @@ router.get('/', function (req, res) {
           "quantity": doc.arr[i].quantity,
           "info": doc.arr[i].info,
           "link": doc.arr[i].thumbnailUrl,
+          "date": doc.arr[i].publishedDate,
           "price": doc.arr[i].price,
-          "distributor": doc.arr[i].distributor
+          "distributor": doc.arr[i].distributor,
+          "discounted": doc.arr[i].discounted
         };
         jsonObject[key].push(details);
       };
@@ -69,9 +71,8 @@ router.get('/', function (req, res) {
     var pros = await user.search(query).catch((error) => {
       res.status(400).send("Error: " + error);
     });
-  
       res.jsonp(pros);
-  
+      
   });
   
   router.get('/cats/get',function (req, res) {

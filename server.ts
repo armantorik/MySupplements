@@ -144,4 +144,4 @@ app.listen(process.env.PORT, () => {
 
 
 // Automatically remove expired discounts
-setInterval(admins.removeExpired, 10000); //time is in ms
+setInterval(admins.removeExpired, 5000); //time is in ms

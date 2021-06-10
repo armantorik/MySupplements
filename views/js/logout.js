@@ -10,9 +10,12 @@ function logout(){
 }
 
 
-$("#signout").click(async function () {
+$("#signout").click(function () {
 
-    const token = await firebase.auth().currentUser.getIdToken()
+
+  firebase.auth().onAuthStateChanged(async user => {
+    if (user) {
+    const token = await user.getIdToken()
     
     fetch("/sessionLogout", {
       method: "POST",
@@ -30,4 +33,8 @@ $("#signout").click(async function () {
     }).catch((error) => {
       window.alert("Error: " + error);
     });
+  } else {
+    window.location.href = '../html/signin.html';
+  }
+})
   })

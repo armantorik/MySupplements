@@ -26,10 +26,11 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="/material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="/material-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
 </head>
 <script src="../js/logout.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white"
@@ -39,27 +40,27 @@ The above copyright notice and this permission notice shall be included in all c
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active ">
-            <a class="nav-link" href="/admin/login?pm=false&sm=true">
-                <i class="material-icons">dashboard</i>
-                <p>Dashboard</p>
-            </a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="/admin/productPage">
-              <p>Products</p>
-          </a>
-      </li>
-        <li class="nav-item ">
-            <a class="nav-link" href="/admin/OrderRefundPage">
-                <p>Order Refund Requests</p>
-            </a>
-        </li>
-        <li class="nav-item ">
-            <a class="nav-link" href="/admin/InvoicePage">
-                <p>Invoices</p>
-            </a>
-        </li>
+            <li class="nav-item  ">
+                <a class="nav-link" href="/admin/login?pm=false&sm=true">
+                    <i class="material-icons">dashboard</i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="/admin/productPage">
+                  <p>Products</p>
+              </a>
+          </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/admin/OrderRefundPage">
+                    <p>Order Refund Requests</p>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/InvoicePage">
+                    <p>Invoices</p>
+                </a>
+            </li>
         </ul>
       </div>
     </div>
@@ -126,19 +127,41 @@ The above copyright notice and this permission notice shall be included in all c
                       <div class="nav-tabs-wrapper">
                         <ul class="nav nav-tabs" data-tabs="tabs">
                           <li class="nav-item">
-                            <a class="nav-link active" href="#profile" data-toggle="tab">
-                              <i class="material-icons"></i> Graph
-                              <div class="ripple-container"></div>
-                            </a>
-                          </li>
-                        </ul>
+                            From&nbsp;&nbsp;<input id="from" type="date"></input>
+                        </li>
+                        
+                        <li class="nav-item">
+                          &nbsp;&nbsp; To&nbsp;&nbsp;<input id="to" type="date"></input>
+                      </li>
+                      &nbsp;&nbsp;
+                      <li class="nav-item">
+                        <button onclick="displayRange()" class="nav-link active" href="#profile" data-toggle="tab">
+                          <i class="material-icons"></i> Show Between Dates
+                        </button>
+                      </li>
+                      <li class="nav-item" style="text-align:center;">
+                        
+                      <button class="nav-link"  onclick="window.print()"> &nbsp;&nbsp; Print PDF</button>
+                        </li>
+                    </ul>
                       </div>
                     </div>
                   </div>
                   <div class="card-body">
                     <div class="tab-content">
                       <div class="tab-pane active" id="profile">
-                        <canvas id="revChart"></canvas>
+                        <table class="table">
+                          <tbody id="orders">
+                            <th>OrderId</th>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>
@@ -147,7 +170,6 @@ The above copyright notice and this permission notice shall be included in all c
             </div>
           </div>
         </div>
-
         <footer class="footer">
           <div class="container-fluid">
             <nav class="float-left">
@@ -282,6 +304,8 @@ The above copyright notice and this permission notice shall be included in all c
     <script src="/material-dashboard-master/assets/js/plugins/bootstrap-notify.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="/material-dashboard-master/assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
+    <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+    <script src="/material-dashboard-master/assets/demo/demo.js"></script>
     <script>
       $(document).ready(function () {
         $().ready(function () {
@@ -454,67 +478,81 @@ The above copyright notice and this permission notice shall be included in all c
       });
 
 
-  
+      async function displayRange(){
+
+      var from = $("#from").val();
+      var to = $("#to").val();
+      if (!from){
+        from = "1970.01.01"
+      }
+      if (!to){
+        to = new Date().toLocaleDateString()
+        
+      }
+      var url = '/admin/getRevenues?start='+from+'&end=' + to;
+      console.log(url)
+      const response = await fetch(url);
+      const myJson = await response.json(); //extract JSON from the http response
+      console.log(myJson.arr)
+
+      document.getElementById("orders").innerHTML = ` <th>OrderId</th>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Quantity</th>`
+      
+      myJson.arr.forEach(order => {
+        //var date = new Date(order.date._seconds * 1000);
+        document.getElementById("orders").innerHTML += `
+
+        <tr>
+        <th>${order.oid}</th>
+        <th>${order.user}</th>
+        <th>${order.date}</th>
+        <th>${order.price}</th>
+        <th>${order.status}</th>
+        <th>${order.quantity}</th>
+      </tr>
+    `
+      });
+
+
+}
+
       $(document).ready(function () {
-        // Javascript method's body can be found in assets/js/demos.js
-        md.initDashboardPageCharts();
+      
 
-        async function dispGraph() {
+        async function dispOrders() {
 
-          const response = await fetch('/admin/getRevenues');
+          const response = await fetch('/admin/getOrders');
           const myJson = await response.json(); //extract JSON from the http response
 
-          var ctx  = document.getElementById("revChart");
-          ctx.height = 500;
-          ctx.width = 1000;
-          var dates = [];
-          var prices = [];
-          console.log(myJson)
-          myJson.arr.forEach(elmnt =>{
-            dates.push(elmnt.date)
-            prices.push(elmnt.price)
-          } )
-          var myChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                  labels:dates,
-                  datasets: [{
-                      label: 'Invoices per Day in $',
-                      data: prices,
-                      backgroundColor: [
-                          'rgba(255, 99, 132, 0.2)',
-                          'rgba(54, 162, 235, 0.2)',
-                          'rgba(255, 206, 86, 0.2)',
-                          'rgba(75, 192, 192, 0.2)',
-                          'rgba(153, 102, 255, 0.2)',
-                          'rgba(255, 159, 64, 0.2)'
-                      ],
-                      borderColor: [
-                          'rgba(255, 99, 132, 1)',
-                          'rgba(54, 162, 235, 1)',
-                          'rgba(255, 206, 86, 1)',
-                          'rgba(75, 192, 192, 1)',
-                          'rgba(153, 102, 255, 1)',
-                          'rgba(255, 159, 64, 1)'
-                      ],
-                      borderWidth: 1
-                  }]
-              },
-              options: {maintainAspectRatio: false,
+          myJson.arr.forEach(order => {
+            var date = new Date(order.date._seconds * 1000);
+            document.getElementById("orders").innerHTML += `
 
-                  scales: {
-                      y: {
-                          beginAtZero: true
-                      }
-                  }
-              }
+            <tr>
+            <th>${order.oid}</th>
+            <th>${order.user}</th>
+            <th>${date}</th>
+            <th>${order.price}</th>
+            <th>${order.status}</th>
+            <th>${order.quantity}</th>
+          </tr>
+        `
           });
 
-
         }
-        dispGraph()
+        dispOrders()
 
-      })
+        
+      });
+
+
+      
+
+
     </script>
 </body>
 
