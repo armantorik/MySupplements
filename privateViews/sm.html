@@ -26,8 +26,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="/material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="/material-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
+
 </head>
 <script src="../js/logout.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
@@ -58,7 +57,7 @@ The above copyright notice and this permission notice shall be included in all c
         </li>
         <li class="nav-item ">
             <a class="nav-link" href="/admin/InvoicePage">
-                <p>Revenue</p>
+                <p>Invoices</p>
             </a>
         </li>
         </ul>
@@ -145,32 +144,10 @@ The above copyright notice and this permission notice shall be included in all c
                   </div>
                 </div>
               </div>
-              <div class="col-lg-12 col-md-12">
-                <div class="card">
-                  <div class="card-header card-header-warning">
-                    <h4 class="card-title">Products</h4>
-                    <p class="card-category">See and remove products!</p>
-                  </div>
-                  <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                      <thead class="text-warning">
-                        <th>PID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Info</th>
-                        <th>Quantity</th>
-                        <th>Distributor</th>
-                        <th>Remove</th>
-                      </thead>
-                      <tbody id="products">
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
+
         <footer class="footer">
           <div class="container-fluid">
             <nav class="float-left">
@@ -305,8 +282,6 @@ The above copyright notice and this permission notice shall be included in all c
     <script src="/material-dashboard-master/assets/js/plugins/bootstrap-notify.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="/material-dashboard-master/assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
-    <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-    <script src="/material-dashboard-master/assets/demo/demo.js"></script>
     <script>
       $(document).ready(function () {
         $().ready(function () {
@@ -491,10 +466,10 @@ The above copyright notice and this permission notice shall be included in all c
 
           var ctx  = document.getElementById("revChart");
           ctx.height = 500;
-          ctx.width = 100;
+          ctx.width = 1000;
           var dates = [];
           var prices = [];
-
+          console.log(myJson)
           myJson.arr.forEach(elmnt =>{
             dates.push(elmnt.date)
             prices.push(elmnt.price)
@@ -504,7 +479,7 @@ The above copyright notice and this permission notice shall be included in all c
               data: {
                   labels:dates,
                   datasets: [{
-                      label: 'Revenue per Day in $',
+                      label: 'Invoices per Day in $',
                       data: prices,
                       backgroundColor: [
                           'rgba(255, 99, 132, 0.2)',
@@ -535,80 +510,11 @@ The above copyright notice and this permission notice shall be included in all c
               }
           });
 
-        //     <tr onclick="Redirect('${order.oid}');">
-        //     <th>${order.oid}</th>
-        //     <th>${order.user}</th>
-        //     <th>${date}</th>
-        //     <th>${order.price}</th>
-        //     <th>${order.status}</th>
-        //     <th>${order.quantity}</th>
-        //   </tr>
-
-        //   myJson.arr.forEach(order => {
-        //     var date = new Date(order.date._seconds * 1000);
-        //     document.getElementById("revChart").innerHTML += `
-
-        //     <tr onclick="Redirect('${order.oid}');">
-        //     <th>${order.oid}</th>
-        //     <th>${order.user}</th>
-        //     <th>${date}</th>
-        //     <th>${order.price}</th>
-        //     <th>${order.status}</th>
-        //     <th>${order.quantity}</th>
-        //   </tr>
-        // `
-        //   });
 
         }
         dispGraph()
 
-
-        async function dispProducts() {
-
-          const response = await fetch('/products/');
-          const myJson = await response.json(); //extract JSON from the http response
-
-
-          myJson.jsonObject.detail.forEach(pro => {
-           
-            document.getElementById("products").innerHTML += `
-            <tr id="${pro.id}">
-              <th>${pro.id}</th>
-              <th>${pro.name}</th>
-              <th>${pro.quantity}</th>
-              <th>${pro.info}</th>
-              <th>${pro.price}</th>
-              <th>${pro.distributor}</th>
-              <td>
-            <button class="btn btn-danger" id="bt-${pro.id}" onclick="removeProduct('${pro.id}')">Remove!</button>
-                </td>
-            </tr>
-            </div>
-            `
-          });
-          
-        }
-        dispProducts()
-      });
-
-
-        async function removeProduct(pid) {
-          var row = document.getElementById(pid);
-          console.log(pid)
-
-          var btn = document.getElementById("bt-" + pid);
-
-          row.remove();
-          btn.remove();
-          //const response = await fetch('/admin/rmProduct?pid' + pid);
-          //const myJson = await response.json(); //extract JSON from the http response
-
-        }
-      
-
-
-
-
+      })
     </script>
 </body>
 

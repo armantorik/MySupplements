@@ -330,38 +330,43 @@ exports.getRevenues = async (start, end) => {
   var orderData = {}
   orders.forEach(order => {
     var date = new Date(order.data().orderTime._seconds * 1000);
-    orderData = {pros:order.data().products, date:date.toLocaleDateString()}
+    
+    var user = order.data().user;
+    if (user)
+      user = user.id
+    else
+      user = null
+
+    orderData = {  
+      pros:order.data().products,
+      date,
+      oid:order.id,
+      user,
+      status:order.data().status
+    }
+
     ordersArr.push(orderData)
+
   })
-
-
-var newArr = ordersArr.reduce((filter, current) => {
-  var dk = filter.find(item => item.date === current.date);
-  if (!dk) {
-    return filter.concat([current]);
-  } else {
-    return filter;
-  }
-}, []);
-  debug(newArr)
 
   var json = {}
   var jsonArr = []
 
     var price = 0;
+    var quantity = 0;
 
-    for await (order of newArr) {
+    for await (order of ordersArr) {
       var proArr = order.pros;
       var date = order.date;
       if (proArr){
         for await (pro of proArr) {
             var product = await db.collection("Products").doc(pro.pid).get()
             price += product.data().price * pro.quantity;
+            quantity += pro.quantity;
         }
-      
       }
 
-      var data = {date, price}
+      var data = {date, price, quantity, oid:order.oid, user:order.user, status:order.status, }
       jsonArr.push(data);
 
     }

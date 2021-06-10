@@ -200,20 +200,42 @@ router.get("/verifyComments", authenticateToken, async function (req, res) {
   })
 
   // Sales Managers can see revenues with range
+
   router.get("/getRevenues", authenticateToken, async function (req, res) {
   
 
     admins.getRevenues().then(revenues => {
       var start = new Date(req.query.start);
       var end = new Date(req.query.end);
-      debug(start)
-      if (req.query.start == null && req.query.end == null)
-        res.send(revenues);
-        else if (start != null && end != null) {
+      
+      if (req.query.start == null && req.query.end == null){
+        let newArr = revenues.arr.map(e =>{
+            var date = e.date.toLocaleDateString();
+            e.date = date;
+            return e;
+        } )
+        debug(newArr)
+        
+          revenues.arr = newArr.reduce((filter, current) => {
+          var dk = filter.find(item => item.date === current.date);
+          if (!dk) {
+            return filter.concat([current]);
+          } else {
+            return filter;
+          }
+        }, []);
 
-          res.send(revenues.arr.filter(ele => {
-            return ele.date >= start && ele.date <= end 
-          }))
+        res.send(revenues);
+
+      }
+        else if (start != null && end != null) {
+          debug(revenues)
+          debug(start)
+          var data = {arr:revenues.arr.filter(ele => {
+            var  startObj = new Date(ele.date);
+            return startObj >= start && startObj <= end 
+          })};
+          res.send(data)
         }
     }).catch((error) => {res.send(error)});
   
