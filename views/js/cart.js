@@ -4,7 +4,7 @@ async function getProducts2js() {
     firebase.auth().onAuthStateChanged(async(user) => {
     if (user) {
         console.log(user.email);
-        var queryurl = "/api/basketQuery.json";
+        var queryurl = "/basket/";
 
 
         $.get(queryurl).then(response => {
@@ -13,15 +13,14 @@ async function getProducts2js() {
            productArr = response.jsonProducts.productArr;
            let subtot = 0;
            productArr.forEach( (row) => {
-
-            pid = row.id;
-            pname = row.name;
-            cquantity = row.cQuantity;
-            pquantity = row.pQuantity;
-            info = row.info;
-            link = row.link;
-            price = row.price; 
-            distributor = row.distributor
+            console.log(row)
+             var pid = row.id;
+             var pname = row.name;
+             var cquantity = row.cQuantity;
+             var pquantity = row.pQuantity;
+             var info = row.info;
+             var link = row.link;
+             var price = row.price; 
  
             subtot+=price * cquantity;
             
@@ -31,25 +30,35 @@ async function getProducts2js() {
             else{
                 pLeft[pid] = true;
             }
+            var cartRowContents = ` <div class="row border-top border-bottom">
+            <div class="row main align-items-center">
+                <div class="col-2"><img class="img-fluid" src="${link}"></div>
+                <div class="col">
+                    <div class="row text-muted">${pname}</div>
+                    <div class="row">supplements.com</div>
+                </div>
+                <div class="col"> <a href="#">-</a><a href="#" class="border"> ${cquantity}</a><a href="#">+</a> </div>
+                <div class="col">$ ${price}<span class="close">&#10005;</span></div>
+            </div>
+            </div>`
 
-            var cartRowContents = `
-         <div width="100" height="100">
-         <img width="200" height="200" src="${link}"> 
-                 <span class="cart-item-title">Name: ${pname}</span>
-             </div>
-             <span class="cart-price cart-column">Price: ${price}₺</span>
-             <span class="cart-price cart-column">Quantity in basket: ${cquantity}</span>
-             <span class="cart-price cart-column">Available Quantity: ${pquantity}</span>
+
+        //     var cartRowContents = `
+        //  <div width="100" height="100">
+        //  <img width="200" height="200" > 
+        //          <span class="cart-item-title">Name: </span>
+        //      </div>
+        //      <span class="cart-price cart-column">Price: ${price}₺</span>
+        //      <span class="cart-price cart-column">Quantity in basket:</span>
+        //      <span class="cart-price cart-column">Available Quantity: ${pquantity}</span>
              
-             <div class="cart-quantity cart-column">
+        //      <div class="cart-quantity cart-column">
 
-                 <button onclick="addP(${pid})" type="button">+</button>
-                 <button class="btn btn-danger" onclick="rmP(${pid})"type="button">-</button>
-             </div>
-             `
-            var cartRow = document.createElement('div')
-            cartRow.innerHTML = cartRowContents
-            document.getElementById("productRows").append(cartRow);
+        //          <button onclick="addP(${pid})" type="button">+</button>
+        //          <button class="btn btn-danger" onclick="rmP(${pid})"type="button">-</button>
+        //      </div>
+        //      `
+            document.getElementById("productRows").innerHTML += cartRowContents;
            })
             
            let ship = 50/subtot;

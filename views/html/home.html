@@ -12,7 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -24,8 +24,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <!-- CSS Files -->
 <link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-<!-- CSS Just for demo purpose, don't include it in your project -->
-<link href="../material-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
 
   <title>Home Page</title>
 </head>
@@ -158,7 +156,7 @@
         console.log(pros)
         if (pros) {
           
-          document.getElementById("lblCartCount").innerHTML = pros.productArr.size;
+          document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
         }
         
       }
@@ -401,15 +399,20 @@
           var imgLink = element["thumbnailUrl"];
           var pname = element["name"];
           var pid = element["id"];
-          var price = Math.round(element["price"]);;
+          var price = Math.round(element["price"]);
+          var ts = element["publishedDate"];
+          var date = new Date(ts['_seconds'] * 1000);
           var quantity = element["quantity"];
           
           if (quantity <= 0) {
-            document.getElementById("product").innerHTML += `<div id='${pname}-${price}-${date}' style='float:left'> <a href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`
           } else {
-            document.getElementById("product").innerHTML += `<div id='${pname}-${price}-${date}' style='float:left'> <a href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
           }
         });
+        $proList = $('#product');
+        $pro = $proList.children('div');
+        console.log($proList)
       }
 
       
@@ -427,7 +430,6 @@
           var price = Math.round(element["price"]);;
           var ts = element["date"];
           var date = new Date(ts['_seconds'] * 1000);
-          console.log(date)
           var quantity = element["quantity"];
           if (quantity <= 0) {
             document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
@@ -435,6 +437,9 @@
             document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
           }
         });
+        $proList = $('#product');
+        $pro = $proList.children('div');
+        
       }
       dispPros()
 
@@ -484,12 +489,12 @@
             getUserInfo()
           }
           else {
-            document.getElementById("signout").innerHTML = '<li id="signout"><a class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
+            document.getElementById("signout").innerHTML = '<li id="signout" three-d-box"><a class="three-d">Sign Out</a></li>'
             console.log("anon");
           }
         }
         else {
-          document.getElementById("signout").innerHTML = '<li id="signout"><a  class="three-d">Sign Out<span class="three-d-box"><span class="front">Sign In</span><span class="back">Sign In</span></span></a></li>'
+          document.getElementById("signout").innerHTML = '<li id="signout" three-d-box"><a  class="three-d">Sign In</a></li>'
           console.log("no user");
         }
       })
@@ -497,10 +502,15 @@
 
 var ascending = true;
 
-var $proList = $('#product');
+
+
+
+$('#btn-sort').on('click', function () {
+  var $proList = $('#product');
 var $pro = $proList.children('div');
 var sortList = Array.prototype.sort.bind($pro);
-console.log($proList)
+
+
 var doSort = function ( ascending, sortType ) {
     
     sortList(function ( a, b ) {
@@ -508,6 +518,11 @@ var doSort = function ( ascending, sortType ) {
       if (sortType != "Default"){
         var aText = a.innerHTML.split("-")[sortType];
         var bText = b.innerHTML.split("-")[sortType];
+        if (sortType == 2){
+          aText = aText.substr(0, aText.indexOf('"')); 
+          bText = bText.substr(0, bText.indexOf('"')); 
+          
+        }
       }
       else {
         var aText = a.innerHTML;
@@ -529,9 +544,9 @@ var doSort = function ( ascending, sortType ) {
     $proList.append($pro);
 
 };
-$('#btn-sort').on('click', function () {
-    var sortType = $('#sortType').val();
 
+    var sortType = $('#sortType').val();
+    console.log($proList)
     doSort(ascending, sortType)
 
     ascending = !ascending;
