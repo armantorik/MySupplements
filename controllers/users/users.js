@@ -379,6 +379,7 @@ exports.retrieveOrders = async function (email, res) {
     var count = 0;
     if (snapshot.size > 0) {
         snapshot.forEach(async function (orderRef) {
+
             var pros = [];
             var order = orderRef.data();
             var oid = orderRef.id;
@@ -386,6 +387,7 @@ exports.retrieveOrders = async function (email, res) {
             for await (pid of order.products)
             {
                 var pro = await product.getProducts(pid.pid);
+
                 pro.product.quantity = pid.quantity;
                 pros.push(pro.product);
             }
