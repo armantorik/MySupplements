@@ -315,6 +315,28 @@ color:white;
                   <div class="col align-self-center text-right text-muted">3 items</div>
               </div>
           </div>
+          <script>
+
+            async function filterByCat(cat) {
+              console.log(cat)
+              const response = await fetch('/products/cats/get?cat=' + cat);
+              const myJson = await response.json(); //extract JSON from the http response
+              document.getElementById("product").innerHTML = "";
+      
+              myJson.proArr.forEach((element) => {
+                var imgLink = element["thumbnailUrl"];
+                var pname = element["name"];
+                var pid = element["id"];
+                var quantity = element["quantity"];
+                
+                if (quantity > 0) {
+                  document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading' >" + pname + "</div></a></div>";
+                } else {
+                  document.getElementById("product").innerHTML += "<div style='float:left'> <a href=/products?pid=" + pid + ">" + "<img class='card-img-top img-fluid' style='width:200px;height:200px;'  src=" + imgLink + "> <div size='20' class='card-heading'>" + pname + " </div></a></div>";
+                }
+              });
+            }
+            </script>
           <div class="row border-top border-bottom">
               <div class="row main align-items-center">
                   <div class="col-2"><img class="img-fluid" src="img/glukoz.jpeg"></div>
@@ -326,26 +348,7 @@ color:white;
                   <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
               </div>
           </div>
-          <div class="row">
-              <div class="row main align-items-center">
-                  <div class="col-2"><img class="img-fluid" src="img/Pea protein.pgn"></div>
-                  <div class="col">
-                      <div class="row text-muted">Protein</div>
-                      <div class="row">Impact Whey Protein</div>
-                  </div>
-                  <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                  <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-              </div>
-          </div>
-          <div class="row border-top border-bottom">
-              <div class="row main align-items-center">
-                  <div class="col-2"><img class="img-fluid" src=""></div>
-                  <div class="col">
-                      <div class="row text-muted">Protein</div>
-                      <div class="row">Pea Protein</div>
-                  </div>
-                  <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                  <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+          
               </div>
           </div>
           <div class="back-to-shop"><a href="/home">&leftarrow;<span class="text-muted">  Back to shop</span></a></div>
