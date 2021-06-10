@@ -20,6 +20,7 @@ router.get('/', function (req, res) {
           "quantity": doc.arr[i].quantity,
           "info": doc.arr[i].info,
           "link": doc.arr[i].thumbnailUrl,
+          "date": doc.arr[i].publishedDate,
           "price": doc.arr[i].price,
           "distributor": doc.arr[i].distributor,
           "discounted": doc.arr[i].discounted
