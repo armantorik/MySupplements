@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <title>Profile</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,6 +44,13 @@
 </script>
   </head>
   <style>
+    
+     .dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
       .parent {
   position: relative;
   height: 70px;
@@ -166,7 +174,12 @@ hr {
 form {
     padding: 2vh 0
 }
-
+.dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
 select {
     border: 1px solid rgba(0, 0, 0, 0.137);
     padding: 1.5vh 1vh;
@@ -322,6 +335,16 @@ color:white;
   
         </div>
       </div>
+      <script>
+        $(document).ready(function(){
+            $(".dropdown").hover(function(){
+                var dropdownMenu = $(this).children(".dropdown-menu");
+                if(dropdownMenu.is(":visible")){
+                    dropdownMenu.parent().toggleClass("open");
+                }
+            });
+        });     
+        </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
       <script src="../js/cart.js" ></script>
@@ -351,7 +374,15 @@ color:white;
       </li>
       <li>
         <a class="generated_button open-cart" href="/html/accountSettings.html">
-          <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle teal-color" style="font-size:30px" id="uName" data-toggle="dropdown">Welcome </a>
+            <div class="dropdown-menu">
+              <a href="/html/profile.html" class="dropdown-item">Profile</a>
+                <a href="#" class="dropdown-item">Sign Out</a>
+                <a href="/html/prevOrders.html" class="dropdown-item">Previous Orders</a>
+                <a href="/html/accountSettings.html" class="dropdown-item">Settings</a>
+            </div>
+        </div>
   
         </a>
       </li>
@@ -367,10 +398,40 @@ color:white;
               <div class="row">
                   <div class="col">
                       <h4><b>Profile Page</b></h4>
+                      &nbsp;
                   </div>
                   <div id="itemCount" class="col align-self-center text-right text-muted"></div>
               </div>
-              <div id="productRows"></div>
+              
+           
+              <div class="btn-group-vertical">
+                <div class="btn-group" role="group">
+                  <h6>Having trouble? Contact us any time here, we're happy to help!               </h6>
+                  <button type="button" class="btn btn-success">Contact Us</button> 
+                </div>
+                
+                <br /><br />
+                <div class="btn-group" role="group">
+                  <h6>To change your information any time you want just click settings!            </h6>
+                  <button href="/html/accountSettings.html"type="button" class="btn btn-primary">Settings</button>
+                </div>
+                <br /><br />
+                <div class="btn-group" role="group">
+                  <h6>Not your frst time here? See your order history from previous orders tab!    </h6>
+                  <button href="/html/prevOrders.html" type="button" class="btn btn-danger">Previous Orders</button>
+                </div>
+                <br /><br />
+                <div class="btn-group" role="group">
+                  <h6>Check the arrival of your package here!                                      </h6>
+                  <button type="button" class="btn btn-info">Track Order</button>
+                </div>
+                <br /><br />
+                <div class="btn-group" role="group">
+                  <h6>Leaving so soon? We're sad to see you go!                                    </h6>
+                  <button id="signout" type="button" class="btn btn-warning">Log Out</button>
+                </div>
+
+            </div>
           </div>
           <div class="back-to-shop"><a href="/home">&leftarrow;<span class="text-muted">  Back to shop</span></a></div>
       </div>

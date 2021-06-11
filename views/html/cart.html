@@ -43,6 +43,12 @@
 </script>
   </head>
   <style>
+     .dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
       .parent {
   position: relative;
   height: 70px;
@@ -290,6 +296,16 @@ color:white;
   background-color: #c67605;
 }
   </style>
+  <script>
+    $(document).ready(function(){
+        $(".dropdown").hover(function(){
+            var dropdownMenu = $(this).children(".dropdown-menu");
+            if(dropdownMenu.is(":visible")){
+                dropdownMenu.parent().toggleClass("open");
+            }
+        });
+    });     
+    </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <body class="backback" onload="getBasketSize()">
@@ -351,7 +367,15 @@ color:white;
       </li>
       <li>
         <a class="generated_button open-cart" href="/html/accountSettings.html">
-          <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle teal-color" style="font-size:30px" id="uName" data-toggle="dropdown">Welcome </a>
+            <div class="dropdown-menu">
+              <a href="profile.html" class="dropdown-item">Profile</a>
+                <a href="#" class="dropdown-item">Sign Out</a>
+                <a href="prevOrders.html" class="dropdown-item">Previous Orders</a>
+                <a href="accountSettings.html" class="dropdown-item">Settings</a>
+            </div>
+        </div>
   
         </a>
       </li>

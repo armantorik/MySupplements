@@ -135,7 +135,7 @@
           <a class="nav-link" id="signout">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
+          
         </li>
       </ul>
       <div class="search" id="searchid">
@@ -148,7 +148,16 @@
 
       </div>
     </div>
-
+    <script>
+      $(document).ready(function(){
+          $(".dropdown").hover(function(){
+              var dropdownMenu = $(this).children(".dropdown-menu");
+              if(dropdownMenu.is(":visible")){
+                  dropdownMenu.parent().toggleClass("open");
+              }
+          });
+      });     
+      </script>
     <script src="../js/search.js" ></script>
 
     <script>
@@ -172,16 +181,7 @@
       }
 
     </script>
-    <script>
-      $(document).ready(function(){
-          $(".dropdown").hover(function(){
-              var dropdownMenu = $(this).children(".dropdown-menu");
-              if(dropdownMenu.is(":visible")){
-                  dropdownMenu.parent().toggleClass("open");
-              }
-          });
-      });     
-      </script>
+
     
     <li>
      
@@ -195,10 +195,10 @@
         <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle teal-color" style="font-size:30px" id="uName" data-toggle="dropdown">Welcome </a>
                     <div class="dropdown-menu">
-                      <a href="profile.html" class="dropdown-item">Profile</a>
+                      <a href="/html/profile.html" class="dropdown-item">Profile</a>
                         <a href="#" class="dropdown-item">Sign Out</a>
-                        <a href="prevOrders.html" class="dropdown-item">Previous Orders</a>
-                        <a href="accountSettings.html" class="dropdown-item">Settings</a>
+                        <a href="/html/prevOrders.html" class="dropdown-item">Previous Orders</a>
+                        <a href="/html/accountSettings.html" class="dropdown-item">Settings</a>
                     </div>
                 </div>
       </a>
