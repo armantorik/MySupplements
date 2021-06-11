@@ -404,11 +404,12 @@ async function getInvoice() {
       console.log(element)
       pros = element.pros;
       pros.forEach(pro => {
+        quantity+=pro.quantity
         summary+= `${pro.quantity} times ${pro.name}, `
         price+=pro.price * pro.quantity;
       })
     } 
-    date = new Date(element.time._seconds);
+    date = new Date(element.time._seconds * 1000);
     date = date.toLocaleDateString();
   });
   document.getElementById("oid").innerHTML += oid

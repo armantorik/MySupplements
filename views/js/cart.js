@@ -12,55 +12,62 @@ async function getProducts2js() {
 
            console.log(response)
            
-           productArr = response.jsonProducts.productArr;
-           let subtot = 0;
-
-           document.getElementById("row").innerHTML = ""
-           document.getElementById("productRows").innerHTML = ""
-           document.getElementById("row").innerHTML = ""
-
-           productArr.forEach( (row) => {
-            console.log(row)
-             var pid = row.id;
-             var pname = row.name;
-             var cquantity = row.cQuantity;
-             totQuantity+=cquantity;
-             var pquantity = row.pQuantity;
-             var info = row.info;
-             var link = row.link;
-             var price = row.price; 
+           if (response.jsonProducts.exist == true) {
+            productArr = response.jsonProducts.productArr;
+            let subtot = 0;
  
-             var singleItemsPrice = price * cquantity;
-            subtot+=singleItemsPrice;
-            
-            if (cquantity >= pquantity){
-                pLeft[pid] = false;
-            }
-            else{
-                pLeft[pid] = true;
-            }
-            var cartRowContents = 
+            document.getElementById("row").innerHTML = ""
+            document.getElementById("productRows").innerHTML = ""
+            document.getElementById("row").innerHTML = ""
+ 
+ 
+ 
+            productArr.forEach( (row) => {
+             console.log(row)
+              var pid = row.id;
+              var pname = row.name;
+              var cquantity = row.cQuantity;
+              totQuantity+=cquantity;
+              var pquantity = row.pQuantity;
+              var info = row.info;
+              var link = row.link;
+              var price = row.price; 
+  
+              var singleItemsPrice = price * cquantity;
+             subtot+=singleItemsPrice;
+             
+             if (cquantity >= pquantity){
+                 pLeft[pid] = false;
+             }
+             else{
+                 pLeft[pid] = true;
+             }
 
-            document.getElementById("productRows").innerHTML += ` <div class="row border-top border-bottom">
-            <div class="row main align-items-center">
-                <div class="col-2"><img class="img-fluid" src="${link}"></div>
-                <div class="col">
-                    <div class="row text-muted">${pname}</div>
-                    <div class="row">supplements.com</div>
-                </div>
-                <div class="col"> <a onclick="decrementP('${pid}')">-</a><a class="border"> ${cquantity}</a><a onclick="addP('${pid}')">+</a> </div>
-                <div class="col">$ ${price}<span onclick="rmP('${pid}')" class="close">&#10005;</span></div>
-            </div>
-            </div>`;
-
-            document.getElementById("row").innerHTML += `<div class="col" style="padding-left:0;">${pname}</div>
-            <div class="col text-right">$ ${singleItemsPrice.toFixed(2)}</div>`
-            
-           })
-            
-           totQuantity
-           document.getElementById("itemCount").innerHTML = totQuantity + " items";
-           document.getElementById("totP").innerHTML = subtot.toFixed(2);
+             document.getElementById("productRows").innerHTML += ` <div class="row border-top border-bottom">
+             <div class="row main align-items-center">
+                 <div class="col-2"><img class="img-fluid" src="${link}"></div>
+                 <div class="col">
+                     <div class="row text-muted">${pname}</div>
+                     <div class="row">supplements.com</div>
+                 </div>
+                 <div class="col"> <a onclick="decrementP('${pid}')">-</a><a class="border"> ${cquantity}</a><a onclick="addP('${pid}')">+</a> </div>
+                 <div class="col">$ ${price}<span onclick="rmP('${pid}')" class="close">&#10005;</span></div>
+             </div>
+             </div>`;
+ 
+             document.getElementById("row").innerHTML += `<div class="col" style="padding-left:0;">${pname}</div>
+             <div class="col text-right">$ ${singleItemsPrice.toFixed(2)}</div>`
+             
+            })
+             
+            totQuantity
+            document.getElementById("itemCount").innerHTML = totQuantity + " items";
+            document.getElementById("totP").innerHTML = subtot.toFixed(2);
+        
+        }   else {
+            document.getElementById("productRows").innerHTML = ` <h3> Your basket is empty!</h3>`
+        }
+          
            
     }
     else {

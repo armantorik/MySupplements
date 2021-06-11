@@ -1,4 +1,5 @@
 const user = require("../controllers/users/users");
+const admins = require("../controllers/users/admins");
 var debug = require('debug')('ordRouter');
 
 const express = require("express");
@@ -26,9 +27,15 @@ router.post("/post", function (req, res) {
   router.get("/get", function (req, res) {
   
     const sessionCookie = req.cookies.session || "";
-    admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
+    admin.auth().verifySessionCookie(sessionCookie, false).then(async (decodedClaims) => {
       var email = decodedClaims["email"];
-      user.retrieveOrders(email, res);
+      var orders = await admins.getOrders();
+
+      orders.arr = orders.arr.map(element => {
+        if (element.user == email)
+        return element
+      })
+      res.send(orders)
   
     })
   

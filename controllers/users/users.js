@@ -2,6 +2,7 @@
 // All the functions related to users are implemented here
 // User info, add2basket, getBasket, getProfile, editProfile, orderBasket and etc should be defined here
 
+const { json } = require('express');
 const { admin, db, firebase } = require('../../utils/admin');
 var debug = require('debug')('user')
 var product = require("../products/products")
@@ -42,7 +43,9 @@ exports.getProductsFromBasket = async function (email) {
     const userDoc = await usersRef.get();
     var jsonProducts = {};
     if (userDoc.data().userCart) {
-
+        if (userDoc.data().userCart.length == 0){
+            return jsonProducts.exist = false;  
+        }
         var productArr = [];
         var userCart = userDoc.data().userCart;
 
@@ -72,11 +75,12 @@ exports.getProductsFromBasket = async function (email) {
                 }
             }
             jsonProducts.productArr = productArr;
+            jsonProducts.exist = true;
             return jsonProducts;
         }
         return await add2json();
     }
-    else return jsonProducts.exist = "false";
+    else return jsonProducts.exist = false;
 }
 exports.add2basket = async function (email, pid) {
 
