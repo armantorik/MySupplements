@@ -386,6 +386,7 @@ exports.retrieveOrders = async function (email, res) {
 
             for await (pid of order.products)
             {
+                console.log(pid.pid)
                 var pro = await product.getProducts(pid.pid);
 
                 pro.product.quantity = pid.quantity;

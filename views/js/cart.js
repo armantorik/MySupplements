@@ -5,10 +5,11 @@ async function getProducts2js() {
     if (user) {
         console.log(user.email);
         var queryurl = "/basket/";
-        
+        const req = await fetch(queryurl);
+
+        const response = await req.json();
         var totQuantity = 0;
 
-        $.get(queryurl).then(response => {
            console.log(response)
            
            productArr = response.jsonProducts.productArr;
@@ -61,7 +62,6 @@ async function getProducts2js() {
            document.getElementById("itemCount").innerHTML = totQuantity + " items";
            document.getElementById("totP").innerHTML = subtot.toFixed(2);
            
-        })
     }
     else {
         console.log("no user");
