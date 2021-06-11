@@ -28,7 +28,12 @@
   <title>Home Page</title>
 </head>
 <style>
-
+    .dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
   .teal-color {
     color: #60bda9;
   }
@@ -130,7 +135,7 @@
           <a class="nav-link" id="signout">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
+          
         </li>
       </ul>
       <div class="search" id="searchid">
@@ -143,7 +148,16 @@
 
       </div>
     </div>
-
+    <script>
+      $(document).ready(function(){
+          $(".dropdown").hover(function(){
+              var dropdownMenu = $(this).children(".dropdown-menu");
+              if(dropdownMenu.is(":visible")){
+                  dropdownMenu.parent().toggleClass("open");
+              }
+          });
+      });     
+      </script>
     <script src="../js/search.js" ></script>
 
     <script>
@@ -165,8 +179,12 @@
         getBasketSize()
         dispName()
       }
+
     </script>
+
+    
     <li>
+     
       <a class="generated_button open-cart" href="/html/cart.html">
         <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
           id='lblCartCount'>0</span>
@@ -174,8 +192,15 @@
     </li>
     <li>
       <a class="generated_button open-cart" href="/html/accountSettings.html">
-        <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
-
+        <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle teal-color" style="font-size:30px" id="uName" data-toggle="dropdown">Welcome </a>
+                    <div class="dropdown-menu">
+                      <a href="/html/profile.html" class="dropdown-item">Profile</a>
+                        <a href="#" class="dropdown-item">Sign Out</a>
+                        <a href="/html/prevOrders.html" class="dropdown-item">Previous Orders</a>
+                        <a href="/html/accountSettings.html" class="dropdown-item">Settings</a>
+                    </div>
+                </div>
       </a>
     </li>
 
