@@ -356,9 +356,14 @@ color:white;
                         <button onclick="addbasket()"  id="add-to-cart">Add to Cart</button>
                        </div>
                         <div class="col-md-12 text-center"><br><br><br><br><br></div>
+                        <div class="col-md-12 text-center">
+                          <input type="text" placeholder="rate.. " name="rate_bar" id="ratebar">
+                          <button onclick="post_rating()">Post a Rating</button>
+                        </div> 
                       <div class="col-md-12 text-center">
                        <div class="form-group">
-                        <button>Add a Comment</button>
+                        <input type="text" placeholder="Add a Comment.. " name="comment_bar" id="commentbar">
+                        <button onclick="post_comment()">Add a Comment</button>
                         <textarea class="form-control" rows="5" id="comment"></textarea>
                       </div>
                         <br><br><br><br><br>
@@ -381,6 +386,10 @@ color:white;
 </body>
 </div>
 </div>
+
+<script src="../js/comment_rate.js" ></script>
+
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
