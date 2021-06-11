@@ -24,18 +24,23 @@ const router = express.Router();
 
 
 // Users can post comments on products
-router.post('/comment/:comm', function (req, res) {
+router.post('/comment/:pid/:comm', function (req, res) {
 
-    console.log("allahu akbar")
-    console.log(req.params.comm)
+
+
     const sessionCookie = req.cookies.session || "";
     admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
       var email = decodedClaims["email"];
-      var pid = req.body.pid;
+      var pid = req.params.pid;
       var comment = req.params.comm;
 
-      if (user.postcomment(email, pid, comment)) {
-  
+      console.log(pid)
+      console.log(comment)
+      console.log(email)
+
+      var resp =  user.postcomment(email, pid, comment)
+
+      if (resp == true) {
         res.jsonp({
           status: true
         })

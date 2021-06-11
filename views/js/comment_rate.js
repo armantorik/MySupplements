@@ -1,12 +1,25 @@
 async function post_comment(){
 
-    console.log('/user/comment/'+ $("#commentbar").val())
+
+    const url = window.location.search;
+    const pid = new URLSearchParams(url).get('pid');
+    console.log(pid)
 
     document.getElementById("comment").innerHTML = ""
-      const response = await fetch('/user/comment/'+ $("#commentbar").val());
-  
-      const myJson = await response.json(); //extract JSON from the http response
-  
+    var response = await fetch('/user/comment/' + pid + '/' + $("#commentbar").val(), {
+        method: "post",
+        headers: {
+            'Accept': '/',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+            comm: $("#commentbar").val(),
+            pid: pid
+        })
+        })
+var myJson = await response.json();
      if(myJson.status == true)
      {
         alert("Your comment is waiting approval from an admin!")

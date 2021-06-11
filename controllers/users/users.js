@@ -137,6 +137,7 @@ exports.postcomment = async function (email, pid, comment) {
   const productDoc = await productRef.get();
   var comment_array = productDoc.get('comments');
 
+
 //   function between(min, max) {  
 //     return Math.floor(
 //       Math.random() * (max - min) + min
@@ -152,6 +153,7 @@ exports.postcomment = async function (email, pid, comment) {
 
   if(comment_array == null)
   {
+      console.log("111")
       const res = await db.collection('Products').doc(pid).update({
         comments: new_comment
      });
@@ -170,6 +172,7 @@ exports.postcomment = async function (email, pid, comment) {
   console.log(can_comment)
 
   if (can_comment == false) { // If the user has already made a comment for this product do not allow for a new one
+    console.log("222")
     return false;
   }
   else{ //atmadıysa burda comment atabilir yazdığı comment database de comments arrayine gidicek userid ile birlikte
@@ -179,6 +182,7 @@ exports.postcomment = async function (email, pid, comment) {
         comments: admin.firestore.FieldValue.arrayUnion(new_comment)
        
      });
+     console.log("333")
      return true;
   }
   
