@@ -28,7 +28,9 @@
   position: relative;
   height: 70px;
 }
-
+li.pointer {
+        cursor: pointer;
+      }
 .backback {
   background-size: cover;
 }
@@ -276,14 +278,14 @@ color:white;
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item ">
+        <li class="nav-item">
           <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="signout">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/html/accountSettings.html">Settings </a>
+          <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
         </li>
       </ul>
       <div class="search" id="searchid">
@@ -296,14 +298,13 @@ color:white;
 
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script src="../js/search.js" ></script>
-    <script src="../js/cart.js" ></script>
-    <script>
-      function dispName() {
-        document.getElementById("uName").innerHTML += sessionStorage.getItem("fname") + " ";
-        document.getElementById("uName").innerHTML += sessionStorage.getItem("lastname");
-      }
+   
+   <script>
+      function dispName(fname, lname) {
+            document.getElementById("uName").innerHTML += fname + " " +  lname;
+          }
       async function getBasketSize() {
         const response = await fetch('/basket');
         const myJson = await response.json();
@@ -313,29 +314,27 @@ color:white;
           
           document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
         }
+        
       }
       function onloadFuncs() {
         getBasketSize()
-        dispName()
       }
     </script>
     <li>
-      <a class="nav-item" href="/html/accountSettings.html">
+      <a class="generated_button open-cart" href="/html/cart.html">
+        <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+          id='lblCartCount'>0</span>
+      </a>
+    </li>
+    <li>
+      <a class="generated_button open-cart" href="/html/accountSettings.html">
         <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
 
       </a>
     </li>
 
-    <li>
-      <a class="nav-item" href="/html/cart.html">
-        <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
-          id='lblCartCount'>0</span>
-      </a>
-    </li>
+    
   </nav>
-
-
-
   <p class="title">
     Product Page:
   </p>
@@ -353,8 +352,23 @@ color:white;
                     </div><div class="container mt-5 text-center">
                       <div class="row wow flash">
                         <div class="col-md-12 text-center" id="root" ></div>
-                       <button onclick="addbasket()" class="btn btn-info" type="button" id="add-to-cart">ADD TO CART</button>
+                        <div class="col-md-12 text-center">
+                        <button onclick="addbasket()"  id="add-to-cart">Add to Cart</button>
+                       </div>
+                        <div class="col-md-12 text-center"><br><br><br><br><br></div>
+                      <div class="col-md-12 text-center">
+                       <div class="form-group">
+                        <button>Add a Comment</button>
+                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                      </div>
+                        <br><br><br><br><br>
+                      <div class="col-md-12 text-center">
+                        <th>User comments</th>
+                      </div>
+                     
+                      <div id="userComments" class="col-md-12 text-center"></div>
 
+                        </div>
                         </div>
                       </div>
                       </div>
@@ -379,6 +393,7 @@ color:white;
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
 
+<script src="../js/logout.js" ></script>
 
 <script>
   // Your web app's Firebase configuration
@@ -426,10 +441,11 @@ color:white;
   function addbasket() {
     const url = window.location.search;
     const pid = new URLSearchParams(url).get('pid');
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {  
       var queryurl;
       
       if (user) {
+        
         queryurl = "/basket/addProduct?&pid=" + pid;
       }
       else {
@@ -437,7 +453,6 @@ color:white;
 
         queryurl = "/basket/addProduct?&pid=" + pid;
       }
-      alert(queryurl)
       axios.get(queryurl).then(
           (response) => {
             var result = response.data;
@@ -454,8 +469,19 @@ color:white;
     });
   };
 
-
-
+  firebase.auth().onAuthStateChanged(user => {  
+    if (user){
+        const getUserInfo = async () => {
+              const url = '/user/getInfo';
+              const response = await fetch(url);
+              const myJson = await response.json(); //extract JSON from the http response
+              
+              dispName(myJson.profile.fname, myJson.profile.lname);
+            }
+            getUserInfo()
+    }
+    
+          });
 </script>
 </div>
 </html>
