@@ -21,7 +21,9 @@
   <link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
@@ -288,97 +290,91 @@ color:white;
   background-color: #c67605;
 }
   </style>
-  <body class="backback" onload="onloadFuncs()">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <body class="backback" onload="getBasketSize()">
     
     <nav class="navbar navbar-expand-lg fixed-top">
-        <a class="navbar-brand" href="#">SUPPLEMENTS</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="signout">Sign In</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
-            </li>
-          </ul>
-          <div class="search" id="searchid">
-              <input type="text" placeholder="   Search Product " name="search" id="searchinput">
-              <button onclick="dosearch()">
-                <i class="fa fa-search" style="font-size: 18px;">
-                </i>
-              </button>
-            <div id="results"> </div>
-    
-          </div>
+      <a class="navbar-brand" href="#">SUPPLEMENTS</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="signout">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
+          </li>
+        </ul>
+        <div class="search" id="searchid">
+            <input type="text" placeholder="   Search Product " name="search" id="searchinput">
+            <button onclick="dosearch()">
+              <i class="fa fa-search" style="font-size: 18px;">
+              </i>
+            </button>
+          <div id="results"> </div>
+  
         </div>
-    
-        <script src="../js/search.js" ></script>
-    
-        <script>
-          function dispName(fname, lname) {
-                document.getElementById("uName").innerHTML += fname + " " +  lname;
-              }
-          async function getBasketSize() {
-            const response = await fetch('/basket');
-            const myJson = await response.json();
-            var pros = myJson.jsonProducts;
-            console.log(pros)
-            if (pros) {
-              
-              document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
+      </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+      <script src="../js/cart.js" ></script>
+      <script src="../js/search.js" ></script>
+  
+      <script>
+        function dispName(fname, lname) {
+              document.getElementById("uName").innerHTML += fname + " " +  lname;
             }
+        async function getBasketSize() {
+          const response = await fetch('/basket');
+          const myJson = await response.json();
+          var pros = myJson.jsonProducts;
+          console.log(pros)
+          if (pros) {
             
+            document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
           }
-          function onloadFuncs() {
-            getBasketSize()
-          }
-        </script>
-        <li>
-          <a class="generated_button open-cart" href="/html/cart.html">
-            <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
-              id='lblCartCount'>0</span>
-          </a>
-        </li>
-        <li>
-          <a class="generated_button open-cart" href="/html/accountSettings.html">
-            <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
-    
-          </a>
-        </li>
-    
-        
-      </nav>
-    
+          
+        }
+      </script>
+      <li>
+        <a class="generated_button open-cart" href="/html/cart.html">
+          <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+            id='lblCartCount'>0</span>
+        </a>
+      </li>
+      <li>
+        <a class="generated_button open-cart" href="/html/accountSettings.html">
+          <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
+  
+        </a>
+      </li>
+  
+      
+    </nav>
+  
+
 <div class="card">
   <div class="row">
-      <div class="col-md-15 cart">
+      <div class="col-md-8 cart">
           <div class="title">
               <div class="row">
                   <div class="col">
-                      <h4><b>Preview Orders</b></h4>
+                      <h4><b>Profile Page</b></h4>
                   </div>
+                  <div id="itemCount" class="col align-self-center text-right text-muted"></div>
               </div>
-              <br><br><br>
-             <div class="row main align-items-center">
-
-              <div class="col">Order ID</div>&nbsp;&nbsp;&nbsp;
-              <div class="col">Date</div>
-              <div class="col">Address</div>
-              <div class="col">Quantity</div>
-              <div class="col">Status</div>
-              <div class="col">Cancel</div>
-              <div id="prevOrders"></div>
-             </div>
+              <div id="productRows"></div>
           </div>
           <div class="back-to-shop"><a href="/home">&leftarrow;<span class="text-muted">  Back to shop</span></a></div>
-        </div>
+      </div>
+   
       
   </div>
   
@@ -387,65 +383,15 @@ color:white;
 </div>
 <script>
 
-
-
 firebase.auth().onAuthStateChanged(user => {
         if (user) {
           if (!user.isAnonymous) {
 
-            async function dispOrders(){
-                var queryurl = "/order/get/";
-                const req = await fetch(queryurl);
-                const response = await req.json();
-                console.log(response.arr)
-                response.arr.forEach(element => {
-                    if (element != null) {
-                        var date = new Date(element.date._seconds * 1000);
-                    if (element.cancelRequest == true)
-                        return;
-                    date = date.toLocaleDateString()
-                    var oid = element.oid;
-                    var quantity = element.quantity;
-                    var status = element.status;
-                    var address = element.address;
-                    document.getElementById("prevOrders").innerHTML += `
-                    
-                    <div class="row border-top border-bottom">
-             <div class="row main align-items-center">
-                     <div class="col">${oid}</div>
-                 <div class="col">${date}</div>
-
-                 <div class="col"> <a class="border">${address}</a> </div>
-                 <div class="col"> <a class="border">${quantity}</a> </div>
-                 <div class="col"> <a class="border">${status}</a> </div>
-                 <div class="col">
-
-                    <form class="col" method="post"  action="/user/askForRefund">
-                        <input hidden name="oid" value="${oid}"/>
-                        <button onclick="alert('Success! The Product Managers will be notified about  your refund request')" class="btn btn-warning">Request To Cancel!</button>
-                 </form>
-                 </div>
-             </div>
-             </div>
-
-                    `
-                    }
-                    
-
-                });
-            
-                
-    
-            }
-            dispOrders()
-
-
             const getUserInfo = async () => {
-              const url = '/user/getInfo';
+              const url = '/user/getInfo?email=' + user.email;
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
-              console.log(myJson)
-              dispName(myJson.profile.fname, myJson.profile.lname)
+              dispName(myJson.profile.fname, myJson.profile.lname);
             }
             document.getElementById("signout").innerHTML = '<li id="signout" class="pointer" three-d-box"><a class="three-d">Sign Out</a></li>'
             getUserInfo()
@@ -460,7 +406,6 @@ firebase.auth().onAuthStateChanged(user => {
           console.log("no user");
         }
       })
-
 
 </script>
   </body>

@@ -267,14 +267,25 @@ exports.getOrders = async () => {
 
     var temp = doc.data();
     count+=1;
-    
-    var data = {
-      date:temp.orderTime,
-      price:temp.totalPrice,
-      status:temp.status,
-      oid:doc.id,
-      address:temp.address
+    if (temp.cancelRequest){
+      var data = {
+        date:temp.orderTime,
+        price:temp.totalPrice,
+        status:temp.status,
+        oid:doc.id,
+        address:temp.address,
+        cancelRequest:temp.cancelRequest
+      }
+    } else {
+      var data = {
+        date:temp.orderTime,
+        price:temp.totalPrice,
+        status:temp.status,
+        oid:doc.id,
+        address:temp.address
+      }
     }
+    
 
     if (temp.products){
       var quan=0;
