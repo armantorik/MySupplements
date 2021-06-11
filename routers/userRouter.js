@@ -1,6 +1,7 @@
 const user = require("../controllers/users/users");
 var debug = require('debug')('usrRouter');
 const {admin} = require("../utils/admin");
+var path = require('path');
 
 const express = require("express");
 const router = express.Router();
@@ -95,12 +96,13 @@ router.post("/comment/post", function (req, res) {
   router.post("/askForRefund", async function (req, res){
   
     const sessionCookie = req.cookies.session || "";
+    console.log(req)
     admin.auth().verifySessionCookie(sessionCookie, false).then( async (decodedClaims) => {
       
       var status = await user.askToCancel(decodedClaims.email, req.body["oid"]);
   
       if (status)
-        res.status(200).send("Success!");
+      res.sendFile(path.join(__dirname + "/../views/html/prevOrders.html"));
       else if (status == false)
         res.status(401).send("Forbidden!");
       else 
