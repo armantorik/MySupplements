@@ -28,7 +28,12 @@
   <title>Home Page</title>
 </head>
 <style>
-
+    .dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
   .teal-color {
     color: #60bda9;
   }
@@ -165,8 +170,21 @@
         getBasketSize()
         dispName()
       }
+
     </script>
+    <script>
+      $(document).ready(function(){
+          $(".dropdown").hover(function(){
+              var dropdownMenu = $(this).children(".dropdown-menu");
+              if(dropdownMenu.is(":visible")){
+                  dropdownMenu.parent().toggleClass("open");
+              }
+          });
+      });     
+      </script>
+    
     <li>
+     
       <a class="generated_button open-cart" href="/html/cart.html">
         <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
           id='lblCartCount'>0</span>
@@ -174,8 +192,14 @@
     </li>
     <li>
       <a class="generated_button open-cart" href="/html/accountSettings.html">
-        <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
-
+        <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle teal-color" style="font-size:30px" id="uName" data-toggle="dropdown">Welcome </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Sign Out</a>
+                        <a href="prevOrders.html" class="dropdown-item">Previous Orders</a>
+                        <a href="accountSettings.html" class="dropdown-item">Settings</a>
+                    </div>
+                </div>
       </a>
     </li>
 

@@ -150,7 +150,7 @@ body,
 .icon-text{text-align: center;margin: 20px auto;font-size: 30px;}
 
 .card{text-align: center;border: none;}
-.card-heading{font-size: 25px;font-weight: 600;color: teal;}
+.card-heading{font-size: 22px;font-weight: 600;color: teal; margin: 2rem;}
 .btn-pink{background-color: #60bda9;transition:  .5s;}
 .btn-pink:hover{background-color: teal;}
 .card-img-top:hover{transform: scale(1.001);transition: 12s;}
