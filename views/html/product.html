@@ -1,0 +1,503 @@
+<html>
+  <head>
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="../css/style.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+     <!-- CSS Files -->
+     <link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+     
+     <title>Product info</title>
+     
+  </head>
+  
+}
+<style>
+        .parent {
+  position: relative;
+  height: 70px;
+}
+li.pointer {
+        cursor: pointer;
+      }
+.backback {
+  background-size: cover;
+}
+    body {
+    background: #ddd;
+    min-height: 100vh;
+    vertical-align: middle;
+    display: flex;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.title {
+    margin-bottom: 5vh
+}
+
+.card {
+    margin: auto;
+    max-width: 950px;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent
+}
+
+@media(max-width:767px) {
+    .card {
+        margin: 3vh auto
+    }
+}
+
+.cart {
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem
+}
+
+@media(max-width:767px) {
+    .cart {
+        padding: 4vh;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 1rem
+    }
+}
+
+.summary {
+    background-color: #ddd;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: rgb(65, 65, 65)
+}
+
+@media(max-width:767px) {
+    .summary {
+        border-top-right-radius: unset;
+        border-bottom-left-radius: 1rem
+    }
+}
+
+.summary .col-2 {
+    padding: 0
+}
+
+.summary .col-10 {
+    padding: 0
+}
+
+.row {
+    margin: 0
+}
+
+.title b {
+    font-size: 1.5rem
+}
+
+.main {
+    margin: 0;
+    padding: 2vh 0;
+    width: 100%
+}
+
+.col-2,
+.col {
+    padding: 0 1vh
+}
+
+a {
+    padding: 0 1vh
+}
+
+.close {
+    margin-left: auto;
+    font-size: 0.7rem
+}
+
+
+.back-to-shop {
+    margin-top: 4.5rem
+}
+
+h5 {
+    margin-top: 4vh
+}
+
+hr {
+    margin-top: 1.25rem
+}
+
+form {
+    padding: 2vh 0
+}
+
+select {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1.5vh 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
+
+input {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
+
+input:focus::-webkit-input-placeholder {
+    color: transparent
+}
+
+.btn {
+    background-color: #000;
+    border-color: #000;
+    color: white;
+    width: 100%;
+    font-size: 0.7rem;
+    margin-top: 4vh;
+    padding: 1vh;
+    border-radius: 0
+}
+
+.btn:focus {
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    -webkit-box-shadow: none;
+    transition: none
+}
+
+.btn:hover {
+    color: white
+}
+
+a {
+    color: black
+}
+
+a:hover {
+    color: black;
+    text-decoration: none
+}
+
+#code {
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center
+}
+    .white-color {
+color:white;
+}
+    .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px; 
+}
+
+            .search input[type=text]{
+            width:300px;
+            height:25px;
+            border-radius:25px;
+            border: none;
+ 
+        }
+         
+        .search{
+            margin-right: 20%;
+            margin:7px;
+ 
+        }
+         
+        .search button{
+            background-color: #0074d900;
+            color: #f2f2f2;
+            float: right;
+            padding: 5px 10px;
+            margin-right: 16px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  font-size: 18px;
+  background-color: #c67605;
+}
+  </style>
+  <body class="backback" style="background-image:url('http://localhost:3000/img/gym.jpeg')" onload="onloadFuncs()">
+<div class="backback">
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <a class="navbar-brand" href="#">SUPPLEMENTS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="signout">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
+        </li>
+      </ul>
+      <div class="search" id="searchid">
+          <input type="text" placeholder="   Search Product " name="search" id="searchinput">
+          <button onclick="dosearch()">
+            <i class="fa fa-search" style="font-size: 18px;">
+            </i>
+          </button>
+        <div id="results"> </div>
+
+      </div>
+    </div>
+
+    <script src="../js/search.js" ></script>
+   
+   <script>
+      function dispName(fname, lname) {
+            document.getElementById("uName").innerHTML += fname + " " +  lname;
+          }
+      async function getBasketSize() {
+        const response = await fetch('/basket');
+        const myJson = await response.json();
+        var pros = myJson.jsonProducts;
+        console.log(pros)
+        if (pros) {
+          
+          document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
+        }
+        
+      }
+      function onloadFuncs() {
+        getBasketSize()
+      }
+    </script>
+      <a class="generated_button open-cart" href="/html/cart.html">
+        <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+          id='lblCartCount'>0</span>
+      </a>
+      <a class="generated_button open-cart" href="/html/accountSettings.html">
+        <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
+
+      </a>
+
+    
+  </nav>
+  <p class="title">
+    Product Page:
+  </p>
+<div class="center">
+  
+
+  &nbsp;
+  &nbsp;
+  &nbsp;
+<div class="center">
+  <div class="card">
+            <div class="row border-top border-bottom">
+                <div class="row main align-items-center">
+                    <div class="col">
+                    </div><div class="container mt-5 text-center">
+                      <div class="row wow flash">
+                        <div class="col-md-12 text-center" id="root" ></div>
+                        <div class="col-md-12 text-center">
+                        <button onclick="addbasket()"  id="add-to-cart">Add to Cart</button>
+                       </div>
+                        <div class="col-md-12 text-center"><br><br><br><br><br></div>
+                        <div class="col-md-12 text-center">
+                          <input type="text" placeholder="rate.. " name="rate_bar" id="ratebar">
+                          <button onclick="post_rating()">Post a Rating</button>
+                        </div> 
+                        <br><br><br>
+                      <div class="col-md-12 text-center">
+                       <div class="form-group">
+                        <input type="text" placeholder="Add a Comment.. " name="comment_bar" id="commentbar">
+                        <button onclick="post_comment()">Add a Comment</button>
+                        <textarea hidden class="form-control" rows="5" id="comment"></textarea>
+                      </div>
+                        <br><br><br><br><br>
+                      <div class="col-md-12 text-center">
+                        <th>User comments</th>
+                      </div>
+                     
+                      <div id="userComments" class="col-md-12 text-center"></div>
+                      <div class="col-md-12 text-center">
+                        <th>armant@gmail.com: Not bad!</th>
+                      </div>
+                      <br><br><br>
+                      <div class="col-md-12 text-center">
+                        <th>Average Rating</th>
+                      </div>
+                      <div class="col-md-12 text-center">
+                        <th>3.5</th>
+                      </div>
+                      
+                        </div>
+                        </div>
+                      </div>
+                      </div>
+                </div>
+            </div>
+
+  
+
+</div>
+</body>
+</div>
+</div>
+
+<script src="../js/comment_rate.js" ></script>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
+<script src="../js/logout.js" ></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+    authDomain: "ecommerce-ca57f.firebaseapp.com",
+    databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "ecommerce-ca57f",
+    storageBucket: "ecommerce-ca57f.appspot.com",
+    messagingSenderId: "450193218046",
+    appId: "1:450193218046:web:ed740c91c94096998288af",
+    measurementId: "G-SV0VSC22KY"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+  
+  const url = window.location.search;
+  const pid = new URLSearchParams(url).get('pid');
+  var purl = "/products/get/" + pid;
+
+  fetch(purl).then((response) => {
+    return response.json();  // converting byte data to json
+  }).then(data => {
+
+    var product = data["jsonObject"]["detail"][0];
+    var imgLink = product["link"];
+    var pname = product["name"];
+    var info = product["info"];
+    var quantity = product["quantity"];
+    var dist = product["distributor"];
+
+    var price = product["price"];
+    document.getElementById("root").innerHTML += "<th>" + pname + "</th> <p>" + info + "</p><img width='300' height='300' src=" + imgLink + "></img><p> Quantity: " + quantity + "</p> <p> Distributor: " + dist  +  "<p> Price: " + price + "</p>";
+    
+    if (quantity <= 0){
+      const button = document.querySelector('button');
+      button.disabled = true
+    }
+  });
+
+
+  function addbasket() {
+    const url = window.location.search;
+    const pid = new URLSearchParams(url).get('pid');
+    firebase.auth().onAuthStateChanged(user => {  
+      var queryurl;
+      
+      if (user) {
+        
+        queryurl = "/basket/addProduct?&pid=" + pid;
+      }
+      else {
+        console.log("no user");
+
+        queryurl = "/basket/addProduct?&pid=" + pid;
+      }
+      axios.get(queryurl).then(
+          (response) => {
+            var result = response.data;
+            console.log('Processing Request');
+            window.location.href ="/html/cart.html";
+            resolve(result);
+
+          },
+          (error) => {
+            alert(error)
+            reject(error);
+          }
+        );
+    });
+  };
+
+  firebase.auth().onAuthStateChanged(user => {  
+    if (user){
+        const getUserInfo = async () => {
+              const url = '/user/getInfo';
+              const response = await fetch(url);
+              const myJson = await response.json(); //extract JSON from the http response
+              
+              dispName(myJson.profile.fname, myJson.profile.lname);
+            }
+            getUserInfo()
+    }
+    
+          });
+</script>
+</div>
+</html>

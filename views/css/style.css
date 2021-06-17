@@ -1,0 +1,164 @@
+body,html{margin: 0;padding: 0;}
+
+.navbar {
+  background-color: rgba(0,0,0,0.00);
+	z-index: 1000;
+}
+.navbar .navbar-brand {
+  color: #f3f8f9;
+}
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+  color: #ecdbff;
+}
+.navbar .navbar-text {
+  color: #f3f8f9;
+}
+.navbar .navbar-text a {
+  color: #ecdbff;
+}
+.navbar .navbar-text a:hover,
+.navbar .navbar-text a:focus {
+  color: #ecdbff; 
+}
+.navbar .navbar-nav .nav-link {
+  color: #f3f8f9;
+  border-radius: .25rem;
+  margin: 0 0.25em;
+}
+.navbar .navbar-nav .nav-link:not(.disabled):hover,
+.navbar .navbar-nav .nav-link:not(.disabled):focus {
+  color: #ecdbff;
+}
+.navbar .navbar-nav .nav-item.active .nav-link,
+.navbar .navbar-nav .nav-item.active .nav-link:hover,
+.navbar .navbar-nav .nav-item.active .nav-link:focus,
+.navbar .navbar-nav .nav-item.show .nav-link,
+.navbar .navbar-nav .nav-item.show .nav-link:hover,
+.navbar .navbar-nav .nav-item.show .nav-link:focus {
+  color: #ecdbff;
+  background-color: #2cb49e;
+}
+.navbar .navbar-toggle {
+  border-color: #2cb49e;
+}
+.navbar .navbar-toggle:hover,
+.navbar .navbar-toggle:focus {
+  background-color: #2cb49e;
+}
+.navbar .navbar-toggle .navbar-toggler-icon {
+  color: #f3f8f9;
+}
+.navbar .navbar-collapse,
+.navbar .navbar-form {
+  border-color: #f3f8f9;
+}
+.navbar .navbar-link {
+  color: #f3f8f9;
+}
+.navbar .navbar-link:hover {
+  color: #ecdbff;
+}
+
+@media (max-width: 575px) {
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #f3f8f9;
+  }
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #2cb49e;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #f3f8f9;
+  }
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #2cb49e;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #f3f8f9;
+  }
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #2cb49e;
+  }
+}
+
+@media (max-width: 1199px) {
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #f3f8f9;
+  }
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #2cb49e;
+  }
+}
+
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+  color: #f3f8f9;
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+  color: #ecdbff;
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+  color: #ecdbff;
+  background-color: #2cb49e;
+}
+
+
+html,
+body,
+.carousel,
+.carousel-inner,
+.carousel-inner .item{
+	height: 100%;
+}
+
+.carousel-caption{
+	top:30%;
+	bottom: auto;
+}
+
+.heading{font-size: 60px; text-shadow: 2px 2px #ff0e3d;}
+.sub-heading{font-size: 30px; text-shadow: 2px 2px #ff0e3d;}
+
+.bg-gray{background-color: lightgray;}
+.bg-teal{background-color: teal;color: white;}
+.icon-text{text-align: center;margin: 20px auto;font-size: 30px;}
+
+.card{text-align: center;border: none;}
+.card-heading{font-size: 22px;font-weight: 600;color: teal; margin: 2rem;}
+.btn-pink{background-color: #60bda9;transition:  .5s;}
+.btn-pink:hover{background-color: teal;}
+.card-img-top:hover{transform: scale(1.001);transition: 12s;}
+
+.bc{text-shadow: 2px 2px #ff0e3d;
+    background-image: url("../img/gym.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+    background-position: top center;
+}

@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<!-- CSS Files -->
+<link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+
+  <title>Home Page</title>
+</head>
+<style>
+    .dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
+  .teal-color {
+    color: #60bda9;
+  }
+
+  #section1 {
+    height: 600px;
+  }
+
+  #section2 {
+    height: 20px;
+  }
+
+  .white-color {
+    color: white;
+  }
+
+  .badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .label-warning[href],
+  .badge-warning[href] {
+    background-color: #c67605;
+  }
+
+  #lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px;
+  }
+
+  
+
+  .search {
+    margin-right: 20%;
+    margin: 7px;
+
+  }
+
+  .search button {
+    background-color: #0074d900;
+    color: #f2f2f2;
+    float: right;
+    padding: 5px 10px;
+    margin-right: 16px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+  }
+  li.pointer {
+        cursor: pointer;
+      }
+
+  .badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+
+  .label-warning[href],
+  .badge-warning[href] {
+    font-size: 18px;
+    background-color: #c67605;
+  }
+  
+</style>
+
+<body onload="getBasketSize()">
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <a class="navbar-brand" href="#">SUPPLEMENTS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/html/prevOrders.html">Previous Orders</a>
+        </li>
+      </ul>
+      <div class="search" id="searchid">
+          <input type="text" placeholder="   Search Product " name="search" id="searchinput">
+          <button onclick="dosearch()">
+            <i class="fa fa-search" style="font-size: 18px;">
+            </i>
+          </button>
+        <div id="results"> </div>
+
+      </div>
+    </div>
+    <script>
+      $(document).ready(function(){
+          $(".dropdown").hover(function(){
+              var dropdownMenu = $(this).children(".dropdown-menu");
+              if(dropdownMenu.is(":visible")){
+                  dropdownMenu.parent().toggleClass("open");
+              }
+          });
+      });     
+      </script>
+    <script src="../js/search.js" ></script>
+
+    <script>
+      function dispName(fname, lname) {
+            document.getElementById("uName").innerHTML += fname + " " +  lname;
+          }
+      async function getBasketSize() {
+        const response = await fetch('/basket');
+        const myJson = await response.json();
+        var pros = myJson.jsonProducts;
+        console.log(pros)
+        if (pros) {
+          
+          document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
+        }
+        
+      }
+      function onloadFuncs() {
+        getBasketSize()
+        dispName()
+      }
+
+    </script>
+
+    
+     
+      <a class="generated_button open-cart" href="/html/cart.html">
+        <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+          id='lblCartCount'>0</span>
+      </a>
+      <a class="nav-item dropdown" href="/html/accountSettings.html">
+        <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle teal-color" style="font-size:30px" id="uName" data-toggle="dropdown">Welcome </a>
+                    <div class="dropdown-menu">
+                      <a href="/html/profile.html" class="dropdown-item">Profile</a>
+                        <a id="signout" class="dropdown-item">Sign Out</a>
+                        <a href="/html/accountSettings.html" class="dropdown-item">Settings</a>
+                    </div>
+                </div>
+      </a>
+
+    
+  </nav>
+
+
+
+
+
+  <div id="carouselExampleIndicators" class="carousel slide" id="section1" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="/img/p1.jpg" alt="First slide">
+        <div class="carousel-caption d-none d-md-block">
+          <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
+          <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR WOMEN AVAILABLE IN SHOP</p>
+          <a href="#contents" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img class="d-block w-100" src="/img/p2.jpeg" alt="Second slide">
+        <div class="carousel-caption d-none d-md-block">
+          <p class="heading animated flipInX delay-1s ">GET STRONGER</p>
+          <p class="sub-heading animated rollIn delay-2s">SUPPLEMENTS FOR MEN AVAILABLE IN SHOP</p>
+          <a href="#contents" class="btn btn-lg btn-danger mt-5 animated infinite bounce delay-2s">SHOP NOW</a>
+        </div>
+      </div>
+
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row bg-gray  wow slideInDown">
+      <div class="col-md-4">
+        <div class="icon-text"><i class="fa fa-money" aria-hidden="true"></i> FAST SECURE PAYMENTS </div>
+      </div>
+      <div class="col-md-4 bg-teal">
+        <div class="icon-text"><i class="fa fa-star" aria-hidden="true"></i> PREMIUM PRODUCTS </div>
+      </div>
+      <div class="col-md-4">
+        <div class="icon-text"><i class="fa fa-truck" aria-hidden="true"></i> FREE & FAST DELIVERY </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="container mt-5 text-center">
+    <div class="row wow flash">
+      <div class="col-md-12 text-center">
+        <h1 id="contents">BROWSE THE TOP SELLING PRODUCTS</h1>
+      </div>
+    </div>
+    <div class="row mt-4 wow bounceIn">
+      
+
+      <div id="cats" class="col-md-12">
+
+      </div>
+      <div id="sort" class="col-md-12">
+          <div class="row">
+              <div>
+                <th>Sort By</th>
+                <select class="custom-select custom-select-sm" id="sortType">
+                  <option selected>Default</option>
+                  <option value="0">Name</option>
+                  <option value="1">Price</option>
+                  <option value="2">Time</option>
+                </select>  
+              </div>
+              <button class='btn btn-info' id="btn-sort">Ascending</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: inline-block;" id="product" class="card">
+    </div>
+</div>
+    <footer class="bg-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 pt-5"><img src="/img/logo.png" alt="footer image"
+              class="img-fluid footer-image wow slideInDown"></div>
+        </div>
+
+        <div class="row text-light mt-5">
+          <div class="col-md-3 wow slideInLeft">
+            <div class="footer-heading" id="about">
+              ABOUT
+            </div>
+            <p class="footer-text mt-3">Always pushing forward for self betterment, supplements are here to boost you on
+              your journey. We have been trying to boost our customers progress day by day with our hard work since the
+              day we've been established.</p>
+            <img src="/img/cards.webp" class="img-fluid mt-2" alt="card">
+          </div>
+
+          <div class="col-md-3 wow slideInRight">
+            <div class="footer-heading">
+              QUESTIONS
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <ul class="footer-list mt-3">
+                  <li><a href="#about">About Us</a></li>
+                  <li><a href="#">Track Orders</a></li>
+                  <li><a href="#">Returns</a></li>
+                  <li><a href="#">Jobs</a></li>
+                  <li><a href="#">Shipping</a></li>
+                  <li><a href="#">Blog</a></li>
+                </ul>
+              </div>
+
+            </div>
+
+
+          </div>
+
+          <div class="col-md-3 wow slideInDown">
+            <div class="footer-heading"> RECENT POSTS </div>
+            <div class="media mt-3">
+              <div class="media-body">
+                <h5 class="mt-0">Newest science in muscle building</h5>
+                Scientists came up with a new formula that promotes muscle growth...
+              </div>
+            </div>
+            <div class="media"> 
+              <div class="media-body">
+                <h5 class="mt-0">Is ketogenic=bad? </h5>
+                There has been several discussions going on about how keto is not always...
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 wow slideInUp">
+            <div class="footer-heading">
+              CONTACT US
+            </div>
+            <p class="footer-text mt-3"><i class="fa fa-home" aria-hidden="true"></i> : Online</p>
+            <p> <i class="fa fa-envelope-o" aria-hidden="true"></i> : supplements@gmail.com</p>
+            <p><i class="fa fa-phone" aria-hidden="true"></i> : +90 216 546 13 92</p>
+            <p><i class="fa fa-fax" aria-hidden="true"></i> : 044 61151556 55</p>
+
+          </div>
+        </div>
+        <hr>
+        <div class="footer-endline text-center text-light mt-2 pb-4 wow fadeIn">This Webpage Was Made By CS308 Group 14
+          As
+          a Project</div>
+      </div>
+    </footer>
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+
+    <script>function getServerData(data) { window.allPros = data; }</script>
+    <script src="/products?callback=getServerData"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
+    <script src="../js/logout.js"></script>
+    <script>
+
+
+      async function filterByCat(cat) {
+        console.log(cat)
+        const response = await fetch('/products/cats/getProducts?cat=' + cat);
+        const myJson = await response.json(); //extract JSON from the http response
+        document.getElementById("product").innerHTML = ``;
+
+        myJson.proArr.forEach((element) => {
+          var imgLink = element["thumbnailUrl"];
+          var pname = element["name"];
+          var pid = element["id"];
+          var price = Math.round(element["price"]);
+          var ts = element["publishedDate"];
+          var date = new Date(ts['_seconds'] * 1000);
+          var quantity = element["quantity"];
+          
+          if (quantity <= 0) {
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`
+          } else {
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
+          }
+        });
+        $proList = $('#product');
+        $pro = $proList.children('div');
+        console.log($proList)
+      }
+
+      
+
+      async function dispPros() {
+        
+        var productJson = window.allPros["jsonObject"]["detail"];
+        document.getElementById("product").innerHTML = '';
+        
+
+        productJson.forEach(element => {
+          var imgLink = element["link"];
+          var pname = element["name"];
+          var pid = element["id"];
+          var price = Math.round(element["price"]);;
+          var ts = element["date"];
+          var date = new Date(ts['_seconds'] * 1000);
+          var quantity = element["quantity"];
+          if (quantity <= 0) {
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' filter='gray' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
+          } else {
+            document.getElementById("product").innerHTML += `<div style='float:left'> <a id="${pname}-${price}-${date}" href=/html/product.html?pid=${pid}><img class='card-img-top img-fluid' style='width:200px;height:200px;' src='${imgLink}'> <div size='20' class='card-heading'>${pname}</div></a></div>`;
+          }
+        });
+        $proList = $('#product');
+        $pro = $proList.children('div');
+        
+      }
+      dispPros()
+
+      async function dispCats() {
+
+
+        const response = await fetch('/products/cats/get');
+        const myJson = await response.json(); //extract JSON from the http response
+        var count = 0;
+        document.getElementById("cats").innerHTML = " <button id='getByCat-1' onclick='dispPros()' class='btn btn-light m1-4'>All</button>";
+        myJson.categories.forEach((cat) => {
+          var funcCall = 'filterByCat("' + cat + '")';
+          document.getElementById("cats").innerHTML += " <button id='getByCat" + count + "' onclick='" + funcCall + "' class='btn btn-light m1-4'>" + cat + "</button>";
+          count += 1;
+        })
+        return count;
+      }
+      dispCats();
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+        authDomain: "ecommerce-ca57f.firebaseapp.com",
+        databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "ecommerce-ca57f",
+        storageBucket: "ecommerce-ca57f.appspot.com",
+        messagingSenderId: "450193218046",
+        appId: "1:450193218046:web:ed740c91c94096998288af",
+        measurementId: "G-SV0VSC22KY"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          if (!user.isAnonymous) {
+
+            const getUserInfo = async () => {
+              const url = '/user/getInfo?email=' + user.email;
+              const response = await fetch(url);
+              const myJson = await response.json(); //extract JSON from the http response
+              dispName(myJson.profile.fname, myJson.profile.lname);
+            }
+            getUserInfo()
+          }
+          else {
+            console.log("anon");  
+          }
+        }
+        else {
+          console.log("no user");
+        }
+      })
+
+
+var ascending = true;
+
+
+
+
+$('#btn-sort').on('click', function () {
+  var $proList = $('#product');
+var $pro = $proList.children('div');
+var sortList = Array.prototype.sort.bind($pro);
+
+
+var doSort = function ( ascending, sortType ) {
+    
+    sortList(function ( a, b ) {
+
+      if (sortType != "Default"){
+        var aText = a.innerHTML.split("-")[sortType];
+        var bText = b.innerHTML.split("-")[sortType];
+        if (sortType == 2){
+          aText = aText.substr(0, aText.indexOf('"')); 
+          bText = bText.substr(0, bText.indexOf('"')); 
+          
+        } 
+      }
+      else {
+        var aText = a.innerHTML;
+        var bText = b.innerHTML;
+      }
+        
+      console.log(aText)
+        if ( aText < bText ) {
+            return ascending ? -1 : 1;
+        }
+
+        if ( aText > bText ) {
+            return ascending ? 1 : -1;
+        }
+
+        return 0;
+    });
+    
+    $proList.append($pro);
+
+};
+
+    var sortType = $('#sortType').val();
+    console.log($proList)
+    doSort(ascending, sortType)
+
+    ascending = !ascending;
+    if (ascending)
+      document.querySelector("#btn-sort").childNodes[0].textContent="Ascending";
+    else {
+      document.querySelector("#btn-sort").childNodes[0].textContent="Descending";
+      
+    }
+});
+
+
+    </script>
+</body>
+
+</html>

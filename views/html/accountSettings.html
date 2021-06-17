@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+    
+    <style>
+          .dropdown:hover .dropdown-menu{
+        display: block;
+    }
+    .dropdown-menu{
+        margin-top: 0;
+    }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+    
+}
+.background {
+    background: #43cea2;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #185a9d, #43cea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: aliceblue
+}
+
+.wrapper {
+    padding: 30px 50px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin: 10px auto;
+    max-width: 600px
+}
+.backback {
+  background-image: url("https://clarksvillenow.sagacom.com/files/2019/02/workout-gym-exercise-equipment-shutterstock.jpg");
+  background-size: cover;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+	
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+}
+
+h4 {
+    letter-spacing: -1px;
+    font-weight: 400
+}
+
+.img {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover
+}
+
+#img-section p,
+#deactivate p {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 10px;
+    text-align: justify
+}
+
+#img-section b,
+#img-section button,
+#deactivate b {
+    font-size: 14px
+}
+
+label {
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #777;
+    padding-left: 3px
+}
+
+.form-control {
+    border-radius: 10px
+}
+
+input[placeholder] {
+    font-weight: 500
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1.5px solid #0779e4
+}
+
+select {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    height: 40px;
+    padding: 5px 10px
+}
+
+select:focus {
+    outline: none
+}
+
+.button {
+    background-color: #fff;
+    color: #0779e4
+}
+
+.button:hover {
+    background-color: #0779e4;
+    color: #fff
+}
+
+.btn-primary {
+    background-color: #0779e4
+}
+
+.danger {
+    background-color: #fff;
+    color: #e20404;
+    border: 1px solid #ddd
+}
+
+.danger:hover {
+    background-color: #e20404;
+    color: #fff
+}
+
+@media(max-width:576px) {
+    .wrapper {
+        padding: 25px 20px
+    }
+
+    #deactivate {
+        line-height: 18px
+    }
+}
+  
+    </style>  
+    <head>
+
+    <div class="backback">
+
+    <title>Account Settings</title>
+    <link rel='icon' href='favicon.ico' type='image/x-icon' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <div class="wrapper bg-white mt-sm-5">
+        <h4 class="pb-4 border-bottom">Account Settings</h4>
+    
+        <div class="py-2">
+            <div class="row py-2">
+                <div class="col-md-6"> <label for="firstname">First Name</label> <input id="firstName" type="text" class="bg-light form-control" placeholder="Name"> </div>
+                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Last Name</label> <input id="lastName" type="text" class="bg-light form-control" placeholder="Surname"> </div>
+            </div>
+            <div class="row py-2">
+                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Phone Number</label> <input id="phone" type="tel" class="bg-light form-control" placeholder="+90 . . . "> 
+                    <i class="zmdi zmdi-tablet-mac"></i>
+                </div>
+
+            </div>
+            <div class="row py-2">
+                <div class="col-md-6"> <label for="country">Country</label> <select name="country" id="country" class="bg-light">
+                        <option value="Turkey" selected>Turkey</option>
+                        <option value="Usa">USA</option>
+                        <option value="Germany">Germany</option>
+                        <option value="France">France</option>
+                        <option value="Japan">Japan</option>
+                        <option value="England">England</option>
+                        <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+                    </select> </div>
+                    <div class="col-md-6"> <label for="gender">Gender</label> <select name="gender" id="gender" class="bg-light">
+                        <option value="" disabled selected> Gender </option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Other">Other</option>
+                    
+                    </select> 
+                    <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+                </div>
+            </div>
+
+            <div class="form-wrapper"> <label for="address">Address</label> <input type="text" id="address" class="bg-light form-control" placeholder="Address">
+                <i class="zmdi zmdi-account-pin"></i>
+            </div>
+
+            <div class="form-wrapper"> <label for="bio">Bio</label> <input type="text" id="bio" class="bg-light form-control" placeholder="Bio">
+                <i class="zmdi zmdi-account-box-mail"></i>
+            </div>
+            <div class="py-3 pb-4 border-bottom"> 
+                <button id="btn-update" style = "background-color: rgba(51, 86, 163, 0.849)" class="btn btn-primary mr-3"><a>Save Changes</a></button>
+                 <button class="btn border button" onclick="window.history.back();">Cancel</button> 
+                <i class="zmdi zmdi-arrow-right"></i>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+                 https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+            authDomain: "ecommerce-ca57f.firebaseapp.com",
+            databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "ecommerce-ca57f",
+            storageBucket: "ecommerce-ca57f.appspot.com",
+            messagingSenderId: "450193218046",
+            appId: "1:450193218046:web:ed740c91c94096998288af",
+            measurementId: "G-SV0VSC22KY"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/accountSettings.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</div>
+</body>
+</div>
+</html>
+

@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="../material-dashboard-master/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script>var firebaseConfig = {
+        apiKey: "AIzaSyBXC-zH_VU7hjRYuRoA-DoizGN8ndGIJ8M",
+        authDomain: "ecommerce-ca57f.firebaseapp.com",
+        databaseURL: "https://ecommerce-ca57f-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "ecommerce-ca57f",
+        storageBucket: "ecommerce-ca57f.appspot.com",
+        messagingSenderId: "450193218046",
+        appId: "1:450193218046:web:ed740c91c94096998288af",
+        measurementId: "G-SV0VSC22KY"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+</script>
+  </head>
+  <style>
+      .parent {
+  position: relative;
+  height: 70px;
+}
+
+.backback {
+  background-image: url("https://clarksvillenow.sagacom.com/files/2019/02/workout-gym-exercise-equipment-shutterstock.jpg");
+  background-size: cover;
+}
+    body {
+    background: #ddd;
+    min-height: 100vh;
+    vertical-align: middle;
+    display: flex;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.title {
+    margin-bottom: 5vh
+}
+
+.card {
+    margin: auto;
+    max-width: 950px;
+    width: 90%;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 1rem;
+    border: transparent
+}
+
+@media(max-width:767px) {
+    .card {
+        margin: 3vh auto
+    }
+}
+
+.cart {
+    background-color: #fff;
+    padding: 4vh 5vh;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem
+}
+
+@media(max-width:767px) {
+    .cart {
+        padding: 4vh;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 1rem
+    }
+}
+
+.summary {
+    background-color: #ddd;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding: 4vh;
+    color: rgb(65, 65, 65)
+}
+
+@media(max-width:767px) {
+    .summary {
+        border-top-right-radius: unset;
+        border-bottom-left-radius: 1rem
+    }
+}
+
+.summary .col-2 {
+    padding: 0
+}
+
+.summary .col-10 {
+    padding: 0
+}
+
+.row {
+    margin: 0
+}
+
+.title b {
+    font-size: 1.5rem
+}
+
+.main {
+    margin: 0;
+    padding: 2vh 0;
+    width: 100%
+}
+
+.col-2,
+.col {
+    padding: 0 1vh
+}
+
+a {
+    padding: 0 1vh
+}
+
+.close {
+    margin-left: auto;
+    font-size: 0.7rem
+}
+
+img {
+    width: 3.5rem
+}
+
+.back-to-shop {
+    margin-top: 4.5rem
+}
+
+h5 {
+    margin-top: 4vh
+}
+
+hr {
+    margin-top: 1.25rem
+}
+
+form {
+    padding: 2vh 0
+}
+
+select {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1.5vh 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
+
+input {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 1vh;
+    margin-bottom: 4vh;
+    outline: none;
+    width: 100%;
+    background-color: rgb(247, 247, 247)
+}
+
+input:focus::-webkit-input-placeholder {
+    color: transparent
+}
+
+.btn {
+    background-color: #000;
+    border-color: #000;
+    color: white;
+    width: 100%;
+    font-size: 0.7rem;
+    margin-top: 4vh;
+    padding: 1vh;
+    border-radius: 0
+}
+
+.btn:focus {
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    -webkit-box-shadow: none;
+    transition: none
+}
+
+.btn:hover {
+    color: white
+}
+
+a {
+    color: black
+}
+
+a:hover {
+    color: black;
+    text-decoration: none
+}
+
+#code {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: center
+}
+    .white-color {
+color:white;
+}
+    .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px; 
+}
+
+            .search input[type=text]{
+            width:300px;
+            height:25px;
+            border-radius:25px;
+            border: none;
+ 
+        }
+         
+        .search{
+            margin-right: 20%;
+            margin:7px;
+ 
+        }
+         
+        .search button{
+            background-color: #0074d900;
+            color: #f2f2f2;
+            float: right;
+            padding: 5px 10px;
+            margin-right: 16px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        .badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  font-size: 18px;
+  background-color: #c67605;
+}
+  </style>
+  <body class="backback" onload="getBasketSize()">
+    
+    
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <a class="navbar-brand" href="#">SUPPLEMENTS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"><i class="fa fa-bars text-light" aria-hidden="true"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item ">
+              <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="signout">Sign In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/html/accountSettings.html">Settings </a>
+            </li>
+          </ul>
+          <div class="search" id="searchid">
+              <input type="text" placeholder="   Search Product " name="search" id="searchinput">
+              <button onclick="dosearch()">
+                <i class="fa fa-search" style="font-size: 18px;">
+                </i>
+              </button>
+            <div id="results"> </div>
+    
+          </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="../js/search.js" ></script>
+        <script src="../js/logout.js"></script>
+
+        <script>
+          function dispName(fname, lname) {
+            document.getElementById("uName").innerHTML += fname + " " +  lname;
+          }
+          async function getBasketSize() {
+            const response = await fetch('/basket');
+            const myJson = await response.json();
+            var pros = myJson.jsonProducts;
+            console.log(pros)
+            if (pros) {
+              
+              document.getElementById("lblCartCount").innerHTML = pros.productArr.length;
+            }
+          }
+        </script>
+        <li>
+          <a class="nav-item" href="/html/accountSettings.html">
+            <i class="fa fa-cart teal-color " id="uName" style="font-size:30px">Welcome </i>
+    
+          </a>
+        </li>
+    
+        <li>
+          <a class="nav-item active" href="/html/cart.html">
+            <i class="fa fa-cart teal-color " style="font-size:50px">&#xf07a;</i><span class='badge badge-warning'
+              id='lblCartCount'>0</span>
+          </a>
+        </li>
+      </nav>
+
+<div class="card">
+  <div class="row">
+      <div class="col-md-8 cart">
+          <div class="title">
+              <div class="row">
+                  <div class="col">
+                      <h4><b>Success!</b></h4>
+                      <h5><b>The invoice will also be sent by email</b></h>
+                  </div>
+                    <div class="row main align-items-center">
+                        <div class="col">
+                            <div class="row text-muted" id="oid">Order ID: </div><br> 
+                            <div class="row text-muted"id="customer">Customer: </div><br> 
+                            <div class="row text-muted"id="date">Date:</div><br> 
+                            <div class="row text-muted"id="address">Address: </div><br> 
+                            <div class="row text-muted"id="quantity">Quantity: </div><br> 
+                            <div class="row text-muted"id="status">Status: </div>
+                            <div class="back-to-shop"><a href="/home">&leftarrow;<span class="text-muted">  Back to shop</span></a></div>
+                            <button class="nav-link"  onclick="window.print()"> &nbsp;&nbsp; Print PDF</button>
+                        </div>
+                    </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+</div>
+
+</div>
+<script>
+
+
+async function getInvoice() {
+  queryurl = "/order/get";
+  const req = await fetch(queryurl);
+  const response = await req.json(); //extract JSON from the http response
+
+  const url = window.location.search;
+  
+  const oid = new URLSearchParams(url).get('oid');
+  var quantity;
+  var date;
+  var address;
+  var user;
+  console.log(response)
+  response.arr.forEach(element =>   {
+
+    if(element == null)
+      return;
+    if (element.oid == oid) {
+      console.log(element)
+      pros = element.pros;
+      address = element.address;
+      quantity = element.quantity;
+      user = element.user;
+      status = element.status;
+      date = new Date(element.date._seconds * 1000);
+    date = date.toLocaleDateString();
+    } 
+    
+  });
+  document.getElementById("oid").innerHTML += oid
+  document.getElementById("customer").innerHTML += user
+  document.getElementById("date").innerHTML += date
+  document.getElementById("address").innerHTML += address
+  document.getElementById("quantity").innerHTML += quantity
+  document.getElementById("status").innerHTML += status
+
+}
+
+getInvoice()
+
+firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          if (!user.isAnonymous) {
+
+            const getUserInfo = async () => {
+              const url = '/user/getInfo?email=' + user.email;
+              const response = await fetch(url);
+              const myJson = await response.json(); //extract JSON from the http response
+              dispName(myJson.profile.fname, myJson.profile.lname);
+            }
+            document.getElementById("signout").innerHTML = '<li id="signout" class="pointer" three-d-box"><a class="three-d">Sign Out</a></li>'
+            getUserInfo()
+          }
+          else {
+            document.getElementById("signout").innerHTML = '<li id="signout" class="pointer"   three-d-box"><a class="three-d">Sign Out</a></li>'
+            console.log("anon");
+          }
+        }
+        else {
+          document.getElementById("signout").innerHTML = '<li id="signout" class="pointer"   three-d-box"><a class="three-d">Sign In</a></li>'
+          console.log("no user");
+        }
+      })
+
+</script>
+  </body>
+</html>
+
+
+
