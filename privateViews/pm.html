@@ -47,13 +47,13 @@ The above copyright notice and this permission notice shall be included in all c
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="/admin/getAddProductPage">
+            <a class="nav-link" href="/admin/new-product">
               <i class="material-icons">content_paste</i>
               <p>Add Products</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="/admin/getCommentsPage">
+            <a class="nav-link" href="/admin/comments">
               <p>Pending Comments</p>
             </a>
           </li>
@@ -497,7 +497,7 @@ The above copyright notice and this permission notice shall be included in all c
 
         async function dispOrders() {
 
-          const response = await fetch('/admin/getOrders');
+          const response = await fetch('/admin/order');
           const myJson = await response.json(); //extract JSON from the http response
 
 
@@ -557,8 +557,13 @@ The above copyright notice and this permission notice shall be included in all c
 
           row.remove();
           btn.remove();
-          //const response = await fetch('/admin/rmProduct?pid' + pid);
-          //const myJson = await response.json(); //extract JSON from the http response
+
+          const response = await fetch('/admin/product', {
+            method: 'delete',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({pid: pid})
+            });
+          const myJson = await response.json(); //extract JSON from the http response
 
         }
       

@@ -7,7 +7,7 @@ const router = express.Router();
 
 const {admin} = require("../utils/admin");
 
-router.post("/post", function (req, res) {
+router.post("/", function (req, res) {
 
     const sessionCookie = req.cookies.session || "";
     //debug(sessionCookie)
@@ -24,7 +24,7 @@ router.post("/post", function (req, res) {
   });
   
   // Users can see their previous orders
-  router.get("/get", function (req, res) {
+  router.get("/", function (req, res) {
   
     const sessionCookie = req.cookies.session || "";
     admin.auth().verifySessionCookie(sessionCookie, false).then(async (decodedClaims) => {

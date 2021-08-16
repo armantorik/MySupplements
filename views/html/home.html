@@ -396,7 +396,7 @@
 
       async function filterByCat(cat) {
         console.log(cat)
-        const response = await fetch('/products/cats/getProducts?cat=' + cat);
+        const response = await fetch('/products/cats/products?cat=' + cat);
         const myJson = await response.json(); //extract JSON from the http response
         document.getElementById("product").innerHTML = ``;
 
@@ -451,7 +451,7 @@
       async function dispCats() {
 
 
-        const response = await fetch('/products/cats/get');
+        const response = await fetch('/products/cats');
         const myJson = await response.json(); //extract JSON from the http response
         var count = 0;
         document.getElementById("cats").innerHTML = " <button id='getByCat-1' onclick='dispPros()' class='btn btn-light m1-4'>All</button>";
@@ -485,7 +485,7 @@
           if (!user.isAnonymous) {
 
             const getUserInfo = async () => {
-              const url = '/user/getInfo?email=' + user.email;
+              const url = '/user/info?email=' + user.email;
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
               dispName(myJson.profile.fname, myJson.profile.lname);

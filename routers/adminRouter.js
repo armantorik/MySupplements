@@ -8,7 +8,7 @@ const router = express.Router();
 const {authenticateToken, upload, generateAccessToken} = require("../utils/admin");
 
 // Admins have to use their username and password to get their session token
-router.post('/getToken', async (req, res) => {
+router.post('/session', async (req, res) => {
 
     var username = req.body["username"];
     var pass = req.body["pass"];
@@ -40,7 +40,7 @@ router.post('/getToken', async (req, res) => {
   });
 
   // After they got their token, they can login to their system
-  router.get("/login", authenticateToken, async function (req, res) {
+  router.get("/session", authenticateToken, async function (req, res) {
     
     if (req.param("pm") == "true") { // True means pm, false means sm
       res.sendFile(path.join(__dirname + "/../privateViews/pm.html"));
@@ -59,12 +59,12 @@ router.post('/getToken', async (req, res) => {
   
   
   // Pm can add products
-  router.get("/getAddProductPage", authenticateToken, async function (req, res) {
+  router.get("/new-product", authenticateToken, async function (req, res) {
     res.sendFile(path.join(__dirname + "/../privateViews/addProduct.html"))
   });
 
 
-  router.post('/addProduct', authenticateToken, upload.single('image'), (req, res) => {
+  router.post('/product', authenticateToken, upload.single('image'), (req, res) => {
   
     debug(req.body)
     if (!req.file) {
@@ -76,9 +76,9 @@ router.post('/getToken', async (req, res) => {
   });
   
 // Pm can remove products
-  router.post('/rmProduct', authenticateToken, (req, res) => {
+  router.delete('/product', authenticateToken, (req, res) => {
   
-    var pid = req.param("pid")
+    var pid = req.body("pid")
 
     if (pid=null) {
       res.status(400).send("Error: No files found")
@@ -90,9 +90,9 @@ router.post('/getToken', async (req, res) => {
 
   
   // Pm Review Invoices
-  router.post("/getInvoices", authenticateToken, async function (req, res) {
+  router.get("/invoice", authenticateToken, async function (req, res) {
   
-    var invoiceArr = await admins.getInvoices().catch((error) => {
+    var invoiceArr = await admins.getOrders().catch((error) => {
       res.status(400).send("Error" + error);
     });
   
@@ -101,21 +101,21 @@ router.post('/getToken', async (req, res) => {
   });
   
  // Pm can see orderRefund page
- router.get("/OrderRefundPage", authenticateToken, async function (req, res) {
+ router.get("/order-refund", authenticateToken, async function (req, res) {
   res.sendFile(path.join(__dirname + "/../privateViews/orderRefund.html"))
 });
 
 
-    // Pm can see the orders to be cancelled
-    router.get("/getOrdersToBeCancelled", authenticateToken, async function (req, res) {
+// Pm can see the orders to be cancelled
+router.get("/ordersToCancel", authenticateToken, async function (req, res) {
+
+  admins.ordersToCancel().then(orders => {
+    res.send(orders)
+  }).catch(error =>{
+    res.send(error)
+  })
   
-      admins.getOrdersToBeCancelled().then(orders => {
-        res.send(orders)
-      }).catch(error =>{
-        res.send(error)
-      })
-      
-    });
+});
 
 
       // Pm can see deliveryPage
@@ -124,7 +124,7 @@ router.post('/getToken', async (req, res) => {
   });
 
   // Pm can change status of deliveries
-  router.post("/changeDeliveryStatus", authenticateToken, async function (req, res) {
+  router.post("/deliveryStatus", authenticateToken, async function (req, res) {
   
     var status = await admins.changeStatus(req.body.oid, req.body.newStatus);
   
@@ -138,9 +138,9 @@ router.post('/getToken', async (req, res) => {
 
   
 // PMs can cancel orders
-router.post("/cancelOrder", authenticateToken, function (req, res){
+router.delete("/order", authenticateToken, function (req, res){
 
-    var status = admins.cancelOrder(req.body["oid"])
+    var status = admins.order(req.body["oid"])
     if (status)
       res.status(200).send("Success!");
     else if (status == false)
@@ -151,7 +151,7 @@ router.post("/cancelOrder", authenticateToken, function (req, res){
   
   });
   // Pm Review Invoices List 
-  router.get("/getOrders", authenticateToken, async function (req, res) {
+  router.get("/order", authenticateToken, async function (req, res) {
       admins.getOrders().then((orders)=> {
         res.send(orders);
       }).catch((error) => {res.send(error)});
@@ -161,19 +161,19 @@ router.post("/cancelOrder", authenticateToken, function (req, res){
   
 
   // Pm see unverified comments
-  router.get("/getCommentsPage", authenticateToken, async function (req, res) {
-    res.sendFile(path.join(__dirname + "/../privateViews/pendingComments.html"));
+  router.get("/comments", authenticateToken, async function (req, res) {
+    res.sendFile(path.join(__dirname + "/../privateViews/comments/pending.html"));
 });
 
-  router.get("/pendingComments", authenticateToken, async function (req, res) {
-    admins.pendingComments().then((comments)=> {
+  router.get("/comments/pending", authenticateToken, async function (req, res) {
+    admins.comments/pending().then((comments)=> {
       res.send(comments);
     }).catch((error) => {res.send(error)});
 
 });
 
 // Pm verifies comments
-router.get("/verifyComments", authenticateToken, async function (req, res) {
+router.post("/comments", authenticateToken, async function (req, res) {
   
   var pid = req.param("pid")
   var cid = req.param("cid")
@@ -195,7 +195,7 @@ router.get("/verifyComments", authenticateToken, async function (req, res) {
   });
   
 
-  router.get("/InvoicePage", authenticateToken, async function (req, res) {
+  router.get("/invoices", authenticateToken, async function (req, res) {
     res.sendFile(path.join(__dirname + "/../privateViews/invoices.html"))
   })
 

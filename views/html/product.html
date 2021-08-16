@@ -462,12 +462,12 @@ color:white;
       
       if (user) {
         
-        queryurl = "/basket/addProduct?&pid=" + pid;
+        queryurl = "/basket/product?&pid=" + pid;
       }
       else {
         console.log("no user");
 
-        queryurl = "/basket/addProduct?&pid=" + pid;
+        queryurl = "/basket/product?&pid=" + pid;
       }
       axios.get(queryurl).then(
           (response) => {
@@ -488,7 +488,7 @@ color:white;
   firebase.auth().onAuthStateChanged(user => {  
     if (user){
         const getUserInfo = async () => {
-              const url = '/user/getInfo';
+              const url = '/user/info';
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
               

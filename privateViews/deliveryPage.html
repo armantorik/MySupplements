@@ -53,13 +53,13 @@ The above copyright notice and this permission notice shall be included in all c
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/admin/getAddProductPage">
+                        <a class="nav-link" href="/admin/new-product">
                             <i class="material-icons">content_paste</i>
                             <p>Add Products</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/admin/getCommentsPage">
+                        <a class="nav-link" href="/admin/comments">
                             <p>Pending Comments</p>
                         </a>
                     </li>
@@ -474,7 +474,7 @@ The above copyright notice and this permission notice shall be included in all c
             async function changeStatus() {
                 var newVal = RadioValue("survey");
 
-                fetch('/admin/changeDeliveryStatus', {
+                fetch('/admin/deliveryStatus', {
                 method: "POST",
                 headers: {"Content-type": "application/json;charset=UTF-8"},
                 body: JSON.stringify({oid:window.oid, newStatus:newVal})
@@ -499,7 +499,7 @@ The above copyright notice and this permission notice shall be included in all c
 
                 async function disDelivery() {
 
-                    const response = await fetch('/admin/getOrders/');
+                    const response = await fetch('/admin/order/');
                     const myJson = await response.json(); //extract JSON from the http response
                     const url = window.location.search;
                     const oid = new URLSearchParams(url).get('oid');

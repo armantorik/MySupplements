@@ -88,7 +88,7 @@ async function addP(pid){
     else {
 
         if (!pid) {alert("Error in pid!"); return;}
-    queryurl = "/basket/addProduct?pid=" + pid;
+    queryurl = "/basket/product?pid=" + pid;
 
     const req = await fetch(queryurl);
     getProducts2js();
@@ -101,16 +101,18 @@ async function addP(pid){
     }
 }
 async function decrementP(pid) {
-    queryurl = "/basket/decrementProduct?pid=" + pid;
-    const req = await fetch(queryurl);
+    queryurl = "/basket/product/decrement?pid=" + pid;
+    const req = await fetch(queryurl, {
+        method: patch
+    });
     getProducts2js();
 
     const response = await req.json(); //extract JSON from the http response
    }
 
    async function rmP(pid) {
-    queryurl = "/basket/removeProduct?pid=" + pid;
-    const req = await fetch(queryurl);
+    queryurl = "/basket/product";
+    const req = await fetch(queryurl, {method:delete});
     getProducts2js();
 
     const response = await req.json(); //extract JSON from the http response

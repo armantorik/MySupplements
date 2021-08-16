@@ -46,7 +46,7 @@ The above copyright notice and this permission notice shall be included in all c
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/admin/getAddProductPage">
+                        <a class="nav-link" href="/admin/new-product">
                             <i class="material-icons">content_paste</i>
                             <p>Add Products</p>
                         </a>
@@ -480,7 +480,7 @@ The above copyright notice and this permission notice shall be included in all c
 
                 async function dispComms() {
 
-                    const response = await fetch('/admin/pendingComments/');
+                    const response = await fetch('/admin/comments/pending/');
                     const myJson = await response.json(); //extract JSON from the http response
 
 

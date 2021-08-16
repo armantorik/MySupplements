@@ -75,7 +75,7 @@ router.get('/', function (req, res) {
       
   });
   
-  router.get('/cats/get',function (req, res) {
+  router.get('/cats',function (req, res) {
     
     products.getProducts().then((pros) => {
       var catArr = [];
@@ -95,7 +95,7 @@ router.get('/', function (req, res) {
   
   
   
-  router.get('/cats/getProducts', async function (req, res) {
+  router.get('/cats/products', async function (req, res) {
     
     var cat = req.param("cat");
   

@@ -8,7 +8,7 @@ const router = express.Router();
 
 
   // Users can get their information
-  router.get("/getInfo", function (req, res) {
+  router.get("/", function (req, res) {
 
     const sessionCookie = req.cookies.session || "";
     admin.auth().verifySessionCookie(sessionCookie, false).then((decodedClaims) => {
@@ -86,7 +86,7 @@ router.post('/comment/:pid/:comm', function (req, res) {
   })
   
   // Users can create their account with their information
-  router.put("/createAccount", function (req, res) {
+  router.post("/", function (req, res) {
     var params = req.query;
     user.createAccount(params.email, params.firstName, params.lastName, params.address, params.phone, params.gender, params.bio).then(() => {
       console.log("Account created successfully");
@@ -100,7 +100,7 @@ router.post('/comment/:pid/:comm', function (req, res) {
   
   
   // Users can request to cancel orders
-  router.post("/askForRefund", async function (req, res){
+  router.post("/refund", async function (req, res){
   
     const sessionCookie = req.cookies.session || "";
     console.log(req)

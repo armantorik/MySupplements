@@ -439,7 +439,7 @@ firebase.auth().onAuthStateChanged(user => {
           if (!user.isAnonymous) {
 
             const getUserInfo = async () => {
-              const url = '/user/getInfo?email=' + user.email;
+              const url = '/user/info?email=' + user.email;
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
               dispName(myJson.profile.fname, myJson.profile.lname);

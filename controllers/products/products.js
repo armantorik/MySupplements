@@ -1,8 +1,7 @@
 // Products Module:
 // getProduct function returns the array consisting all of the products
 
-const { firebase, admin, db } = require("../../utils/admin");
-var debug = require('debug')('products')
+const { db } = require("../../utils/admin");
 
 exports.getProducts = async function getProducts(pid) {
 

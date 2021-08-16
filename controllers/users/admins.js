@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 var debug = require('debug')('adminController')
 
-const { admin, db, firebase } = require('../../utils/admin');
+const { admin, db } = require('../../utils/admin');
 var bucket = admin.storage().bucket();
 const uuid = require('uuid-v4');
 const FieldValue = admin.firestore.FieldValue;
@@ -123,7 +123,7 @@ exports.removeProduct = async (pid) => {
 }
 
 
-exports.pendingComments = async () => {
+exports.getComments = async () => {
 
   var snapshot = await db.collection("Products").get();
 
@@ -171,7 +171,7 @@ exports.verify = async (pid, cid) => {
 }
 
 
-exports.getOrdersToBeCancelled  = async () => {
+exports.ordersToCancel  = async () => {
 
   var Query = await db.collection("orders").where("cancelRequest", "==", true).get();
 

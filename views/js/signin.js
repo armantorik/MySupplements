@@ -72,13 +72,13 @@ function signinDefault(event) {
       body: JSON.stringify(params)
     };
     
-    fetch('http://localhost:3000/admin/getToken', options)
+    fetch('http://localhost:3000/admin/session', options)
       .then(response => response.json())
       .then(response => {
         
         if (response.token && response.pm != undefined && response.sm != undefined){
           document.cookie = `token=${response.token}; path=/`
-          location.href = ('http://localhost:3000/admin/login?sm='+response.sm+'&pm='+response.pm);
+          location.href = ('http://localhost:3000/admin/session?sm='+response.sm+'&pm='+response.pm);
         }
 
       });

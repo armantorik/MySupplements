@@ -432,7 +432,7 @@ firebase.auth().onAuthStateChanged((user) => {
                  <div class="col"> <a class="border">${status}</a> </div>
                  <div class="col">
 
-                    <form class="col" method="post"  action="/user/askForRefund">
+                    <form class="col" method="post"  action="/user/refund">
                         <input hidden name="oid" value="${oid}"/>
                         <button onclick="alert('Success! The Product Managers will be notified about  your refund request')" class="btn btn-warning">Request To Cancel!</button>
                  </form>
@@ -453,7 +453,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
 
             const getUserInfo = async () => {
-              const url = '/user/getInfo';
+              const url = '/user/info';
               const response = await fetch(url);
               const myJson = await response.json(); //extract JSON from the http response
               console.log(myJson)

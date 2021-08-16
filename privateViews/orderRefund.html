@@ -51,12 +51,12 @@ The above copyright notice and this permission notice shall be included in all c
                       </a>
                   </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/admin/OrderRefundPage">
+                        <a class="nav-link" href="/admin/order-refund">
                             <p>Order Refund Requests</p>
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/admin/InvoicePage">
+                        <a class="nav-link" href="/admin/invoices">
                             <p>Invoices</p>
                         </a>
                     </li>
@@ -472,8 +472,8 @@ The above copyright notice and this permission notice shall be included in all c
                 row.remove();
 
            
-                fetch('/admin/CancelOrder', {
-                method: "POST",
+                fetch('/admin/order', {
+                method: "delete",
                 headers: {"Content-type": "application/json;charset=UTF-8"},
                 body: JSON.stringify({oid:oid})
                 })
@@ -487,7 +487,7 @@ The above copyright notice and this permission notice shall be included in all c
 
                 async function dispComms() {
 
-                    const response = await fetch('/admin/getOrdersToBeCancelled/');
+                    const response = await fetch('/admin/ordersToCancel/');
                     const myJson = await response.json(); //extract JSON from the http response
 
 

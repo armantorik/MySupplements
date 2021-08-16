@@ -32,7 +32,7 @@ router.all('/', function (req, res) {
 
 
     // Users can add products with their pid to the basket
-    router.get("/addProduct", function (req, res) {
+    router.get("/product", function (req, res) {
       var pid = req.param("pid");
       if (!pid){
         res.status(400).send("Bad Request, please make sure you set the pid correct")
@@ -63,7 +63,7 @@ router.all('/', function (req, res) {
 
   
   // Users can decrement the product from their basket
-  router.get("/decrementProduct", function (req, res) {
+  router.patch("/product/decrement", function (req, res) {
     const sessionCookie = req.cookies.session || "";
     admin.auth().verifySessionCookie(sessionCookie, true).then((decodedClaims) => {
       var email = decodedClaims["email"];
@@ -77,7 +77,7 @@ router.all('/', function (req, res) {
   
   
   // Users can remove all of the product using pid from their basket
-  router.get("/removeProduct", function (req, res) {
+  router.delete("/product", function (req, res) {
     const sessionCookie = req.cookies.session || "";
     admin.auth().verifySessionCookie(sessionCookie, true).then(async (decodedClaims) => {
       var email = decodedClaims["email"];
