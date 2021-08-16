@@ -12,14 +12,16 @@ A fully functional mySupplements.com Ecommerce Website!
 
 Node.js, NPM, Express.js
 
-### Installing
+### Installation
 
 1) Install Node.js and NPM if not already installed on your device
 2) From the command line, `npm install` in the project directory is enough to install all of the remaining dependencies
 
 ### Executing program
 To test -> `test`
+<br /> 
 To run -> `dev`
+<br /> 
 To debug -> `dev:debug`
 
 
