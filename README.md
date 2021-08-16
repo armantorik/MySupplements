@@ -1,10 +1,28 @@
 # MySupplements
 
-Simple overview of use/purpose.
+A fully functional mySupplements E-commerce Website!
 
 ## Description
 
-A fully functional mySupplements.com Ecommerce Website!
+As a term project, an E-commerce Website was needed, so Node.js + Firebase were used a Web Application that fulfills:
+  *Create account
+  *Login
+  *Access, search, filter and select products
+  *Add to basket
+  *Remove from basket
+  *Order the basket
+  *Access previous orders
+  *Cancel order
+  *Access and change profile
+  
+  * For admins (PM and SM):
+    *CRUD products
+    *CRUD orders
+    *Access and visualize the statistics
+  
+  
+
+
 
 ## Getting Started
 
